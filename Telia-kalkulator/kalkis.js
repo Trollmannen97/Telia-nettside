@@ -112,14 +112,14 @@ function removeFamilyPlan(element) {
 }
 
 // Funksjon for å hente familierabatten basert på valgt plan
-function getFamilyDiscount(planValue, isMainNumber) {
+function getFamilyDiscount(planValue, planText, isMainNumber) {
   const familyDiscountRates = {
     teliaX: 100, // 100 kr rabatt for Telia X-abonnement
     teliaMobile: 30, // 30 kr rabatt for Telia Junior, 5GB og 10GB
   };
 
-  // Telia X-abonnementer (planValue >= 399) gir 100 kr rabatt, men ikke for hovednummeret
-  if (planValue >= 399 && !isMainNumber) {
+  // Telia X-abonnementer (planValue >= 399) gir 100 kr rabatt, men IKKE for Telia X Ung eller hovednummeret
+  if (planValue >= 399 && !isMainNumber && !planText.includes("Telia X Ung")) {
     return familyDiscountRates.teliaX;
   }
   // Telia 5GB og 10GB, samt Junior-abonnementer gir 30 kr rabatt
@@ -170,7 +170,11 @@ function calculatePrice() {
       var familyPlanValue = parseFloat(familyPlans[i].value);
       var familyPlanText =
         familyPlans[i].options[familyPlans[i].selectedIndex].text; // Henter abonnementsnavnet
-      var familyDiscountAmount = getFamilyDiscount(familyPlanValue, false); // Familierabatt (100 kr for Telia X)
+      var familyDiscountAmount = getFamilyDiscount(
+        familyPlanValue,
+        familyPlanText,
+        false
+      ); // Send også planText
 
       // Prisen for ekstra nummer etter familierabatt
       var discountedFamilyPrice = familyPlanValue - familyDiscountAmount;
@@ -178,6 +182,7 @@ function calculatePrice() {
       // Hvis abonnementsplanen er Telia X eller Telia 5GB/10GB, legg til familierabattprosent
       if (
         !familyPlanText.includes("Telia x Start") && // Sjekk at det ikke er Telia x Start
+        !familyPlanText.includes("Telia X Ung") && // Legg til sjekk for Telia X Ung
         (familyPlanValue >= 399 ||
           (familyPlanValue >= 299 && familyPlanValue <= 359))
       ) {
