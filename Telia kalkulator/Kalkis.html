@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pris Kalkulator</title>
+    <link rel="stylesheet" href="/Telia kalkulator/kalkis.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/Favicon 2/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/Favicon 2/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon 2/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+</head>
+<body>
+    <div class="calculator">
+        <h1>Pris Kalkulator</h1>
+        <div class="form-group">
+            <label for="customerType">Velg kundetype:</label><br>
+            <input type="radio" id="single" name="customerType" value="single" checked onclick="toggleCustomerType()">
+            <label for="single">Enkel kunde</label><br>
+            <input type="radio" id="family" name="customerType" value="family" onclick="toggleCustomerType()">
+            <label for="family">Familie</label>
+        </div>
+        <div class="form-group">
+            <label for="plan">Velg abonnement:</label>
+            <select id="plan">
+                <option value="129">Telia Junior 1GB - 129kr</option>
+                <option value="179">Telia Junior 3GB - 179kr</option>
+                <option value="299">Telia 5GB - 299 kr</option>
+                <option value="349">Telia 10GB - 349 kr</option>
+                <option value="399">Telia X Start - 399 kr</option>
+                <option value="399">Telia X Ung - 399 kr</option>
+                <option value="479">Telia X Basic - 479 kr</option>
+                <option value="579">Telia X Max - 579 kr</option>
+                <option value="679">Telia X Max Pluss - 679 kr</option>
+                <option value="1099">Telia X + Viaplay Total - 1099 kr</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="discount">Rabatt for hovednummer:</label>
+            <select id="discount">
+                <option value="0">Ingen rabatt</option>
+                <option value="10">10%</option>
+                <option value="15">15%</option>
+                <option value="20">20%</option>
+            </select>
+          </div>
+          <div class="form-group family-discount" style="display: none;">
+            <label for="familyDiscount">Familierabatt:</label>
+            <select id="familyDiscount">
+                <option value="0">Ingen rabatt</option>
+                <option value="10">10%</option>
+                <option value="15">15%</option>
+                <option value="20">20%</option>
+            </select>
+          </div>
+        <div id="familySection" style="display: none;">
+            <h3>Familierabatt</h3>
+            <div id="familyPlans"></div>
+            <button type="button" onclick="addFamilyPlan()">Legg til abonnement</button>
+        </div>
+        <button type="button" onclick="calculatePrice()">Beregn pris</button>
+        <div class="result">
+            <h2>Prisdetaljer:</h2>
+            <div id="priceDetails"></div> <!-- Ny div for å vise detaljerte priser -->
+            <p id="finalPrice" class="total-price">Endelig pris: - kr</p>
+        </div>
+        </div>
+    </div>
+    <script src="/Telia kalkulator/kalkis.js"></script>
+</body>
+</html>
