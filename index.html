@@ -8,6 +8,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/Favicon 2/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon 2/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
@@ -43,55 +44,228 @@
                         <td>1099 NOK/mnd</td>
                         <td>Ubegrenset data og Viaplay Total inkludert</td>
                     </tr>
-                    <tr>
-                        <td>Telia X Max Plus - 1000 Mbps</td>
-                        <td>679 NOK/mnd</td>
-                        <td>Ubegrenset data med 1000 Mbps hastighet</td>
-                    </tr>
-                    <tr>
-                        <td>Telia X Max - 1000 Mbps</td>
-                        <td>579 NOK/mnd</td>
-                        <td>Ubegrenset data med 1000 Mbps hastighet</td>
-                    </tr>
-                    <tr>
-                        <td>Telia X Basis - 100 Mbps</td>
-                        <td>479 NOK/mnd</td>
-                        <td>Ubegrenset data med 100 Mbps hastighet</td>
-                    </tr>
-                    <tr>
-                        <td>Telia X Start - 10 Mbps</td>
-                        <td>499 NOK/mnd (399 NOK/mnd første 12 mnd)</td>
-                        <td>Ubegrenset data med 10 Mbps hastighet</td>
-                    </tr>
-                    <tr>
-                        <td>Telia X Ung - 220 Mbps</td>
-                        <td>399 NOK/mnd</td>
-                        <td>Ubegrenset data med 220 Mbps hastighet</td>
-                    </tr>
-                    <tr>
-                        <td>10 GB</td>
-                        <td>349 NOK/mnd</td>
-                        <td>10 GB data inkludert</td>
-                    </tr>
-                    <tr>
-                        <td>5 GB</td>
-                        <td>299 NOK/mnd</td>
-                        <td>5 GB data inkludert</td>
-                    </tr>
-                    <tr>
-                        <td>Junior 3 GB</td>
-                        <td>179 NOK/mnd</td>
-                        <td>Mobilabonnement for barn under 16 år</td>
-                    </tr>
-                    <tr>
-                        <td>Junior 1 GB</td>
-                        <td>129 NOK/mnd</td>
-                        <td>Mobilabonnement for barn under 16 år</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-
+                    <td><button onclick="toggleDetails('teliaXViaplay')">Vis detaljer</button></td>
+            </tr>
+            <tr id="teliaXViaplay" style="display: none;">
+                <td colspan="4">
+                    <div class="detaljkort">
+                        <h3>Telia X + Viaplay Total</h3>
+                        <p>For deg som elsker sport, fremfor alt fotball og Premier League. Her får du maksimal 5G-fart helt uten begrensninger, med hastighet opptil 1000 Mbps kan du streame kampene direkte på mobilen i høyeste kvalitet</p>
+                        <h4> Inkludert i Viaplay Total</h4>
+                        <p><i class="fas fa-film"></i> Film & Serier</p>
+                        <p><i class="fas fa-futbol"></i> Premier League </p>
+                        <p><i class="fas fa-flag"></i> Sport - Formel 1, UFC, og mye mer</p>
+                        <h4>Inkludert i Abonnementet:</h4>
+                        <p><i class="fas fa-wifi"></i> Max 5G-dekning</p>
+                        <p><i class="fas fa-cloud"></i> Telia sky</p>
+                        <h4>Alle abonnement inkluderer:</h4>
+                        <p><i class="fas fa-wifi"></i> 5G hastighet</p>
+                        <p><i class="fas fa-shield-alt"></i> Nettslett</p>
+                        <p><i class="fas fa-plane"></i> Bruk mobilen som hjemme i EU</p>
+                        <p><i class="fas fa-comment-dots"></i> Fri tale, SMS og MMS</p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Telia X Max Pluss - 1000 Mbps</td>
+                <td>679 NOK/mnd</td>
+                <td>Ubegrenset data og 1000 Mbps hastighet</td>
+            </tr>
+            <td><button onclick="toggleDetails('teliaXmaxpluss')">Vis detaljer</button></td>
+    </tr>
+    <tr id="teliaXmaxpluss" style="display: none;">
+        <td colspan="4">
+            <div class="detaljkort">
+                <h3>Telia X Max pluss</h3>
+                <p>For deg som bruker mobilen til "alt"! Her får du maksimal 5G-fart helt uten begrensninger, med hastighet opptil 1000 Mbps</p>
+                <h4>Inkluderte tjenester:</h4>
+                <p><i class="fas fa-wifi"></i> Max 5G-dekning</p>
+                <p><i class="fa-solid fa-mobile-screen-button"></i> Tre skjermbeskyttere i året</p>
+                <p><i class="fas fa-sim-card"></i> Inntil 2 ekstra sim kort </p>
+                <p><i class="fas fa-cloud"></i> Telia sky - Ubegrenset skylagering</p>
+                <p><i class="fas fa-shield"></i> Telia Trygg inkludert</p>
+                <h4>Alle abonnement inkluderer:</h4>
+                        <p><i class="fas fa-wifi"></i> 5G-dekning</p>
+                        <p><i class="fas fa-shield-alt"></i> Nettslett</p>
+                        <p><i class="fas fa-plane"></i> Bruk mobilen som hjemme i EU</p>
+                        <p><i class="fas fa-comment-dots"></i> Fri tale, SMS og MMS</p>
+            </div>
+        </td>
+        <tr>
+            <td>Telia X Max  - 1000 Mbps</td>
+            <td>579 NOK/mnd</td>
+            <td>Ubegrenset data og 1000 Mbps hastighet</td>
+        </tr>
+        <td><button onclick="toggleDetails('teliaxmax')">Vis detaljer</button></td>
+</tr>
+<tr id="teliaxmax" style="display: none;">
+    <td colspan="4">
+        <div class="detaljkort">
+            <h3>Telia X Max</h3>
+            <p>For deg som bruker mobilen mye, og gjerne data på flere enheter. Her får du maksimal 5G-fart helt uten begrensninger, med hastighet opptil 1000 Mbps.</p>
+            <h4>Inkludert i Abonnementet:</h4>
+            <p><i class="fas fa-wifi"></i> Max 5G-dekning</p>
+            <p><i class="fa-solid fa-mobile-screen-button"></i> Tre skjermbeskyttere i året</p>
+            <p><i class="fas fa-cloud"></i> Telia sky - Ubegrenset skylagering</p>
+            <h4>Alle abonnement inkluderer:</h4>
+                        <p><i class="fas fa-wifi"></i> 5G-dekning</p>
+                        <p><i class="fas fa-shield-alt"></i> Nettslett</p>
+                        <p><i class="fas fa-plane"></i> Bruk mobilen som hjemme i EU</p>
+                        <p><i class="fas fa-comment-dots"></i> Fri tale, SMS og MMS</p>
+        </div>
+    </td>
+    <tr>
+        <td>Telia X Basic - 1000 Mbps</td>
+        <td>479 NOK/mnd</td>
+        <td>Ubegrenset data og 220 Mbps hastighet</td>
+    </tr>
+    <td><button onclick="toggleDetails('teliaxbasic')">Vis detaljer</button></td>
+</tr>
+<tr id="teliaxbasic" style="display: none;">
+<td colspan="4">
+    <div class="detaljkort">
+        <h3>Telia X Basic</h3>
+        <p>Her får du høy 5G-fart, og kan virkelig utnytte nettet, med en hastighet på opptil 220 Mbps. Fint for deg som gjerne bruker flere enheter og vil dele data, eller se på en del video i god kvalitet</p>
+        <h4>Inkludert i Abonnementet:</h4>
+                        <p><i class="fas fa-wifi"></i> Høy 5G-dekning</p>
+                        <p><i class="fas fa-cloud"></i> Telia sky - Ubegrenset skylagering</p>
+        <h4>Alle abonnement inkluderer:</h4>
+                        <p><i class="fas fa-wifi"></i> 5G-dekning</p>
+                        <p><i class="fas fa-shield-alt"></i> Nettslett</p>
+                        <p><i class="fas fa-plane"></i> Bruk mobilen som hjemme i EU</p>
+                        <p><i class="fas fa-comment-dots"></i> Fri tale, SMS og MMS</p>
+    </div>
+</td>
+<tr>
+    <td>Telia X Start</td>
+    <td> 499 NOK/mnd (399 NOK/mnd)</td></td>
+    <td>Ubegrenset data og 10 Mbps hastighet</td>
+</tr>
+<td><button onclick="toggleDetails('teliaxstart')">Vis detaljer</button></td>
+</tr>
+<tr id="teliaxstart" style="display: none;">
+<td colspan="4">
+<div class="detaljkort">
+    <h3>Telia x Start</h3>
+    <p>Ubegrenset data med moderat hastighet opptil 10 Mbps, for deg som vil teste ubegrenset data til en lav pris. 10 Mbps er nok til hverdagslig bruk som sosiale medier og nyheter. Du får tilgang til 5G med god kapasitet i nettet.</p>
+    <h4>Inkludert i Abonnementet:</h4>
+                        <p><i class="fas fa-wifi"></i> Moderat 5G-hastighet</p>
+                        <p><i class="fas fa-cloud"></i> Telia sky - Ubegrenset skylagering</p>
+    <h4>Alle abonnement inkluderer:</h4>
+                        <p><i class="fas fa-wifi"></i> 5G-dekning</p>
+                        <p><i class="fas fa-shield-alt"></i> Nettslett</p>
+                        <p><i class="fas fa-plane"></i> Bruk mobilen som hjemme i EU</p>
+                        <p><i class="fas fa-comment-dots"></i> Fri tale, SMS og MMS</p>
+</div>
+</td>
+<tr>
+    <td>Telia x Ung - 220 Mbps</td>
+    <td>399 NOK/mnd</td>
+    <td>Ubegrenset data og 220 Mbps hastighet</td>
+</tr>
+<td><button onclick="toggleDetails('teliaxung')">Vis detaljer</button></td>
+</tr>
+<tr id="teliaxung" style="display: none;">
+<td colspan="4">
+<div class="detaljkort">
+    <h3>Telia x Ung</h3>
+    <p>Detaljert informasjon om produktet her. Du kan tilpasse denne informasjonen som du ønsker.</p>
+    <h4>Inkludert i Abonnementet:</h4>
+                        <p><i class="fas fa-wifi"></i> Høy 5G-hastighet</p>
+                        <p><i class="fas fa-cloud"></i> Telia sky - Ubegrenset skylagering</p>
+    <h4>Alle abonnement inkluderer:</h4>
+                        <p><i class="fas fa-wifi"></i> 5G-dekning</p>
+                        <p><i class="fas fa-shield-alt"></i> Nettslett</p>
+                        <p><i class="fas fa-plane"></i> Bruk mobilen som hjemme i EU</p>
+                        <p><i class="fas fa-comment-dots"></i> Fri tale, SMS og MMS</p>
+</div>
+</td> 
+<tr>
+    <td>Telia 10GB </td>
+    <td>349 NOK/mnd</td>
+    <td>10GB data inkludert</td>
+</tr>
+<td><button onclick="toggleDetails('telia10gb')">Vis detaljer</button></td>
+</tr>
+<tr id="telia10gb" style="display: none;">
+<td colspan="4">
+<div class="detaljkort">
+    <h3>Telia 10GB</h3>
+    <p>For deg som ikke bruker mobilen så mye, men vil ha litt ekstra med data på farten for streaming av musikk og litt filmer og TV-serier. Opptil 220 Mbps hastighet.</p>
+    <h4>Inkludert i Abonnementet:</h4>
+                        <p><i class="fas fa-gift"></i> Data Sharing</p>
+                        <p><i class="fas tower-cell"></i> Data rollover </p>
+    <h4>Alle abonnement inkluderer:</h4>
+                        <p><i class="fas fa-wifi"></i> 5G-dekning</p>
+                        <p><i class="fas fa-shield-alt"></i> Nettslett</p>
+                        <p><i class="fas fa-plane"></i> Bruk mobilen som hjemme i EU</p>
+                        <p><i class="fas fa-comment-dots"></i> Fri tale, SMS og MMS</p>
+</div>
+</td>
+<tr>
+    <td>Telia 5GB</td>
+    <td>299 NOK/mnd</td>
+    <td>5GB data inkludert </td>
+</tr>
+<td><button onclick="toggleDetails('telia5gb')">Vis detaljer</button></td>
+</tr>
+<tr id="telia5gb" style="display: none;">
+<td colspan="4">
+<div class="detaljkort">
+    <h3>Telia 5GB</h3>
+    <p>For deg som bruker mest data på Wifi, men vil ha litt ekstra med data på farten for streaming av musikk og litt filmer og TV-serier. Opptil 220 Mbps hastighet.</p>
+    <h4>Inkludert i Abonnementet:</h4>
+                        <p><i class="fas fa-gift"></i> Data Sharing</p>
+                        <p><i class="fas tower-cell"></i> Data rollover </p>
+    <h4>Alle abonnement inkluderer:</h4>
+                        <p><i class="fas fa-wifi"></i> 5G-dekning</p>
+                        <p><i class="fas fa-shield-alt"></i> Nettslett</p>
+                        <p><i class="fas fa-plane"></i> Bruk mobilen som hjemme i EU</p>
+                        <p><i class="fas fa-comment-dots"></i> Fri tale, SMS og MMS</p>
+</div>
+</td>
+<tr>
+    <td>Telia Junior 3GB</td>
+    <td>179 NOK/mnd</td>
+    <td>Mobilabonnement for barn under 16 år</td>
+</tr>
+<td><button onclick="toggleDetails('teliajunior3gb')">Vis detaljer</button></td>
+</tr>
+<tr id="teliajunior3gb" style="display: none;">
+<td colspan="4">
+<div class="detaljkort">
+    <h3>Telia Junior 3GB</h3>
+    <p>Detaljert informasjon om produktet her. Du kan tilpasse denne informasjonen som du ønsker.</p>
+    <h4>Alle abonnement inkluderer:</h4>
+                        <p><i class="fas fa-wifi"></i> 5G-dekning</p>
+                        <p><i class="fas fa-shield-alt"></i> Nettslett</p>
+                        <p><i class="fas fa-plane"></i> Bruk mobilen som hjemme i EU</p>
+                        <p><i class="fas fa-comment-dots"></i> Fri tale, SMS og MMS</p>
+</div>
+</td>
+<tr>
+    <td>Telia Junior 1GB</td>
+    <td>129 NOK/mnd</td>
+    <td>Mobilabonnement for barn under 16 år</td>
+</tr>
+<td><button onclick="toggleDetails('teliajunior1gb')">Vis detaljer</button></td>
+</tr>
+<tr id="teliajunior1gb" style="display: none;">
+<td colspan="4">
+<div class="detaljkort">
+    <h3>Telia Junior 1GB</h3>
+    <p>Detaljert informasjon om produktet her. Du kan tilpasse denne informasjonen som du ønsker.</p>
+    <h4>Alle abonnement inkluderer:</h4>
+                        <p><i class="fas fa-wifi"></i> 5G-dekning</p>
+                        <p><i class="fas fa-shield-alt"></i> Nettslett</p>
+                        <p><i class="fas fa-plane"></i> Bruk mobilen som hjemme i EU</p>
+                        <p><i class="fas fa-comment-dots"></i> Fri tale, SMS og MMS</p>
+</div>
+</td>
+<!-- Legg til flere abonnementer på samme måte -->
+        </tbody>
+    </table>
+</section>        
         <section id="sim">
             <h2>TvillingSIM og DataSIM Priser</h2>
             <table>
