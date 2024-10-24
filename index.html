@@ -44,9 +44,9 @@
                         <td>1099 NOK/mnd</td>
                         <td>Ubegrenset data og Viaplay Total inkludert</td>
                     </tr>
-                    <td><button onclick="toggleDetails('teliaXViaplay')">Vis detaljer</button></td>
-            </tr>
-            <tr id="teliaXViaplay" style="display: none;">
+                    <td><button onclick="toggleAbonnentDetails('teliaXViaplay')">Vis detaljer</button></td>
+                </tr>
+                <tr id="teliaXViaplay" style="display: none;">
                 <td colspan="4">
                     <div class="detaljkort">
                         <h3>Telia X + Viaplay Total</h3>
@@ -71,9 +71,9 @@
                 <td>679 NOK/mnd</td>
                 <td>Ubegrenset data og 1000 Mbps hastighet</td>
             </tr>
-            <td><button onclick="toggleDetails('teliaXmaxpluss')">Vis detaljer</button></td>
-    </tr>
-    <tr id="teliaXmaxpluss" style="display: none;">
+            <td><button onclick="toggleAbonnentDetails('teliaXmaxpluss')">Vis detaljer</button></td>
+        </tr>
+        <tr id="teliaXmaxpluss" style="display: none;">
         <td colspan="4">
             <div class="detaljkort">
                 <h3>Telia X Max pluss</h3>
@@ -96,7 +96,7 @@
             <td>579 NOK/mnd</td>
             <td>Ubegrenset data og 1000 Mbps hastighet</td>
         </tr>
-        <td><button onclick="toggleDetails('teliaxmax')">Vis detaljer</button></td>
+        <td><button onclick="toggleAbonnentDetails('teliaxmax')">Vis detaljer</button></td>
 </tr>
 <tr id="teliaxmax" style="display: none;">
     <td colspan="4">
@@ -119,7 +119,7 @@
         <td>479 NOK/mnd</td>
         <td>Ubegrenset data og 250 Mbps hastighet</td>
     </tr>
-    <td><button onclick="toggleDetails('teliaxbasic')">Vis detaljer</button></td>
+    <td><button onclick="toggleAbonnentDetails('teliaxbasic')">Vis detaljer</button></td>
 </tr>
 <tr id="teliaxbasic" style="display: none;">
 <td colspan="4">
@@ -141,7 +141,7 @@
     <td> 499 NOK/mnd (399 NOK/mnd)</td></td>
     <td>Ubegrenset data og 10 Mbps hastighet</td>
 </tr>
-<td><button onclick="toggleDetails('teliaxstart')">Vis detaljer</button></td>
+<td><button onclick="toggleAbonnentDetails('teliaxstart')">Vis detaljer</button></td>
 </tr>
 <tr id="teliaxstart" style="display: none;">
 <td colspan="4">
@@ -159,11 +159,11 @@
 </div>
 </td>
 <tr>
-    <td>Telia x Ung - 220 Mbps</td>
+    <td>Telia x Ung - 250 Mbps</td>
     <td>399 NOK/mnd</td>
-    <td>Ubegrenset data og 220 Mbps hastighet</td>
+    <td>Ubegrenset data og 250 Mbps hastighet</td>
 </tr>
-<td><button onclick="toggleDetails('teliaxung')">Vis detaljer</button></td>
+<td><button onclick="toggleAbonnentDetails('teliaxung')">Vis detaljer</button></td>
 </tr>
 <tr id="teliaxung" style="display: none;">
 <td colspan="4">
@@ -185,7 +185,7 @@
     <td>349 NOK/mnd</td>
     <td>10GB data inkludert</td>
 </tr>
-<td><button onclick="toggleDetails('telia10gb')">Vis detaljer</button></td>
+<td><button onclick="toggleAbonnentDetails('telia10gb')">Vis detaljer</button></td>
 </tr>
 <tr id="telia10gb" style="display: none;">
 <td colspan="4">
@@ -194,7 +194,7 @@
     <p>For deg som ikke bruker mobilen så mye, men vil ha litt ekstra med data på farten for streaming av musikk og litt filmer og TV-serier. Opptil 220 Mbps hastighet.</p>
     <h4>Inkludert i Abonnementet:</h4>
                         <p><i class="fas fa-gift"></i> Data Sharing</p>
-                        <p><i class="fas tower-cell"></i> Data rollover </p>
+                        <p><i class="fa-regular fa-circle"></i> Data rollover </p>
     <h4>Alle abonnement inkluderer:</h4>
                         <p><i class="fas fa-wifi"></i> 5G-dekning</p>
                         <p><i class="fas fa-shield-alt"></i> Nettslett</p>
@@ -207,7 +207,7 @@
     <td>299 NOK/mnd</td>
     <td>5GB data inkludert </td>
 </tr>
-<td><button onclick="toggleDetails('telia5gb')">Vis detaljer</button></td>
+<td><button onclick="toggleAbonnentDetails('telia5gb')">Vis detaljer</button></td>
 </tr>
 <tr id="telia5gb" style="display: none;">
 <td colspan="4">
@@ -216,8 +216,8 @@
     <p>For deg som bruker mest data på Wifi, men vil ha litt ekstra med data på farten for streaming av musikk og litt filmer og TV-serier. Opptil 220 Mbps hastighet.</p>
     <h4>Inkludert i Abonnementet:</h4>
                         <p><i class="fas fa-gift"></i> Data Sharing</p>
-                        <p><i class="fas tower-cell"></i> Data rollover </p>
-    <h4>Alle abonnement inkluderer:</h4>
+                        <p><i class="fa-regular fa-circle"></i> Data rollover </p>
+                        <h4>Alle abonnement inkluderer:</h4>
                         <p><i class="fas fa-wifi"></i> 5G-dekning</p>
                         <p><i class="fas fa-shield-alt"></i> Nettslett</p>
                         <p><i class="fas fa-plane"></i> Bruk mobilen som hjemme i EU</p>
@@ -229,18 +229,22 @@
     <td>179 NOK/mnd</td>
     <td>Mobilabonnement for barn under 16 år</td>
 </tr>
-<td><button onclick="toggleDetails('teliajunior3gb')">Vis detaljer</button></td>
+<td><button onclick="toggleAbonnentDetails('teliajunior3gb')">Vis detaljer</button></td>
 </tr>
 <tr id="teliajunior3gb" style="display: none;">
 <td colspan="4">
 <div class="detaljkort">
     <h3>Telia Junior 5GB</h3>
-    <p>Detaljert informasjon om produktet her. Du kan tilpasse denne informasjonen som du ønsker.</p>
-    <h4>Alle abonnement inkluderer:</h4>
+    <p>Mobilabonnement for barn under 16 år</p>
+    <h4>Inkludert i Abonnementet::</h4>
                         <p><i class="fas fa-wifi"></i> 5G-dekning</p>
-                        <p><i class="fas fa-shield-alt"></i> Nettslett</p>
                         <p><i class="fas fa-plane"></i> Bruk mobilen som hjemme i EU</p>
                         <p><i class="fas fa-comment-dots"></i> Fri tale, SMS og MMS</p>
+                        <p><i class="fa-solid fa-lock"></i> Kostnadskontroll</p>
+                        <p><i class="fa-regular fa-circle"></i> Rollover</p>
+
+                        
+
 </div>
 </td>
 <tr>
@@ -248,18 +252,19 @@
     <td>129 NOK/mnd</td>
     <td>Mobilabonnement for barn under 16 år</td>
 </tr>
-<td><button onclick="toggleDetails('teliajunior1gb')">Vis detaljer</button></td>
+<td><button onclick="toggleAbonnentDetails('teliajunior1gb')">Vis detaljer</button></td>
 </tr>
 <tr id="teliajunior1gb" style="display: none;">
 <td colspan="4">
 <div class="detaljkort">
     <h3>Telia Junior 1GB</h3>
-    <p>Detaljert informasjon om produktet her. Du kan tilpasse denne informasjonen som du ønsker.</p>
+    <p>Mobilabonnement for barn under 16 år.</p>
     <h4>Alle abonnement inkluderer:</h4>
-                        <p><i class="fas fa-wifi"></i> 5G-dekning</p>
-                        <p><i class="fas fa-shield-alt"></i> Nettslett</p>
-                        <p><i class="fas fa-plane"></i> Bruk mobilen som hjemme i EU</p>
-                        <p><i class="fas fa-comment-dots"></i> Fri tale, SMS og MMS</p>
+    <p><i class="fas fa-wifi"></i> 5G-dekning</p>
+    <p><i class="fas fa-plane"></i> Bruk mobilen som hjemme i EU</p>
+    <p><i class="fas fa-comment-dots"></i> Fri tale, SMS og MMS</p>
+    <p><i class="fa-solid fa-lock"></i> Kostnadskontroll</p>
+    <p><i class="fa-regular fa-circle"></i> Rollover</p>
 </div>
 </td>
 <!-- Legg til flere abonnementer på samme måte -->
@@ -334,42 +339,37 @@
         </section>
         <section id="Mer-salg">
             <h2>Tilleggstjenester</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Hva</th>
-                        <th>Pris</th>
-                        <th>Beskrivelse</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Telia Trygg  </td>
-                        <td>109 NOK/mnd</td>
-                        <td>Id - tyveri forsikring</td>
-                    </tr>
-                    <tr>
-                        <td>Telia Sky - Telia Mobil</td>
-                        <td>69 NOK/mnd</td>
-                        <td>Skylageringstjenste </td>
-                    </tr>
-                    <tr>
-                        <td>MAX</td>
-                        <td>89 NOK/mnd</td>
-                        <td></td>
-                    </tr>
-                    <tr></tr>
-                        <td>Viaplay</td>
-                        <td>149NOK/mnd</td>
-                        <td></td>
-                    </tr>
-                    <tr></tr>
-                        <td>Storytel</td>
-                        <td>199 NOK/mnd</td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="addons">
+                <!-- Telia Trygg -->
+                <div class="addon">
+                    <img src="/Bilder/trygg.webp" alt="Telia Trygg" class="addon-icon" data-price="69" onclick="toggleAddon(this)">
+                    <h4>Telia Trygg</h4>
+                    <button class="details-btn" onclick="toggleServiceDetails('telia-trygg')">Vis detaljer</button>
+                    <div id="telia-trygg" class="detaljkort" style="display:none;">
+                        <h3>Telia Trygg</h3>
+                        <p>Telia Trygg gir deg og familien din beskyttelse mot trusler på nettet. Du får sikkerhetspakke som inkluderer trygg netthandel, trygg ID, trygg Wifi og trygg enhet </p>
+                        <h4>Inkludert i Telia Trygg:</h4>
+                        <p><i class="fa-solid fa-cart-shopping"></i></i> Trygg netthandel</p>
+                        <p><i class="fas fa-user-lock"></i> Trygg ID</p>
+                        <p><i class="fa-solid fa-wifi"></i></i> Trygg Wifi</p>
+                        <p><i class="fa-solid fa-shield"></i> Trygg Enhet</p>
+                    </div>
+                </div>
+            
+                <!-- Telia Sky -->
+                <div class="addon">
+                    <img src="/Bilder/218706.png" alt="Telia Sky" class="addon-icon" data-price="69" onclick="toggleAddon(this)">
+                    <h4>Telia Sky</h4>
+                    <button class="details-btn" onclick="toggleServiceDetails('telia-sky')">Vis detaljer</button>
+                    <div id="telia-sky" class="detaljkort" style="display:none;">
+                        <h3>Telia Sky</h3>
+                        <p>Telia Sky gir deg sikker og enkel lagring av bilder og filer i skyen. Du kan få tilgang til filene dine fra alle enheter.</p>
+                        <h4>Inkludert i Telia Sky:</h4>
+                        <p><i class="fas fa-cloud"></i> Ubegrenset skylagring</p>
+                        <p><i class="fas fa-lock"></i> Trygg lagring</p>
+                        <p><i class="fas fa-lock"></i> Tilgjengelig for dine</p>
+                    </div>
+                </div>
         </section>
         <section id="bredband">
             <h2>Mobilt Bredbånd</h2>

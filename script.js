@@ -1,3 +1,4 @@
+// Søkemotoren for produkter
 document.getElementById("sokeboks").addEventListener("input", function () {
   let filter = this.value.toLowerCase();
   let rows = document.querySelectorAll("tbody tr");
@@ -19,16 +20,7 @@ document.getElementById("sokeboks").addEventListener("input", function () {
   });
 });
 
-// JavaScript for å toggle dropdowns
-function toggleDropdown(element) {
-  const content = element.nextElementSibling;
-  if (content.style.display === "block") {
-    content.style.display = "none";
-  } else {
-    content.style.display = "block";
-  }
-}
-
+// Dropdown-toggle
 function toggleDropdown(element) {
   const content = element.nextElementSibling;
   if (content.classList.contains("show")) {
@@ -40,10 +32,21 @@ function toggleDropdown(element) {
   }
 }
 
-function toggleDetails(id) {
+// Abonnent-detaljer toggle
+function toggleAbonnentDetails(id) {
   var details = document.getElementById(id);
   if (details.style.display === "none" || details.style.display === "") {
-    details.style.display = "table-row";
+    details.style.display = "table-row"; // For tabellrader
+  } else {
+    details.style.display = "none";
+  }
+}
+
+// Tjeneste-detaljer toggle
+function toggleServiceDetails(detailsId) {
+  var details = document.getElementById(detailsId);
+  if (details.style.display === "none") {
+    details.style.display = "block";
   } else {
     details.style.display = "none";
   }
