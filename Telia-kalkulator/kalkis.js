@@ -36,13 +36,13 @@ function addFamilyPlan() {
       <select class="family-plan-select">
           <option value="129">Telia Junior 1GB - 129kr</option>
           <option value="179">Telia Junior 3GB - 179kr</option>
-          <option value="299">Telia 5GB - 329 kr</option>
-          <option value="349">Telia 10GB - 379 kr</option>
-          <option value="399">Telia X Start - 479 kr</option>
+          <option value="329">Telia 5GB - 329 kr</option>
+          <option value="379">Telia 10GB - 379 kr</option>
+          <option value="479">Telia X Start - 479 kr</option>
           <option value="399">Telia X Ung - 399 kr</option>
-          <option value="479">Telia X Basic - 499 kr</option>
-          <option value="579">Telia X Max - 599 kr</option>
-          <option value="679">Telia X Max Pluss - 699 kr</option>
+          <option value="499">Telia X Basic - 499 kr</option>
+          <option value="599">Telia X Max - 599 kr</option>
+          <option value="699">Telia X Max Pluss - 699 kr</option>
           <option value="1099">Telia X + Viaplay Total - 1099 kr</option>
       </select>
     <!-- Ny seksjon for TvillingSIM og DataSIM -->
@@ -160,7 +160,7 @@ function calculatePrice() {
 
   // Spesialtilfelle for hovednummeret - Telia X Start har fast pris på 399 uten rabatt
   if (planName.includes("Telia X Start") && !isFamily) {
-    finalPrice = 399;
+    finalPrice = 379;
   } else {
     // Beregn rabatt for hovednummeret
     if (selectedDiscount > 0) {
@@ -187,7 +187,7 @@ function calculatePrice() {
       // Spesialtilfelle for Telia X Start som familie
       var discountedFamilyPrice;
       if (familyPlanText.includes("Telia X Start")) {
-        discountedFamilyPrice = 299; // Fast pris for Telia X Start som familie
+        discountedFamilyPrice = 379; // Fast pris for Telia X Start som familie
       } else {
         // Beregn familierabatt for andre abonnementer
         var familyDiscountAmount = getFamilyDiscount(
