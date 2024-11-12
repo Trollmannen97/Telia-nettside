@@ -38,7 +38,7 @@ function addFamilyPlan() {
           <option value="179">Telia Junior 3GB - 179kr</option>
           <option value="329">Telia 5GB - 329 kr</option>
           <option value="379">Telia 10GB - 379 kr</option>
-          <option value="479">Telia X Start - 479 kr</option>
+          <option value="429">Telia X Start - 429 kr</option>
           <option value="399">Telia X Ung - 399 kr</option>
           <option value="499">Telia X Basic - 499 kr</option>
           <option value="599">Telia X Max - 599 kr</option>
