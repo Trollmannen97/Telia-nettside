@@ -136,7 +136,7 @@ button:hover {
 }
 
 .addon-icon {
-    width: 40px;
+    width: 45px;
     height: 40px;
     cursor: pointer;
     transition: transform 0.3s, opacity 0.3s;
@@ -204,4 +204,3 @@ button:hover {
     text-align: center;
     margin-top: 20px;
 }
-
