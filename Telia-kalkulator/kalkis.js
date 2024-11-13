@@ -67,7 +67,7 @@ function addFamilyPlan() {
     </div>
       
       <div class="addons">
-          <img src="/Telia-nettside/Bilder/mx3.webp" alt="Max" class="addon-icon" data-price="89" onclick="toggleAddon(this)">
+          <img src="/Telia-nettside/Bilder/maxlogo.webp" alt="Max" class="addon-icon" data-price="89" onclick="toggleAddon(this)">
           <img src="/Telia-nettside//Bilder/Storytel's_logo.png" alt="Storytel" class="addon-icon" data-price="199" onclick="toggleAddon(this)">
           <img src="/Telia-nettside//Bilder/via.png" alt="Viaplay" class="addon-icon" data-price="149" onclick="toggleAddon(this)">
           <img src="/Telia-nettside//Bilder/218706.png" alt="Telia Sky" class="addon-icon" data-price="69" onclick="toggleAddon(this)">
