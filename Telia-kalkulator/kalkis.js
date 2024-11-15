@@ -241,6 +241,9 @@ function calculatePrice() {
 
   // Oppdater endelig pris
   totalDisplay.innerText = "Endelig pris: " + finalPrice.toFixed(2) + " kr";
+
+  // Kall funksjonen for å oppdatere den nye resultatvisningen
+  updateResultDisplay();
 }
 
 // Hent kostnader for TvillingSIM og DataSIM
@@ -335,6 +338,66 @@ function updateSimPrice(selectElement) {
 
   // Oppdater totalprisen i kalkulatoren
   calculatePrice();
+}
+
+// Funksjon for å vise detaljert resultat
+function updateResultDisplay() {
+  // Hent HTML-elementene for å vise valgt informasjon
+  var selectedPlanElement = document.getElementById("selectedPlan");
+  var discountDetailsElement = document.getElementById("discountDetails");
+  var simDetailsElement = document.getElementById("simDetails");
+  var addonDetailsElement = document.getElementById("addonDetails");
+
+  // Tøm innholdet i elementene for å starte på nytt
+  selectedPlanElement.innerHTML = "";
+  discountDetailsElement.innerHTML = "";
+  simDetailsElement.innerHTML = "";
+  addonDetailsElement.innerHTML = "";
+
+  // Vis valgt abonnement
+  var plan = document.getElementById("plan");
+  var planName = plan.options[plan.selectedIndex].text;
+  var selectedPlanPrice = parseFloat(plan.value);
+  selectedPlanElement.innerHTML = `<p>${planName} - ${selectedPlanPrice.toFixed(
+    2
+  )} kr</p>`;
+
+  // Vis rabattinformasjon
+  var discount = document.getElementById("discount");
+  var discountPercentage = parseFloat(discount.value);
+  discountDetailsElement.innerHTML = `<p>Rabatt: ${discountPercentage}%</p>`;
+
+  // Vis SIM-valg
+  var simDetails = "";
+  var familyPlans = document.getElementsByClassName("family-plan");
+  for (var i = 0; i < familyPlans.length; i++) {
+    var familyPlanDiv = familyPlans[i];
+    var twinSimCount = parseInt(
+      familyPlanDiv.querySelector(".twinsim-select").value
+    );
+    var dataSimCount = parseInt(
+      familyPlanDiv.querySelector(".datasim-select").value
+    );
+
+    if (twinSimCount > 0) {
+      simDetails += `<p>TvillingSIM: ${twinSimCount} x 49 kr</p>`;
+    }
+    if (dataSimCount > 0) {
+      simDetails += `<p>DataSIM: ${dataSimCount} x 49 kr</p>`;
+    }
+  }
+  simDetailsElement.innerHTML = simDetails || "<p>Ingen SIM valgt</p>";
+
+  // Vis tilleggstjenester
+  var selectedAddons = document.querySelectorAll(".addon-icon.selected");
+  var addonDetails = "";
+  selectedAddons.forEach(function (addon) {
+    var addonName = addon.alt;
+    var addonPrice = parseFloat(addon.getAttribute("data-price"));
+    addonDetails += `<p>${addonName} - ${addonPrice.toFixed(2)} kr</p>`;
+  });
+  addonDetailsElement.innerHTML =
+    addonDetails || "<p>Ingen tilleggstjenester valgt</p>";
 }
 
 // Funksjon for å beregne totalprisen i kalkulatoren
