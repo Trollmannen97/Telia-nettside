@@ -158,7 +158,7 @@ function calculatePrice() {
   var planName = plan.options[plan.selectedIndex].text;
   var finalPrice = selectedPlan;
 
-  // Spesialtilfelle for hovednummeret - Telia X Start har fast pris på 399 uten rabatt
+  // Spesialtilfelle for hovednummeret - Telia X Start har fast pris på 429 uten rabatt
   if (planName.includes("Telia X Start") && !isFamily) {
     finalPrice = 379;
   } else {
@@ -289,6 +289,20 @@ detailedResult += `<p>Nummer ${i + 2}: ${
 } - ${discountedFamilyPrice.toFixed(2)} kr${simPriceDetails}</p>`;
 
 {
+  finalPrice = familyTotal;
+}
+
+if (resultDisplay) {
+  resultDisplay.innerHTML = detailedResult;
+} else {
+  console.error("Element med ID 'priceDetails' ble ikke funnet.");
+}
+
+if (totalDisplay) {
+  totalDisplay.innerText = "Endelig pris: " + finalPrice.toFixed(2) + " kr";
+}
+
+{
   // Oppdater resultatvisningen med detaljerte priser
   resultDisplay.innerHTML = detailedResult;
 
@@ -371,6 +385,7 @@ function updateResultDisplay() {
   var simDetails = "";
   var familyPlans = document.getElementsByClassName("family-plan");
   for (var i = 0; i < familyPlans.length; i++) {
+    var familyPlanDiv = familyPlans[i].closest(".family-plan");
     var familyPlanDiv = familyPlans[i];
     var twinSimCount = parseInt(
       familyPlanDiv.querySelector(".twinsim-select").value
