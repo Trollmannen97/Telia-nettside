@@ -339,9 +339,19 @@ function updateSimPrice(selectElement) {
   // Sjekk om abonnementet er Telia X Max Pluss, som gir 2 gratis SIM-kort
   if (planType.includes("Max Pluss")) {
     var totalSimCount = twinSimCount + dataSimCount;
-    var chargeableSimCount = Math.max(0, totalSimCount - 2); // Gratis for de første to
-    twinSimPrice = chargeableSimCount * 89; // Pris per ekstra TvillingSIM for Telia X Max Pluss
-    dataSimPrice = 0; // Ingen tillegg for DataSIM med Telia X Max Pluss
+    var chargeableSimCount = Math.max(0, totalSimCount - 2); // Gratis for de første to SIM-kortene
+
+    // Fordel de gratis SIM-kortene på TvillingSIM og DataSIM
+    if (twinSimCount > 2) {
+      twinSimPrice = (twinSimCount - 2) * 89; // Kun belaste for TvillingSIM utover de to gratis
+      dataSimPrice = dataSimCount * 89; // Belaste for alle DataSIM
+    } else if (twinSimCount + dataSimCount > 2) {
+      twinSimPrice = 0; // Alle TvillingSIM er gratis
+      dataSimPrice = Math.max(0, twinSimCount + dataSimCount - 2) * 89; // Belaste for DataSIM utover de to gratis
+    } else {
+      twinSimPrice = 0; // Ingen belastes
+      dataSimPrice = 0; // Ingen belastes
+    }
   } else if (planType.includes("Telia X")) {
     twinSimPrice = twinSimCount * 89; // 89 NOK per TvillingSIM
     dataSimPrice = dataSimCount * 89; // 89 NOK per DataSIM
