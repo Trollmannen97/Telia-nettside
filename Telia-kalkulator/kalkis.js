@@ -268,8 +268,15 @@ if (familyPlanText.includes("Telia X")) {
 if (familyPlanText.includes("Max Pluss")) {
   var totalSimCount = twinSimCount + dataSimCount;
   var chargeableSimCount = Math.max(0, totalSimCount - 2); // Gratis for de første to SIM-kortene
-  twinSimPrice = chargeableSimCount * 89;
-  dataSimPrice = chargeableSimCount > 0 ? chargeableSimCount * 89 : 0; // Gratis om ingen ekstra SIM
+
+  // Oppdater prisene for TvillingSIM og DataSIM
+  if (chargeableSimCount > 0) {
+    twinSimPrice = twinSimCount > 2 ? (twinSimCount - 2) * 89 : 0;
+    dataSimPrice = dataSimCount > 2 ? (dataSimCount - 2) * 89 : 0;
+  } else {
+    twinSimPrice = 0;
+    dataSimPrice = 0;
+  }
 }
 
 // Legg til SIM-prisene til familiemedlemmet
