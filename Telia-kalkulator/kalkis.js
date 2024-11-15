@@ -254,9 +254,8 @@ var twinSimCount = parseInt(
 var dataSimCount = parseInt(
   familyPlanDiv.querySelector(".datasim-select").value
 );
-
-var twinSimPrice = twinSimCount * 49; // TvillingSIM koster 49 kr per SIM for vanlige abonnement
-var dataSimPrice = dataSimCount * 49; // DataSIM koster 49 kr per SIM for vanlige abonnement
+var twinSimPrice = 0;
+var dataSimPrice = 0;
 
 // Hvis Telia X, endre prisen for både TvillingSIM og DataSIM
 if (familyPlanText.includes("Telia X")) {
@@ -271,11 +270,16 @@ if (familyPlanText.includes("Max Pluss")) {
 
   // Oppdater prisene for TvillingSIM og DataSIM
   if (chargeableSimCount > 0) {
-    twinSimPrice = twinSimCount > 2 ? (twinSimCount - 2) * 89 : 0;
-    dataSimPrice = dataSimCount > 2 ? (dataSimCount - 2) * 89 : 0;
+    if (twinSimCount > 2) {
+      twinSimPrice = (twinSimCount - 2) * 89; // Kun belaste for TvillingSIM utover de to gratis
+      dataSimPrice = dataSimCount * 89; // Belaste for alle DataSIM
+    } else {
+      twinSimPrice = 0; // Alle TvillingSIM er gratis
+      dataSimPrice = Math.max(0, totalSimCount - 2) * 89; // Belaste for DataSIM utover de to gratis
+    }
   } else {
-    twinSimPrice = 0;
-    dataSimPrice = 0;
+    twinSimPrice = 0; // Ingen belastes
+    dataSimPrice = 0; // Ingen belastes
   }
 }
 
@@ -294,20 +298,6 @@ familyTotal += discountedFamilyPrice + twinSimPrice + dataSimPrice;
 detailedResult += `<p>Nummer ${i + 2}: ${
   familyPlans[i].options[familyPlans[i].selectedIndex].text.split("-")[0]
 } - ${discountedFamilyPrice.toFixed(2)} kr${simPriceDetails}</p>`;
-
-{
-  finalPrice = familyTotal;
-}
-
-if (resultDisplay) {
-  resultDisplay.innerHTML = detailedResult;
-} else {
-  console.error("Element med ID 'priceDetails' ble ikke funnet.");
-}
-
-if (totalDisplay) {
-  totalDisplay.innerText = "Endelig pris: " + finalPrice.toFixed(2) + " kr";
-}
 
 {
   // Oppdater resultatvisningen med detaljerte priser
