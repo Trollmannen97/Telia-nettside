@@ -255,14 +255,6 @@ function calculatePrice() {
       detailedResult += `<p>Nummer ${i + 2}: ${
         familyPlans[i].options[familyPlans[i].selectedIndex].text.split("-")[0]
       } - ${discountedFamilyPrice.toFixed(2)} kr</p>`;
-
-      // Legg til detaljer om SIM-priser i resultatlisten
-      detailedResult += `<p>TvillingSIM: ${twinSimCount} x ${
-        twinSimPrice / twinSimCount
-      } kr</p>`;
-      detailedResult += `<p>DataSIM: ${dataSimCount} x ${
-        dataSimPrice / dataSimCount
-      } kr</p>`;
     }
 
     finalPrice = familyTotal; // Oppdater totalpris med familieabonnementer
@@ -377,13 +369,14 @@ function updateResultDisplay() {
     );
 
     if (twinSimCount > 0) {
-      simDetails += `<p>TvillingSIM: ${twinSimCount} x 49 kr</p>`;
+      var twinSimPrice = planName.includes("Telia X") ? 89 : 49;
+      simDetails += `<p>TvillingSIM: ${twinSimCount} x ${twinSimPrice} kr</p>`;
     }
     if (dataSimCount > 0) {
-      simDetails += `<p>DataSIM: ${dataSimCount} x 49 kr</p>`;
+      var dataSimPrice = planName.includes("Telia X") ? 89 : 49;
+      simDetails += `<p>DataSIM: ${dataSimCount} x ${dataSimPrice} kr</p>`;
     }
   }
-  simDetailsElement.innerHTML = simDetails || "<p>Ingen SIM valgt</p>";
 
   // Vis tilleggstjenester
   var selectedAddons = document.querySelectorAll(".addon-icon.selected");
