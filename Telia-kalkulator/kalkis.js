@@ -255,43 +255,6 @@ function calculatePrice() {
   updateResultDisplay();
 }
 
-// Hent kostnader for TvillingSIM og DataSIM
-var familyPlanDiv = familyPlans[i].closest(".family-plan");
-var twinSimCount = parseInt(
-  familyPlanDiv.querySelector(".twinsim-select").value
-);
-var dataSimCount = parseInt(
-  familyPlanDiv.querySelector(".datasim-select").value
-);
-var twinSimPrice = 0;
-var dataSimPrice = 0;
-
-// Hvis Telia X, endre prisen for både TvillingSIM og DataSIM
-if (familyPlanText.includes("Telia X")) {
-  twinSimPrice = twinSimCount * 89; // TvillingSIM koster 89 kr for Telia X
-  dataSimPrice = dataSimCount * 89; // DataSIM koster også 89 kr for Telia X
-}
-
-// Hvis Telia X Max Pluss, gir 2 gratis SIM-kort
-if (familyPlanText.includes("Max Pluss")) {
-  var totalSimCount = twinSimCount + dataSimCount;
-  var chargeableSimCount = Math.max(0, totalSimCount - 2); // Gratis for de første to SIM-kortene
-
-  // Oppdater prisene for TvillingSIM og DataSIM
-  if (chargeableSimCount > 0) {
-    if (twinSimCount > 2) {
-      twinSimPrice = (twinSimCount - 2) * 89; // Kun belaste for TvillingSIM utover de to gratis
-      dataSimPrice = dataSimCount * 89; // Belaste for alle DataSIM
-    } else {
-      twinSimPrice = 0; // Alle TvillingSIM er gratis
-      dataSimPrice = Math.max(0, totalSimCount - 2) * 89; // Belaste for DataSIM utover de to gratis
-    }
-  } else {
-    twinSimPrice = 0; // Ingen belastes
-    dataSimPrice = 0; // Ingen belastes
-  }
-}
-
 // Legg til SIM-prisene til familiemedlemmet
 var simPriceDetails = "";
 if (twinSimCount > 0) {
