@@ -357,6 +357,56 @@ function updateSimPrice(selectElement) {
   calculatePrice();
 }
 
+// Funksjon for å oppdatere tilleggstjenester basert på valgt abonnement
+function updateAdditionalServices() {
+  var planSelect = document.getElementById("plan");
+  var selectedPlan = planSelect.options[planSelect.selectedIndex].text;
+
+  var teliaSkyIcon = document.querySelector(".addon-icon[alt='Telia Sky']");
+
+  if (selectedPlan.includes("Telia X")) {
+    // Telia Sky er inkludert i Telia X-abonnementer
+    teliaSkyIcon.classList.add("selected");
+    teliaSkyIcon.setAttribute("data-price", "0"); // Sett prisen til 0
+    teliaSkyIcon.onclick = null; // Fjern klikk-funksjonen for å gjøre den ikke-deaktiverbar
+  } else {
+    // Telia Sky er en betalt tilleggstjeneste for andre abonnementer
+    teliaSkyIcon.classList.remove("selected");
+    teliaSkyIcon.setAttribute("data-price", "69"); // Gjenopprett prisen til 69 kr
+    teliaSkyIcon.onclick = function () {
+      toggleAddon(teliaSkyIcon);
+    }; // Tillat valg
+  }
+
+  // Oppdater totalprisen for å reflektere endringene
+  calculatePrice();
+}
+
+// Funksjon for å håndtere tilleggstjenester
+function toggleAddon(element) {
+  // Hent prisen fra data-attributten
+  var addonPrice = parseFloat(element.getAttribute("data-price"));
+
+  // Hvis ikonet allerede er valgt (class="selected"), fjern prisen
+  if (element.classList.contains("selected")) {
+    element.classList.remove("selected");
+    updateTotalPrice(-addonPrice); // Fjern prisen fra totalsummen
+  } else {
+    element.classList.add("selected");
+    updateTotalPrice(addonPrice); // Legg til prisen i totalsummen
+  }
+}
+
+// Kall funksjonen når abonnementet endres
+document
+  .getElementById("plan")
+  .addEventListener("change", updateAdditionalServices);
+
+// Initialiser tilleggstjenester ved sideinnlasting
+window.onload = function () {
+  updateAdditionalServices();
+};
+
 // Funksjon for å vise detaljert resultat
 function updateResultDisplay() {
   // Hent HTML-elementene for å vise valgt informasjon
