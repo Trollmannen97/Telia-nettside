@@ -136,6 +136,29 @@ function getFamilyDiscount(planValue, planText, isMainNumber) {
   return 0; // Ingen rabatt for hovednummer eller hvis rabatt ikke gjelder
 }
 
+// Funksjon for å beregne prisen på TvillingSIM og DataSIM
+function calculateSimPrice(planType, twinSimCount, dataSimCount) {
+  var twinSimPrice = 0;
+  var dataSimPrice = 0;
+
+  // Sjekk om abonnementet er Telia X Max Pluss, som gir 2 gratis SIM-kort
+  if (planType.includes("Max Pluss")) {
+    var totalSimCount = twinSimCount + dataSimCount;
+    var chargeableSimCount = Math.max(0, totalSimCount - 2); // Gratis for de første to
+    twinSimPrice = chargeableSimCount * 89; // Pris per ekstra TvillingSIM for Telia X Max Pluss
+    dataSimPrice = chargeableSimCount > 0 ? chargeableSimCount * 89 : 0; // Ingen tillegg for DataSIM hvis ingen ekstra SIM utover de første to
+  } else if (planType.includes("Telia X")) {
+    twinSimPrice = twinSimCount * 89; // 89 NOK per TvillingSIM
+    dataSimPrice = dataSimCount * 89; // 89 NOK per DataSIM
+  } else {
+    // Pris for Telia Mobil og andre abonnementer
+    twinSimPrice = twinSimCount * 49; // 49 NOK per TvillingSIM
+    dataSimPrice = dataSimCount * 49; // 49 NOK per DataSIM
+  }
+
+  return { twinSimPrice, dataSimPrice };
+}
+
 // Funksjon for å beregne prisen
 function calculatePrice() {
   var plan = document.getElementById("plan");
@@ -216,23 +239,15 @@ function calculatePrice() {
       var dataSimCount = parseInt(
         familyPlanDiv.querySelector(".datasim-select").value
       );
-      var twinSimPrice = 0;
-      var dataSimPrice = 0;
 
-      // Hvis Telia X Max Pluss, gir 2 gratis SIM-kort
-      if (familyPlanText.includes("Max Pluss")) {
-        var totalSimCount = twinSimCount + dataSimCount;
-        var chargeableSimCount = Math.max(0, totalSimCount - 2); // Gratis for de første to SIM-kortene
-        twinSimPrice = chargeableSimCount * 89; // Pris per ekstra TvillingSIM for Telia X Max Pluss
-        dataSimPrice = chargeableSimCount > 0 ? chargeableSimCount * 89 : 0; // Gratis om ingen ekstra SIM
-      } else if (familyPlanText.includes("Telia X")) {
-        twinSimPrice = twinSimCount * 89; // 89 NOK per TvillingSIM
-        dataSimPrice = dataSimCount * 89; // 89 NOK per DataSIM
-      } else {
-        // Pris for Telia Mobil og andre abonnementer
-        twinSimPrice = twinSimCount * 49; // 49 NOK per TvillingSIM
-        dataSimPrice = dataSimCount * 49; // 49 NOK per DataSIM
-      }
+      // Beregn SIM-priser ved å bruke calculateSimPrice()
+      var simPrices = calculateSimPrice(
+        familyPlanText,
+        twinSimCount,
+        dataSimCount
+      );
+      var twinSimPrice = simPrices.twinSimPrice;
+      var dataSimPrice = simPrices.dataSimPrice;
 
       familyTotal += discountedFamilyPrice + twinSimPrice + dataSimPrice;
 
@@ -255,30 +270,6 @@ function calculatePrice() {
   updateResultDisplay();
 }
 
-// Legg til SIM-prisene til familiemedlemmet
-var simPriceDetails = "";
-if (twinSimCount > 0) {
-  simPriceDetails += ` + TvillingSIM - ${twinSimPrice} kr`;
-}
-if (dataSimCount > 0) {
-  simPriceDetails += ` + DataSIM - ${dataSimPrice} kr`;
-}
-
-familyTotal += discountedFamilyPrice + twinSimPrice + dataSimPrice;
-
-// Legg til familiemedlemmets plan i resultatlisten
-detailedResult += `<p>Nummer ${i + 2}: ${
-  familyPlans[i].options[familyPlans[i].selectedIndex].text.split("-")[0]
-} - ${discountedFamilyPrice.toFixed(2)} kr${simPriceDetails}</p>`;
-
-{
-  // Oppdater resultatvisningen med detaljerte priser
-  resultDisplay.innerHTML = detailedResult;
-
-  // Oppdater endelig pris
-  totalDisplay.innerText = "Endelig pris: " + finalPrice.toFixed(2) + " kr";
-}
-
 // Funksjon for å oppdatere prisen basert på valg av TvillingSIM og DataSIM
 function updateSimPrice(selectElement) {
   var familyPlanDiv = selectElement.closest(".family-plan");
@@ -292,23 +283,10 @@ function updateSimPrice(selectElement) {
   var twinSimCount = parseInt(twinSimSelect.value);
   var dataSimCount = parseInt(dataSimSelect.value);
 
-  var twinSimPrice = 0;
-  var dataSimPrice = 0;
-
-  // Sjekk om abonnementet er Telia X Max Pluss, som gir 2 gratis SIM-kort
-  if (planType.includes("Max Pluss")) {
-    var totalSimCount = twinSimCount + dataSimCount;
-    var chargeableSimCount = Math.max(0, totalSimCount - 2); // Gratis for de første to
-    twinSimPrice = chargeableSimCount * 89; // Pris per ekstra TvillingSIM for Telia X Max Pluss
-    dataSimPrice = chargeableSimCount > 0 ? chargeableSimCount * 89 : 0; // Ingen tillegg for DataSIM hvis ingen ekstra SIM utover de første to
-  } else if (planType.includes("Telia X")) {
-    twinSimPrice = twinSimCount * 89; // 89 NOK per TvillingSIM
-    dataSimPrice = dataSimCount * 89; // 89 NOK per DataSIM
-  } else {
-    // Pris for Telia Mobil og andre abonnementer
-    twinSimPrice = twinSimCount * 49; // 49 NOK per TvillingSIM
-    dataSimPrice = dataSimCount * 49; // 49 NOK per DataSIM
-  }
+  // Beregn SIM-priser ved å bruke calculateSimPrice()
+  var simPrices = calculateSimPrice(planType, twinSimCount, dataSimCount);
+  var twinSimPrice = simPrices.twinSimPrice;
+  var dataSimPrice = simPrices.dataSimPrice;
 
   var totalSimPrice = twinSimPrice + dataSimPrice;
 
@@ -319,6 +297,7 @@ function updateSimPrice(selectElement) {
   // Oppdater totalprisen i kalkulatoren
   calculatePrice();
 }
+
 // Funksjon for å oppdatere tilleggstjenester basert på valgt abonnement
 function updateAdditionalServices() {
   var planSelect = document.getElementById("plan");
@@ -343,31 +322,6 @@ function updateAdditionalServices() {
   // Oppdater totalprisen for å reflektere endringene
   calculatePrice();
 }
-
-// Initialiser tilleggstjenester ved sideinnlasting
-window.onload = function () {
-  updateAdditionalServices();
-};
-
-// Funksjon for å håndtere tilleggstjenester
-function toggleAddon(element) {
-  // Hent prisen fra data-attributten
-  var addonPrice = parseFloat(element.getAttribute("data-price"));
-
-  // Hvis ikonet allerede er valgt (class="selected"), fjern prisen
-  if (element.classList.contains("selected")) {
-    element.classList.remove("selected");
-    updateTotalPrice(-addonPrice); // Fjern prisen fra totalsummen
-  } else {
-    element.classList.add("selected");
-    updateTotalPrice(addonPrice); // Legg til prisen i totalsummen
-  }
-}
-
-// Kall funksjonen når abonnementet endres
-document
-  .getElementById("plan")
-  .addEventListener("change", updateAdditionalServices);
 
 // Initialiser tilleggstjenester ved sideinnlasting
 window.onload = function () {
