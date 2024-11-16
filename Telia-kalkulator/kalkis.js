@@ -255,6 +255,14 @@ function calculatePrice() {
       detailedResult += `<p>Nummer ${i + 2}: ${
         familyPlans[i].options[familyPlans[i].selectedIndex].text.split("-")[0]
       } - ${discountedFamilyPrice.toFixed(2)} kr</p>`;
+
+      // Legg til detaljer om SIM-priser i resultatlisten
+      detailedResult += `<p>TvillingSIM: ${twinSimCount} x ${
+        twinSimPrice / twinSimCount
+      } kr</p>`;
+      detailedResult += `<p>DataSIM: ${dataSimCount} x ${
+        dataSimPrice / dataSimCount
+      } kr</p>`;
     }
 
     finalPrice = familyTotal; // Oppdater totalpris med familieabonnementer
