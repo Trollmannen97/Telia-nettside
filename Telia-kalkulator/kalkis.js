@@ -158,7 +158,7 @@ function calculatePrice() {
   var planName = plan.options[plan.selectedIndex].text;
   var finalPrice = selectedPlan;
 
-  // Spesialtilfelle for hovednummeret - Telia X Start har fast pris på 429 uten rabatt
+  // Spesialtilfelle for hovednummeret - Telia X Start har fast pris på 379 uten rabatt
   if (planName.includes("Telia X Start") && !isFamily) {
     finalPrice = 379;
   } else {
@@ -216,13 +216,22 @@ function calculatePrice() {
       var dataSimCount = parseInt(
         familyPlanDiv.querySelector(".datasim-select").value
       );
-      var twinSimPrice = twinSimCount * 49; // TvillingSIM koster 49 kr per SIM for vanlige abonnement
-      var dataSimPrice = dataSimCount * 49; // DataSIM koster 49 kr per SIM for vanlige abonnement
+      var twinSimPrice = 0;
+      var dataSimPrice = 0;
 
-      // Hvis Telia X, endre prisen
-      if (familyPlanText.includes("Telia X")) {
-        twinSimPrice = twinSimCount * 89; // TvillingSIM koster 89 kr for Telia X
-        dataSimPrice = dataSimCount * 89; // DataSIM koster 89 kr for Telia X
+      // Hvis Telia X Max Pluss, gir 2 gratis SIM-kort
+      if (familyPlanText.includes("Max Pluss")) {
+        var totalSimCount = twinSimCount + dataSimCount;
+        var chargeableSimCount = Math.max(0, totalSimCount - 2); // Gratis for de første to SIM-kortene
+        twinSimPrice = chargeableSimCount * 89; // Pris per ekstra TvillingSIM for Telia X Max Pluss
+        dataSimPrice = chargeableSimCount > 0 ? chargeableSimCount * 89 : 0; // Gratis om ingen ekstra SIM
+      } else if (familyPlanText.includes("Telia X")) {
+        twinSimPrice = twinSimCount * 89; // 89 NOK per TvillingSIM
+        dataSimPrice = dataSimCount * 89; // 89 NOK per DataSIM
+      } else {
+        // Pris for Telia Mobil og andre abonnementer
+        twinSimPrice = twinSimCount * 49; // 49 NOK per TvillingSIM
+        dataSimPrice = dataSimCount * 49; // 49 NOK per DataSIM
       }
 
       familyTotal += discountedFamilyPrice + twinSimPrice + dataSimPrice;
