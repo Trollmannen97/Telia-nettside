@@ -255,6 +255,20 @@ function calculatePrice() {
       detailedResult += `<p>Nummer ${i + 2}: ${
         familyPlans[i].options[familyPlans[i].selectedIndex].text.split("-")[0]
       } - ${discountedFamilyPrice.toFixed(2)} kr</p>`;
+
+      // Legg til TvillingSIM-detaljer for hvert familiemedlem
+      if (twinSimCount > 0) {
+        detailedResult += `<p>TvillingSIM: ${twinSimCount} x ${
+          twinSimPrice / twinSimCount
+        } kr</p>`;
+      }
+
+      // Legg til DataSIM-detaljer for hvert familiemedlem
+      if (dataSimCount > 0) {
+        detailedResult += `<p>DataSIM: ${dataSimCount} x ${
+          dataSimPrice / dataSimCount
+        } kr</p>`;
+      }
     }
 
     finalPrice = familyTotal; // Oppdater totalpris med familieabonnementer
@@ -659,36 +673,6 @@ function updateSimPrice(selectElement) {
   // Oppdater totalprisen i kalkulatoren
   calculatePrice();
 }
-
-// Funksjon for å oppdatere tilleggstjenester basert på valgt abonnement
-function updateAdditionalServices() {
-  var planSelect = document.getElementById("plan");
-  var selectedPlan = planSelect.options[planSelect.selectedIndex].text;
-
-  var teliaSkyIcon = document.querySelector(".addon-icon[alt='Telia Sky']");
-
-  if (selectedPlan.includes("Telia X")) {
-    // Telia Sky er inkludert i Telia X-abonnementer
-    teliaSkyIcon.classList.add("selected");
-    teliaSkyIcon.setAttribute("data-price", "0"); // Sett prisen til 0
-    teliaSkyIcon.onclick = null; // Fjern klikk-funksjonen for å gjøre den ikke-deaktiverbar
-  } else {
-    // Telia Sky er en betalt tilleggstjeneste for andre abonnementer
-    teliaSkyIcon.classList.remove("selected");
-    teliaSkyIcon.setAttribute("data-price", "69"); // Gjenopprett prisen til 69 kr
-    teliaSkyIcon.onclick = function () {
-      toggleAddon(teliaSkyIcon);
-    }; // Tillat valg
-  }
-
-  // Oppdater totalprisen for å reflektere endringene
-  calculatePrice();
-}
-
-// Initialiser tilleggstjenester ved sideinnlasting
-window.onload = function () {
-  updateAdditionalServices();
-};
 
 /*************  ✨ Codeium Command 🌟  *************/
 // Funksjon for å vise detaljert resultat
