@@ -356,7 +356,6 @@ function updateSimPrice(selectElement) {
   // Oppdater totalprisen i kalkulatoren
   calculatePrice();
 }
-
 // Funksjon for å oppdatere tilleggstjenester basert på valgt abonnement
 function updateAdditionalServices() {
   var planSelect = document.getElementById("plan");
@@ -381,6 +380,11 @@ function updateAdditionalServices() {
   // Oppdater totalprisen for å reflektere endringene
   calculatePrice();
 }
+
+// Initialiser tilleggstjenester ved sideinnlasting
+window.onload = function () {
+  updateAdditionalServices();
+};
 
 // Funksjon for å håndtere tilleggstjenester
 function toggleAddon(element) {
