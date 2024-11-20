@@ -1,11 +1,18 @@
 // Funksjon for å vise/skjule familiefelt basert på kundetype
 function toggleCustomerType() {
   var familySection = document.getElementById("familySection");
+  var simOptionsSection = document.querySelector(".sim-options"); // SIM-seksjon
+  var addonsSection = document.querySelector(".addons"); // Tilleggstjenester-seksjon
   var singleRadio = document.getElementById("single");
+
   if (singleRadio.checked) {
-    familySection.style.display = "none";
+    familySection.style.display = "none"; // Skjul familie-seksjonen for enkel kunde
+    simOptionsSection.style.display = "block"; // Vis SIM-seksjonen
+    addonsSection.style.display = "block"; // Vis tilleggstjenestene
   } else {
-    familySection.style.display = "block";
+    familySection.style.display = "block"; // Vis familie-seksjonen for familie
+    simOptionsSection.style.display = "block"; // Vis SIM-seksjonen for familie
+    addonsSection.style.display = "block"; // Vis tilleggstjenestene for familie
   }
 }
 

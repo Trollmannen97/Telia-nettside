@@ -54,6 +54,42 @@
                 <option value="20">20%</option>
             </select>
         </div>
+
+
+<!-- Ny seksjon for SIM-kort og tilleggstjenester for enkel kunde -->
+<div id="singlePlanOptions" class="form-group sim-options">
+    <h3>SIM og tilleggstjenester for enkel kunde</h3>
+
+    <!-- TvillingSIM og DataSIM valg -->
+    <label for="twinsim">TvillingSIM:</label>
+    <select id="singleTwinsimSelect" class="twinsim-select" onchange="updateSimPrice(this)">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+    </select>
+
+    <label for="datasim">DataSIM:</label>
+    <select id="singleDatasimSelect" class="datasim-select" onchange="updateSimPrice(this)">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+    </select>
+    <span class="family-plan-price">SIM-kort: 0.00 kr</span>
+
+    <!-- Tilleggstjenester -->
+    <h4>Velg tilleggstjenester:</h4>
+    <div class="addons">
+        <img src="/Telia-nettside/Bilder/mx3.webp" alt="Max" class="addon-icon" data-price="89" onclick="toggleAddon(this)">
+        <img src="/Telia-nettside/Bilder/Storytel's_logo.png" alt="Storytel" class="addon-icon" data-price="199" onclick="toggleAddon(this)">
+        <img src="/Telia-nettside/Bilder/via.png" alt="Viaplay" class="addon-icon" data-price="149" onclick="toggleAddon(this)">
+        <img src="/Telia-nettside/Bilder/218706.png" alt="Telia Sky" class="addon-icon" data-price="69" onclick="toggleAddon(this)">
+        <img src="/Telia-nettside/Bilder/trygg.webp" alt="Telia Trygg" class="addon-icon" data-price="69" onclick="toggleAddon(this)">
+    </div>
+</div>
+
+
         <div id="familySection" style="display: none;">
             <h3>Familierabatt</h3>
             <div id="familyPlans"></div>
