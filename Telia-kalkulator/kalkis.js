@@ -119,9 +119,9 @@ function getFamilyDiscount(planValue, planText, isMainNumber) {
     teliaMobile: 30, // 30 kr rabatt for Telia Junior, 5GB og 10GB
   };
 
-  // Spesialtilfelle for Telia X Start - Ingen rabatt på hovednummer, og fastpris på 299 for familie
+  // Spesialtilfelle for Telia X Start - Ingen rabatt på hovednummer.
   if (planText.includes("Telia X Start")) {
-    return isMainNumber ? 0 : 100; // Fast rabatt på 100 for familie, tilsvarer fastpris på 299
+    return isMainNumber ? 0 : 100; // Fast rabatt på 100 for familie
   }
 
   // Telia X-abonnementer (planValue >= 399) gir 100 kr rabatt, men IKKE for Telia X Ung eller hovednummeret
@@ -216,7 +216,10 @@ function calculatePrice() {
       // Spesialtilfelle for Telia X Start som familie
       var discountedFamilyPrice;
       if (familyPlanText.includes("Telia X Start")) {
-        discountedFamilyPrice = 379; // Fast pris for Telia X Start som familie
+        discountedFamilyPrice = 299; // Fast pris for Telia X Start som familie
+      } else if (familyPlanText.includes("10GB")) {
+        // Legg til spesifikk rabatt for Telia 10 GB som familie
+        discountedFamilyPrice = familyPlanValue - 30; // Telia 10 GB får 30 kr rabatt
       } else {
         // Beregn familierabatt for andre abonnementer
         var familyDiscountAmount = getFamilyDiscount(
