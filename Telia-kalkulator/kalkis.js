@@ -130,7 +130,12 @@ function getFamilyDiscount(planValue, planText, isMainNumber) {
   }
 
   // Telia 5GB og 10GB, samt Junior-abonnementer gir 30 kr rabatt
-  else if (planValue >= 129 && planValue <= 359 && !isMainNumber) {
+  else if (
+    (planText.includes("5GB") ||
+      planText.includes("10GB") ||
+      planText.includes("Junior")) &&
+    !isMainNumber
+  ) {
     return familyDiscountRates.teliaMobile;
   }
 
