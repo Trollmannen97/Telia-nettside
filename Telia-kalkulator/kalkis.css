@@ -25,10 +25,7 @@ body {
     margin-bottom: 50px; /* Ekstra margin nederst */
     max-height: 90vh; /* Begrens høyden til 90% av vinduet */
     overflow-y: auto; /* Legg til intern scrolling om nødvendig */
-    
-
 }
-
 
 /* Overskrift-styling */
 h1 {
@@ -111,12 +108,13 @@ button:hover {
     align-items: center;
 }
 
-/* Dropdown for SIM-innstillinger */
+/* Styling for SIM-seksjoner (for både enkel og familie) */
 .sim-options {
     display: flex;
     justify-content: space-between;
     width: 100%; /* Gir full bredde */
     gap: 10px; /* Mellomrom mellom elementer */
+    margin-bottom: 15px; /* Litt mer avstand under SIM-seksjonen */
 }
 
 .sim-options select {
@@ -127,7 +125,7 @@ button:hover {
     border-color: black;
 }
 
-/* Container for ikonene */
+/* Container for tilleggstjeneste-ikoner (for både enkel og familie) */
 .addons {
     display: flex;
     gap: 10px; /* Avstand mellom ikoner */
@@ -163,7 +161,7 @@ button:hover {
     background-color: #b71c1c;
 }
 
-/* Resultat-seksjon */
+/* Styling for resultat-seksjonen */
 .result {
     margin-top: 25px;
     background-color: #f9f9f9;
@@ -204,6 +202,7 @@ button:hover {
     text-align: center;
     margin-top: 20px;
 }
+
 /* Styling for enkel kunde-seksjon (singlePlanOptions) */
 #singlePlanOptions {
     background-color: #f0f0f0;
