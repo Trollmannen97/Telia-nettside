@@ -780,13 +780,16 @@ function updateResultDisplay() {
     addonDetails || "<p>Ingen tilleggstjenester valgt</p>";
 }
 
-// Funksjon for å beregne totalprisen i kalkulatoren
+// Funksjon for å beregne totalprisen i kalkulatoren.
 function calculateTotalPrice() {
   var familyPlans = document.querySelectorAll(".family-plan");
   var totalPrice = 0;
 
   familyPlans.forEach(function (plan) {
     var planPrice = parseFloat(plan.querySelector(".family-plan-select").value);
+    var planText = plan.querySelector(
+      ".family-plan-select option:checked"
+    ).textContent; // Hent abonnementsnavnet
 
     // Beregn spesifikk rabatt for Telia 10 GB
     if (planText.includes("10GB")) {
