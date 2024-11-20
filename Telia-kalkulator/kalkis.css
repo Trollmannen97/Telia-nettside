@@ -219,3 +219,52 @@ button:hover {
     font-size: 1.4em;
     text-align: center;
 }
+
+/* Container for SIM-valg */
+.sim-select-container {
+    display: flex;
+    flex-direction: row; /* Rad for å holde alle SIM-valgene sammen */
+    justify-content: space-around; /* Jevn fordeling mellom SIM-valg */
+    margin-bottom: 15px;
+}
+
+.sim-option {
+    width: 45%;
+    text-align: left;
+}
+
+.sim-option label {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.sim-option select {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    width: 100%;
+    border-color: black;
+}
+
+/* Container for tilleggstjeneste-ikoner */
+.addons {
+    display: flex;
+    gap: 10px; /* Avstand mellom ikoner */
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.addon-icon {
+    width: 45px;
+    height: 40px;
+    cursor: pointer;
+    transition: transform 0.3s, opacity 0.3s;
+    opacity: 0.7;
+}
+
+.addon-icon:hover {
+    transform: scale(1.1);
+    opacity: 1;
+}
+
