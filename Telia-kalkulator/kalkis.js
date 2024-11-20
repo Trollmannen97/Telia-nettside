@@ -431,6 +431,8 @@ function addFamilyPlan() {
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
         </select>
 
         <label for="datasim">DataSIM:</label>
@@ -439,6 +441,8 @@ function addFamilyPlan() {
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
         </select>
          <!-- Denne er viktig, familie-plan-price må være med -->
         <span class="family-plan-price">SIM-kort: 0.00 kr</span>
