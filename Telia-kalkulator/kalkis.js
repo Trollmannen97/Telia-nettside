@@ -784,6 +784,12 @@ function calculateTotalPrice() {
 
   familyPlans.forEach(function (plan) {
     var planPrice = parseFloat(plan.querySelector(".family-plan-select").value);
+
+    // Beregn spesifikk rabatt for Telia 10 GB
+    if (planText.includes("10GB")) {
+      planPrice -= 30; // Trekk fra familierabatten
+    }
+
     var simPrice =
       parseFloat(
         plan
