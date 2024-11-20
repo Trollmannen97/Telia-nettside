@@ -791,9 +791,20 @@ function calculateTotalPrice() {
       ".family-plan-select option:checked"
     ).textContent; // Hent abonnementsnavnet
 
+    // Logg verdien som vi starter med
+    console.log("Original plan pris:", planPrice);
+    console.log("Plan tekst:", planText);
+
     // Beregn spesifikk rabatt for Telia 10 GB
     if (planText.includes("10GB")) {
       planPrice -= 30; // Trekk fra familierabatten
+    }
+
+    // Beregn spesifikk rabatt for Telia 10 GB
+    if (planText.includes("10GB")) {
+      console.log("Telia 10 GB funnet. Før rabatt: ", planPrice);
+      planPrice -= 30; // Trekk fra familierabatten
+      console.log("Telia 10 GB etter rabatt (30 kr trukket fra): ", planPrice);
     }
 
     var simPrice =
@@ -803,9 +814,18 @@ function calculateTotalPrice() {
           .textContent.replace("SIM-kort: ", "")
           .replace(" kr", "")
       ) || 0;
+
+    // Logg SIM-kostnadene
+    console.log("SIM-kostnader for planen:", simPrice);
+
     totalPrice += planPrice + simPrice;
+    // Logg den akkumulerte totalprisen etter hver familieplan
+    console.log("Akkumulert totalpris etter denne planen:", totalPrice);
   });
 
   document.getElementById("finalPrice").textContent =
     "Endelig pris: " + totalPrice.toFixed(2) + " kr";
+
+  // Logg sluttresultatet
+  console.log("Endelig totalpris:", totalPrice);
 }
