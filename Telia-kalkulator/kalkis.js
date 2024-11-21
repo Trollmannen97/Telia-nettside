@@ -75,7 +75,7 @@ function addFamilyPlan() {
   newDiv.innerHTML = `
       <select class="family-plan-select">
           <option value="129">Telia Junior 1GB - 129kr</option>
-          <option value="179">Telia Junior 3GB - 179kr</option>
+          <option value="179">Telia Junior 5GB - 179kr</option>
           <option value="329">Telia 5GB - 329 kr</option>
           <option value="379">Telia 10GB - 379 kr</option>
           <option value="329">Telia 10GB Ung - 329 kr</option>
@@ -460,7 +460,7 @@ function addFamilyPlan() {
   newDiv.innerHTML = `
       <select class="family-plan-select">
           <option value="129">Telia Junior 1GB - 129kr</option>
-          <option value="179">Telia Junior 3GB - 179kr</option>
+          <option value="179">Telia Junior 5GB - 179kr</option>
           <option value="329">Telia 5GB - 329 kr</option>
           <option value="379">Telia 10GB - 379 kr</option>
            <option value="329">Telia 10GB Ung - 329 kr</option>
