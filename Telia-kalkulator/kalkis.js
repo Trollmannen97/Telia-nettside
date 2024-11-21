@@ -136,7 +136,7 @@ function getFamilyDiscount(planValue, planText, isMainNumber) {
 }
 
 // Funksjon for å beregne prisen på TvillingSIM og DataSIM
-function calculateSimPrice(planType, twinSimCount, dataSimCount) {
+function calculateSimPrice(planType, twinSimCount, dataSimCount, planDiv) {
   var twinSimPrice = 0;
   var dataSimPrice = 0;
 
@@ -153,6 +153,14 @@ function calculateSimPrice(planType, twinSimCount, dataSimCount) {
     // Pris for Telia Mobil og andre abonnementer
     twinSimPrice = twinSimCount * 49; // 49 NOK per TvillingSIM
     dataSimPrice = dataSimCount * 49; // 49 NOK per DataSIM
+  }
+
+  var totalSimPrice = twinSimPrice + dataSimPrice;
+
+  // Oppdater total SIM-pris for enkelt kunde eller familieplan
+  if (planDiv) {
+    planDiv.querySelector(".family-plan-price").textContent =
+      "SIM-kort: " + totalSimPrice.toFixed(2) + " kr";
   }
 
   return { twinSimPrice, dataSimPrice };
@@ -282,7 +290,12 @@ function calculatePrice() {
     var dataSimCount = parseInt(dataSimSelect.value);
 
     // Beregn SIM-priser ved å bruke calculateSimPrice()
-    var simPrices = calculateSimPrice(planType, twinSimCount, dataSimCount);
+    var simPrices = calculateSimPrice(
+      planType,
+      twinSimCount,
+      dataSimCount,
+      familyPlanDiv
+    );
     var twinSimPrice = simPrices.twinSimPrice;
     var dataSimPrice = simPrices.dataSimPrice;
 
