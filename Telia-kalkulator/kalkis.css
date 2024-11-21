@@ -199,6 +199,22 @@ button:hover {
 
 
 
+/* Enkel kunde-seksjon styling */
+#singlePlanOptions {
+    display: none; /* Som standard skjules enkel kunde-seksjonen */
+  }
+  
+  /* Familie-seksjon styling */
+  #familySection {
+    display: none; /* Som standard skjules familie-seksjonen */
+  }
+  
+  /* Familie-SIM-seksjon spesifikt */
+  .family-sim-container {
+    display: none; /* Som standard skjules familie-SIM-container */
+  }
+  
+
 
 
 /* Fjern knapp for familieplan */
