@@ -199,10 +199,7 @@ button:hover {
 
 
 
-/* Enkel kunde-seksjon styling */
-#singlePlanOptions {
-    display: none; /* Som standard skjules enkel kunde-seksjonen */
-  }
+
   
   /* Familie-seksjon styling */
   #familySection {
