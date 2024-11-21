@@ -1,18 +1,28 @@
 // Funksjon for å vise/skjule familiefelt basert på kundetype
 function toggleCustomerType() {
-  var familySection = document.getElementById("familySection");
-  var simOptionsSection = document.querySelector(".sim-options"); // SIM-seksjon
-  var addonsSection = document.querySelector(".addons"); // Tilleggstjenester-seksjon
-  var singleRadio = document.getElementById("single");
+  // Referanser til ulike seksjoner
+  var familySection = document.getElementById("familySection"); // Hele familie-seksjonen
+  var singlePlanOptions = document.getElementById("singlePlanOptions"); // Enkel kunde SIM og tilleggstjenester
+  var familySimContainer = document.querySelector(".family-sim-container"); // Familie SIM-seksjon (TvillingSIM og DataSIM)
+  var singleRadio = document.getElementById("single"); // Enkel kunde radioknapp
+
+  // Finn tilleggstjenester-seksjonen for enkel kunde
+  var addonsSection = document.querySelector(
+    "#singlePlanOptions .addon-container"
+  ); // Tilleggstjenester for enkel kunde
 
   if (singleRadio.checked) {
-    familySection.style.display = "none"; // Skjul familie-seksjonen for enkel kunde
-    simOptionsSection.style.display = "block"; // Vis SIM-seksjonen
-    addonsSection.style.display = "block"; // Vis tilleggstjenestene
+    // Hvis enkel kunde er valgt
+    familySection.style.display = "none"; // Skjul familie-seksjonen
+    singlePlanOptions.style.display = "block"; // Vis enkel kunde SIM-valg og tilleggstjenester
+    familySimContainer.style.display = "none"; // Skjul familie-SIM-seksjonen (for sikkerhet)
+    addonsSection.style.display = "block"; // Vis tilleggstjenestene for enkel kunde
   } else {
-    familySection.style.display = "block"; // Vis familie-seksjonen for familie
-    simOptionsSection.style.display = "block"; // Vis SIM-seksjonen for familie
-    addonsSection.style.display = "block"; // Vis tilleggstjenestene for familie
+    // Hvis familie er valgt
+    familySection.style.display = "block"; // Vis familie-seksjonen
+    singlePlanOptions.style.display = "none"; // Skjul enkel kunde-seksjonen
+    familySimContainer.style.display = "block"; // Vis familie-SIM-seksjonen
+    addonsSection.style.display = "none"; // Skjul tilleggstjenestene for enkel kunde (håndteres separat i familieplanene)
   }
 }
 
