@@ -84,6 +84,8 @@
     <span class="family-plan-price">SIM-kort: 0.00 kr</span>
 
     <!-- Tilleggstjenester under SIM-valgene -->
+ <!-- Legger tilleggstjenester i en egen container for å sikre at den plasseres under -->
+ <div class="addon-container">
     <h4>Velg tilleggstjenester:</h4>
     <div class="addons">
         <img src="/Telia-nettside/Bilder/mx3.webp" alt="Max" class="addon-icon" data-price="89" onclick="toggleAddon(this)">
@@ -93,9 +95,7 @@
         <img src="/Telia-nettside/Bilder/trygg.webp" alt="Telia Trygg" class="addon-icon" data-price="69" onclick="toggleAddon(this)">
     </div>
 </div>
-
-
-
+</div>
         <div id="familySection" style="display: none;">
             <h3>Familierabatt</h3>
             <div id="familyPlans"></div>
