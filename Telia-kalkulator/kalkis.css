@@ -111,6 +111,8 @@ button:hover {
 /* Styling for SIM-seksjoner (for både enkel og familie) */
 .sim-options {
     display: flex;
+    flex-direction: column;
+    flex-direction: nowrap;
     justify-content: space-between;
     width: 100%; /* Gir full bredde */
     gap: 10px; /* Mellomrom mellom elementer */
@@ -207,7 +209,7 @@ button:hover {
 /* Styling for enkel kunde-seksjon (singlePlanOptions) */
 #singlePlanOptions {
     background-color: #f0f0f0;
-    padding: 20px;
+    padding: 50px;
     border-radius: 10px;
     border: 1px solid #ddd;
     margin-top: 25px;
