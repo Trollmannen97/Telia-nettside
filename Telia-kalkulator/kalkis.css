@@ -155,7 +155,7 @@ button:hover {
 
 .addons {
     display: flex;
-    gap: 10px; /* Avstand mellom ikoner */
+    gap: 20px; /* Avstand mellom ikoner */
     justify-content: center;
     margin-top: 10px;
 }
