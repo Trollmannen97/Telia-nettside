@@ -175,6 +175,40 @@ button:hover {
 
 
 
+/* Enkel Kunde - SIM-valg Styling */
+.sim-select-container {
+    display: flex;
+    flex-direction: column; /* SIM-valgene plasseres under hverandre for enkel kunde */
+    gap: 15px; /* Mellomrom mellom TvillingSIM og DataSIM */
+    margin-bottom: 15px;
+}
+
+/* Familieplan - SIM-valg Styling */
+.family-sim-container {
+    display: flex;
+    flex-direction: row; /* SIM-valgene vises ved siden av hverandre for familie */
+    justify-content: space-between; /* Sørger for at valgene står jevnt fordelt */
+    gap: 10px; /* Mindre avstand mellom TvillingSIM og DataSIM */
+    margin-bottom: 15px;
+}
+
+.family-sim-container .sim-option {
+    width: 45%; /* Gjør hvert valg litt smalere slik at de kan stå ved siden av hverandre */
+    text-align: center;
+}
+
+.family-sim-container select {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    width: 100%; /* Full bredde på select-boksen */
+    border-color: black;
+}
+
+
+
+
+
 /* Fjern knapp for familieplan */
 .remove-family-plan {
     background-color: #d32f2f;

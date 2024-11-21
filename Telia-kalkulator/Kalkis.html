@@ -83,6 +83,8 @@
     </div>
     <span class="family-plan-price">SIM-kort: 0.00 kr</span>
 
+
+    
     <!-- Tilleggstjenester under SIM-valgene -->
  <!-- Legger tilleggstjenester i en egen container for å sikre at den plasseres under -->
  <div class="addon-container">
@@ -96,12 +98,34 @@
     </div>
 </div>
 </div>
-        <div id="familySection" style="display: none;">
-            <h3>Familierabatt</h3>
-            <div id="familyPlans"></div>
-            <button type="button" onclick="addFamilyPlan()">Legg til abonnement</button>
+     <!-- Familie-seksjon for SIM-kort -->
+<div id="familySection" style="display: none;">
+    <h3>Familierabatt</h3>
+    <div id="familyPlans">
+        <!-- Familieplan - SIM-valg (TVILLINGSIM og DataSIM) -->
+        <div class="sim-select-container family-sim-container">
+            <div class="sim-option">
+                <label for="familyTwinsimSelect">TvillingSIM:</label>
+                <select id="familyTwinsimSelect" class="twinsim-select" onchange="updateSimPrice(this)">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
+            <div class="sim-option">
+                <label for="familyDatasimSelect">DataSIM:</label>
+                <select id="familyDatasimSelect" class="datasim-select" onchange="updateSimPrice(this)">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
         </div>
-        <button type="button" onclick="calculatePrice()">Beregn pris</button>
+    </div>
+    <button type="button" onclick="addFamilyPlan()">Legg til abonnement</button>
+</div>
         <div class="result">
             <h2>Prisdetaljer:</h2>
             <div id="priceSummary">
