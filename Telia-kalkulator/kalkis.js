@@ -205,162 +205,6 @@ function calculateSimPrice(planType, twinSimCount, dataSimCount) {
   return { twinSimPrice, dataSimPrice };
 }
 
-// Funksjon for å beregne prisen
-function calculatePrice() {
-  var plan = document.getElementById("plan");
-  var discount = document.getElementById("discount");
-  var familyDiscount = document.getElementById("familyDiscount"); // Rabatt for familien
-  var singleRadio = document.getElementById("single");
-  var resultDisplay = document.getElementById("priceDetails"); // Element for å vise detaljerte priser
-  var totalDisplay = document.getElementById("finalPrice"); // Element for å vise sluttresultatet
-
-  if (!plan || !discount || !singleRadio) {
-    console.error("Ett eller flere elementer ble ikke funnet i DOM-en.");
-    return;
-  }
-
-  var selectedPlan = parseFloat(plan.value);
-  var selectedDiscount = parseFloat(discount.value); // Rabatt for hovednummeret
-  var selectedFamilyDiscount = parseFloat(familyDiscount.value); // Rabatt for familien
-  var isFamily = !singleRadio.checked;
-
-  var planName = plan.options[plan.selectedIndex].text;
-  var finalPrice = selectedPlan;
-
-  // Spesialtilfelle for hovednummeret - Telia X Start har fast pris på 379 uten rabatt
-  if (planName.includes("Telia X Start") && !isFamily) {
-    finalPrice = 379;
-  } else {
-    // Beregn rabatt for hovednummeret
-    if (selectedDiscount > 0) {
-      finalPrice -= selectedPlan * (selectedDiscount / 100);
-    }
-  }
-
-  // Start med hovednummeret i resultatlisten
-  var detailedResult = `<p>Hovednummer 1: ${
-    plan.options[plan.selectedIndex].text.split("-")[0]
-  } - ${finalPrice.toFixed(2)} kr</p>`;
-
-  // Håndter familierabatt hvis familie er valgt
-  if (isFamily) {
-    var familyPlans = document.getElementsByClassName("family-plan-select");
-    var familyTotal = finalPrice; // Start med hovednummerets pris
-
-    // Beregne rabatter for alle familiemedlemmer
-    for (var i = 0; i < familyPlans.length; i++) {
-      var familyPlanValue = parseFloat(familyPlans[i].value);
-      var familyPlanText =
-        familyPlans[i].options[familyPlans[i].selectedIndex].text; // Henter abonnementsnavnet
-
-      // Spesialtilfelle for Telia X Start som familie
-      var discountedFamilyPrice;
-      if (familyPlanText.includes("Telia X Start")) {
-        discountedFamilyPrice = 299; // Fast pris for Telia X Start som familie
-      } else if (familyPlanText.includes("10GB")) {
-        // Legg til spesifikk rabatt for Telia 10 GB som familie
-        discountedFamilyPrice = familyPlanValue - 30; // Telia 10 GB får 30 kr rabatt
-      } else {
-        // Beregn familierabatt for andre abonnementer
-        var familyDiscountAmount = getFamilyDiscount(
-          familyPlanValue,
-          familyPlanText,
-          false
-        );
-        discountedFamilyPrice = familyPlanValue - familyDiscountAmount;
-
-        // Hvis plan ikke er Telia X Start eller Telia X Ung, legg til ekstra familierabatt
-        if (
-          !familyPlanText.includes("Telia X Start") &&
-          !familyPlanText.includes("Telia X Ung") &&
-          selectedFamilyDiscount > 0
-        ) {
-          discountedFamilyPrice -=
-            discountedFamilyPrice * (selectedFamilyDiscount / 100);
-        }
-      }
-
-      // Hent kostnader for TvillingSIM og DataSIM
-      var familyPlanDiv = familyPlans[i].closest(".family-plan");
-      var twinSimCount = parseInt(
-        familyPlanDiv.querySelector(".twinsim-select").value
-      );
-      var dataSimCount = parseInt(
-        familyPlanDiv.querySelector(".datasim-select").value
-      );
-
-      // Beregn SIM-priser ved å bruke calculateSimPrice()
-      var simPrices = calculateSimPrice(
-        familyPlanText,
-        twinSimCount,
-        dataSimCount
-      );
-      var twinSimPrice = simPrices.twinSimPrice;
-      var dataSimPrice = simPrices.dataSimPrice;
-
-      familyTotal += discountedFamilyPrice + twinSimPrice + dataSimPrice;
-
-      // Legg til familiemedlemmets plan i resultatlisten
-      detailedResult += `<p>Nummer ${i + 2}: ${
-        familyPlans[i].options[familyPlans[i].selectedIndex].text.split("-")[0]
-      } - ${discountedFamilyPrice.toFixed(2)} kr</p>`;
-
-      // Legg til TvillingSIM-detaljer for hvert familiemedlem
-      if (twinSimCount > 0) {
-        detailedResult += `<p>TvillingSIM: ${twinSimCount} x ${
-          twinSimPrice / twinSimCount
-        } kr</p>`;
-      }
-
-      // Legg til DataSIM-detaljer for hvert familiemedlem
-      if (dataSimCount > 0) {
-        detailedResult += `<p>DataSIM: ${dataSimCount} x ${
-          dataSimPrice / dataSimCount
-        } kr</p>`;
-      }
-    }
-
-    finalPrice = familyTotal; // Oppdater totalpris med familieabonnementer
-  }
-
-  // Oppdater resultatvisningen med detaljerte priser
-  resultDisplay.innerHTML = detailedResult;
-
-  // Oppdater endelig pris
-  totalDisplay.innerText = "Endelig pris: " + finalPrice.toFixed(2) + " kr";
-
-  // Kall funksjonen for å oppdatere den nye resultatvisningen
-  updateResultDisplay();
-}
-
-// Funksjon for å oppdatere prisen basert på valg av TvillingSIM og DataSIM
-function updateSimPrice(selectElement) {
-  var familyPlanDiv = selectElement.closest(".family-plan");
-  var planType = familyPlanDiv.querySelector(
-    ".family-plan-select option:checked"
-  ).textContent;
-
-  var twinSimSelect = familyPlanDiv.querySelector(".twinsim-select");
-  var dataSimSelect = familyPlanDiv.querySelector(".datasim-select");
-
-  var twinSimCount = parseInt(twinSimSelect.value);
-  var dataSimCount = parseInt(dataSimSelect.value);
-
-  // Beregn SIM-priser ved å bruke calculateSimPrice()
-  var simPrices = calculateSimPrice(planType, twinSimCount, dataSimCount);
-  var twinSimPrice = simPrices.twinSimPrice;
-  var dataSimPrice = simPrices.dataSimPrice;
-
-  var totalSimPrice = twinSimPrice + dataSimPrice;
-
-  // Oppdater familieplanens totale pris for TvillingSIM og DataSIM
-  familyPlanDiv.querySelector(".family-plan-price").textContent =
-    "SIM-kort: " + totalSimPrice.toFixed(2) + " kr";
-
-  // Oppdater totalprisen i kalkulatoren
-  calculatePrice();
-}
-
 // Funksjon for å vise detaljert resultat
 function updateResultDisplay() {
   // Hent HTML-elementene for å vise valgt informasjon
@@ -589,6 +433,17 @@ function calculateSimPrice(planType, twinSimCount, dataSimCount) {
     // Pris for Telia Mobil og andre abonnementer
     twinSimPrice = twinSimCount * 49; // 49 NOK per TvillingSIM
     dataSimPrice = dataSimCount * 49; // 49 NOK per DataSIM
+  }
+
+  var totalSimPrice = twinSimPrice + dataSimPrice;
+
+  // Oppdater total SIM-pris for enkelt kunde eller familieplan
+  if (planDiv.id === "singlePlanOptions") {
+    planDiv.querySelector(".family-plan-price").textContent =
+      "SIM-kort: " + totalSimPrice.toFixed(2) + " kr";
+  } else {
+    planDiv.querySelector(".family-plan-price").textContent =
+      "SIM-kort: " + totalSimPrice.toFixed(2) + " kr";
   }
 
   return { twinSimPrice, dataSimPrice };
