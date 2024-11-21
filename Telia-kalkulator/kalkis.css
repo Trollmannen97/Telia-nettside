@@ -183,6 +183,30 @@ button:hover {
 }
 
 
+addon-container {
+    margin-top: 20px; /* Avstand mellom SIM-valg og tilleggstjenester */
+    text-align: center;
+}
+
+.addons {
+    display: flex;
+    gap: 20px; /* Avstand mellom ikoner */
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.addon-icon {
+    width: 45px;
+    height: 40px;
+    cursor: pointer;
+    transition: transform 0.3s, opacity 0.3s;
+    opacity: 0.7;
+}
+
+.addon-icon:hover {
+    transform: scale(1.1);
+    opacity: 1;
+}
 
 
 /* Fjern knapp for familieplan */
