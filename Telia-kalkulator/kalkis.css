@@ -217,7 +217,7 @@ button:hover {
 /* Container for SIM-valg */
 .sim-select-container {
     display: flex;
-    flex-direction: row; /* Holder SIM-valgene i en rad */
+    flex-direction: column; /* Holder SIM-valgene i en rad */
     justify-content: space-around; /* Jevn fordeling mellom SIM-valg */
     margin-bottom: 15px;
 }
