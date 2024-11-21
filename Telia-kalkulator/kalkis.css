@@ -122,7 +122,6 @@ button:hover {
 .sim-options {
     display: flex;
     flex-direction: column;
-    width: 100%; /* Gir full bredde */
     gap: 10px; /* Mellomrom mellom elementer */
     margin-bottom: 15px; /* Litt mer avstand under SIM-seksjonen */
 }
