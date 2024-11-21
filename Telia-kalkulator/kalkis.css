@@ -138,12 +138,12 @@ button:hover {
 .sim-select-container {
     display: flex;
     flex-direction: row; /* Holder SIM-valgene i en rad */
-    justify-content: space-around; /* Jevn fordeling mellom SIM-valg */
+    justify-content: center; /* Jevn fordeling mellom SIM-valg */
     margin-bottom: 15px;
 }
 
 .sim-option {
-    width: 45%;
+    width: 25%;
     text-align: center;
 }
 
