@@ -176,7 +176,7 @@ button:hover {
 
 
 /* Familieplan - SIM-valg Styling */
-.family-sim-container {
+.family-sim-options {
     display: flex;
     flex-direction: row; /* SIM-valgene vises ved siden av hverandre for familie */
     justify-content: space-between; /* Sørger for at valgene står jevnt fordelt */
@@ -184,12 +184,12 @@ button:hover {
     margin-bottom: 15px;
 }
 
-.family-sim-container .sim-option {
+.family-sim-options .sim-option {
     width: 45%; /* Gjør hvert valg litt smalere slik at de kan stå ved siden av hverandre */
     text-align: center;
 }
 
-.family-sim-container select {
+.family-sim-options select {
     padding: 8px;
     border-radius: 5px;
     border: 1px solid #ddd;
