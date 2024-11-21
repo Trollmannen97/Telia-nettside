@@ -92,7 +92,8 @@ button:hover {
     transform: translateY(-3px);
 }
 
-/* Enkel kunde - SIM-valg Styling */
+
+/* Enkel Kunde - SIM-valg Styling */
 #singlePlanOptions {
     background-color: #f0f0f0;
     padding: 50px;
@@ -106,8 +107,8 @@ button:hover {
     display: flex;
     flex-direction: row; /* Holder SIM-valgene i en rad */
     justify-content: center; /* Jevn fordeling mellom SIM-valg */
-    gap: 10px;
-    margin-bottom: 15px; /* Litt mer avstand under SIM-seksjonen */
+    gap: 10px; /* Mellomrom mellom TvillingSIM og DataSIM */
+    margin-bottom: 15px; /* Litt avstand nederst */
 }
 
 #singlePlanOptions .sim-option {
@@ -122,6 +123,14 @@ button:hover {
     width: 100%;
     border-color: black;
 }
+
+/* Tilleggstjenester under SIM-valgene for enkel kunde */
+#singlePlanOptions .addon-container {
+    margin-top: 20px; /* Avstand mellom SIM-valg og tilleggstjenester */
+    text-align: center;
+}
+
+
 
 /* Familieplan - SIM-valg Styling */
 #familySection {
@@ -155,6 +164,13 @@ button:hover {
     border-color: black;
 }
 
+/* Familieplan-pris */
+.family-plan-price {
+    font-weight: bold;
+    font-size: 1.2em;
+    align-items: center;
+}
+
 /* Flexbox for familieplan */
 .family-plan {
     display: flex;
@@ -166,37 +182,8 @@ button:hover {
     width: 100%;
 }
 
-.family-plan-price {
-    font-weight: bold;
-    font-size: 1.2em;
-    align-items: center;
-}
 
-/* Tilleggstjenester under SIM-valgene */
-.addon-container {
-    margin-top: 20px; /* Avstand mellom SIM-valg og tilleggstjenester */
-    text-align: center;
-}
 
-.addons {
-    display: flex;
-    gap: 20px; /* Avstand mellom ikoner */
-    justify-content: center;
-    margin-top: 10px;
-}
-
-.addon-icon {
-    width: 45px;
-    height: 40px;
-    cursor: pointer;
-    transition: transform 0.3s, opacity 0.3s;
-    opacity: 0.7;
-}
-
-.addon-icon:hover {
-    transform: scale(1.1);
-    opacity: 1;
-}
 
 /* Fjern knapp for familieplan */
 .remove-family-plan {
@@ -212,6 +199,9 @@ button:hover {
 .remove-family-plan:hover {
     background-color: #b71c1c;
 }
+
+
+
 
 /* Styling for resultat-seksjonen */
 .result {

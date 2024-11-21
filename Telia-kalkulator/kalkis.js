@@ -3,8 +3,11 @@ function toggleCustomerType() {
   // Referanser til ulike seksjoner
   var familySection = document.getElementById("familySection"); // Hele familie-seksjonen
   var singlePlanOptions = document.getElementById("singlePlanOptions"); // Enkel kunde SIM og tilleggstjenester
-  var familySimContainer = document.querySelector(".family-sim-container"); // Familie SIM-seksjon (TvillingSIM og DataSIM)
   var singleRadio = document.getElementById("single"); // Enkel kunde radioknapp
+
+  // Finn SIM-seksjoner for enkel kunde og familie separat
+  var singleSimOptions = document.querySelector(".single-sim-options"); // Enkel kunde SIM-seksjon
+  var familySimOptions = document.querySelector(".family-sim-options"); // Familie SIM-seksjon
 
   // Finn tilleggstjenester-seksjonen for enkel kunde
   var addonsSection = document.querySelector(
@@ -15,13 +18,33 @@ function toggleCustomerType() {
     // Hvis enkel kunde er valgt
     familySection.style.display = "none"; // Skjul familie-seksjonen
     singlePlanOptions.style.display = "block"; // Vis enkel kunde SIM-valg og tilleggstjenester
-    familySimContainer.style.display = "none"; // Skjul familie-SIM-seksjonen (for sikkerhet)
+
+    // Vis spesifikt enkel kunde SIM-valg og tilleggstjenester
+    if (singleSimOptions) {
+      singleSimOptions.style.display = "flex";
+    }
+
+    // Skjul spesifikt familie SIM-valg
+    if (familySimOptions) {
+      familySimOptions.style.display = "none";
+    }
+
     addonsSection.style.display = "block"; // Vis tilleggstjenestene for enkel kunde
   } else {
     // Hvis familie er valgt
     familySection.style.display = "block"; // Vis familie-seksjonen
     singlePlanOptions.style.display = "none"; // Skjul enkel kunde-seksjonen
-    familySimContainer.style.display = "block"; // Vis familie-SIM-seksjonen
+
+    // Skjul spesifikt enkel kunde SIM-valg
+    if (singleSimOptions) {
+      singleSimOptions.style.display = "none";
+    }
+
+    // Vis spesifikt familie SIM-valg
+    if (familySimOptions) {
+      familySimOptions.style.display = "flex";
+    }
+
     addonsSection.style.display = "none"; // Skjul tilleggstjenestene for enkel kunde (håndteres separat i familieplanene)
   }
 }
