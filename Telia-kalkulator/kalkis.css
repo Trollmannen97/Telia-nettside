@@ -1,3 +1,4 @@
+
 /* Generelle justeringer for kroppen */
 body {
     font-family: Arial, sans-serif;
@@ -91,6 +92,69 @@ button:hover {
     transform: translateY(-3px);
 }
 
+/* Enkel kunde - SIM-valg Styling */
+#singlePlanOptions {
+    background-color: #f0f0f0;
+    padding: 50px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    margin-top: 25px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+#singlePlanOptions .sim-select-container {
+    display: flex;
+    flex-direction: row; /* Holder SIM-valgene i en rad */
+    justify-content: center; /* Jevn fordeling mellom SIM-valg */
+    gap: 10px;
+    margin-bottom: 15px; /* Litt mer avstand under SIM-seksjonen */
+}
+
+#singlePlanOptions .sim-option {
+    width: 45%; /* Litt mindre bredde slik at de passer ved siden av hverandre */
+    text-align: center;
+}
+
+#singlePlanOptions select {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    width: 100%;
+    border-color: black;
+}
+
+/* Familieplan - SIM-valg Styling */
+#familySection {
+    background-color: #f9f9f9;
+    padding: 50px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    margin-top: 25px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    display: none; /* Som standard skjules familie-seksjonen */
+}
+
+.family-sim-options {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; /* Sørger for avstand mellom TvillingSIM og DataSIM */
+    gap: 10px; /* Avstand mellom TvillingSIM og DataSIM for familien */
+    margin-bottom: 15px; /* Litt avstand nederst */
+}
+
+.family-sim-option {
+    width: 45%;
+    text-align: center;
+}
+
+.family-sim-option select {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    width: 100%;
+    border-color: black;
+}
+
 /* Flexbox for familieplan */
 .family-plan {
     display: flex;
@@ -108,46 +172,7 @@ button:hover {
     align-items: center;
 }
 
-
-#singlePlanOptions {
-    background-color: #f0f0f0;
-    padding: 50px;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-    margin-top: 25px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-/* Styling for SIM-seksjoner (for både enkel og familie) */
-.sim-options {
-    display: flex;
-    flex-direction: column;
-    gap: 10px; /* Mellomrom mellom elementer */
-    margin-bottom: 15px; /* Litt mer avstand under SIM-seksjonen */
-}
-
-.sim-options select {
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    width: 45%; /* Gir god plass til både TvillingSIM og DataSIM */
-    border-color: black;
-}
-
-.sim-select-container {
-    display: flex;
-    flex-direction: row; /* Holder SIM-valgene i en rad */
-    justify-content: center; /* Jevn fordeling mellom SIM-valg */
-    margin-bottom: 15px;
-}
-
-.sim-option {
-    width: 25%;
-    text-align: center;
-}
-
-
-
+/* Tilleggstjenester under SIM-valgene */
 .addon-container {
     margin-top: 20px; /* Avstand mellom SIM-valg og tilleggstjenester */
     text-align: center;
@@ -172,48 +197,6 @@ button:hover {
     transform: scale(1.1);
     opacity: 1;
 }
-
-
-
-/* Familieplan - SIM-valg Styling */
-.family-sim-container {
-    display: flex;
-    flex-direction: row; /* SIM-valgene vises ved siden av hverandre for familie */
-    justify-content: space-between; /* Sørger for at valgene står jevnt fordelt */
-    gap: 10px; /* Mindre avstand mellom TvillingSIM og DataSIM */
-    margin-bottom: 15px;
-}
-
-.family-sim-option {
-    width: 45%; /* Gjør hvert valg litt smalere slik at de kan stå ved siden av hverandre */
-    text-align: center;
-}
-
-.family-sim-option select {
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    width: 100%; /* Full bredde på select-boksen */
-    border-color: black;
-}
-
-
-  
-  /* Familie-seksjon styling */
-  #familySection {
-    display: none; /* Som standard skjules familie-seksjonen */
-  }
-  
-  /* Familie-SIM-seksjon spesifikt */
-  .family-sim-container {
-    display: none; /* Som standard skjules familie-SIM-container */
-  }
-  
-  .family-sim-options {
-    display: none;
-  }
-
-
 
 /* Fjern knapp for familieplan */
 .remove-family-plan {
@@ -271,7 +254,3 @@ button:hover {
     text-align: center;
     margin-top: 20px;
 }
-
-
-
-
