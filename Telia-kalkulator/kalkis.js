@@ -157,7 +157,7 @@ function calculateSimPrice(planType, twinSimCount, dataSimCount, planDiv) {
 
   var totalSimPrice = twinSimPrice + dataSimPrice;
 
-  // Oppdater total SIM-pris for enkelt kunde eller familieplan
+  // Bare oppdater DOM hvis `planDiv` er gitt
   if (planDiv) {
     planDiv.querySelector(".family-plan-price").textContent =
       "SIM-kort: " + totalSimPrice.toFixed(2) + " kr";
