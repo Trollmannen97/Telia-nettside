@@ -122,7 +122,6 @@ button:hover {
 .sim-options {
     display: flex;
     flex-direction: column;
-    flex-direction: nowrap;
     width: 100%; /* Gir full bredde */
     gap: 10px; /* Mellomrom mellom elementer */
     margin-bottom: 15px; /* Litt mer avstand under SIM-seksjonen */
@@ -145,8 +144,10 @@ button:hover {
 
 .sim-option {
     width: 45%;
-    text-align: left;
+    text-align: center;
 }
+
+
 
 .addon-container {
     margin-top: 20px; /* Avstand mellom SIM-valg og tilleggstjenester */
