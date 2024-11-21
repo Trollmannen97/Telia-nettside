@@ -211,6 +211,9 @@ button:hover {
     display: none; /* Som standard skjules familie-SIM-container */
   }
   
+  .family-sim-options {
+    display: none;
+  }
 
 
 
