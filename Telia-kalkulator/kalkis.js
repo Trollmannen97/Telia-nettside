@@ -237,6 +237,29 @@ function updateResultDisplay() {
     // Ekstraher kun abonnementsnavnet uten pris
     const familyPlanName = familyPlanNameFull.split(" - ")[0];
 
+    // Hent den valgte rabattprosenten for hovednummeret
+    const discountSelect = document.getElementById("discount");
+    const discountPercentage = parseFloat(discountSelect.value) || 0;
+
+    // Beregn rabattbeløpet for hovedabonnementet
+    const mainDiscountAmount = (selectedPlanPrice * discountPercentage) / 100;
+    const discountedMainPlanPrice = selectedPlanPrice - mainDiscountAmount;
+
+    // Vis rabattinformasjon for hovedabonnementet
+    let discountDetails = "";
+    if (discountPercentage > 0) {
+      discountDetails += `<p>Hovedabonnement: ${discountPercentage}% rabatt (${mainDiscountAmount.toFixed(
+        2
+      )} kr trukket fra)</p>`;
+    } else {
+      discountDetails += `<p>Hovedabonnement: Ingen rabatt</p>`;
+    }
+
+    // Vis hovedabonnementet med rabattert pris
+    selectedPlanElement.innerHTML = `<p>Hovedabonnement: ${planName} - ${discountedMainPlanPrice.toFixed(
+      2
+    )} kr</p>`;
+
     // Beregn rabatt
     const discount = getFamilyDiscount(familyPlanPrice, familyPlanName, false);
     const discountedPrice = familyPlanPrice - discount;
@@ -330,9 +353,13 @@ function calculateTotalPrice() {
   const planName = planNameFull.split(" - ")[0];
   let planPrice = selectedPlanPrice;
 
-  // Hovednummer har fullpris (ingen rabatt)
-  const mainDiscount = getFamilyDiscount(planPrice, planName, true); // Dette vil returnere 0
-  const discountedMainPlanPrice = planPrice - mainDiscount;
+  // Hent den valgte rabattprosenten for hovednummeret
+  const discountSelect = document.getElementById("discount");
+  const discountPercentage = parseFloat(discountSelect.value) || 0;
+
+  // Beregn rabattbeløpet for hovedabonnementet
+  const mainDiscountAmount = (planPrice * discountPercentage) / 100;
+  const discountedMainPlanPrice = planPrice - mainDiscountAmount;
 
   // Legg til hovedabonnementets pris til totalprisen
   totalPrice += discountedMainPlanPrice;
