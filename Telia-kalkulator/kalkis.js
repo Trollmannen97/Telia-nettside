@@ -240,9 +240,6 @@ function updateResultDisplay() {
     2
   )} kr</p>`;
 
-  // Vis rabattinformasjon for hovedabonnementet (ingen rabatt)
-  let discountDetails = `<p>Hovedabonnement: Ingen rabatt</p>`;
-
   // **Legg til familieabonnementene**
   const familyPlans = document.getElementsByClassName("family-plan");
   for (let i = 0; i < familyPlans.length; i++) {
