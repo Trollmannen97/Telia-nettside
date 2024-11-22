@@ -216,6 +216,20 @@ function updateResultDisplay() {
   // Ekstraher kun abonnementsnavnet uten pris
   const planName = planNameFull.split(" - ")[0];
 
+  // Hent den valgte rabattprosenten for hovednummeret
+  const discountSelect = document.getElementById("discount");
+  if (!discountSelect) {
+    console.error("Elementet med ID 'discount' ble ikke funnet.");
+    return;
+  }
+  const discountValue = discountSelect.value || "0";
+  const discountPercentage = parseFloat(discountValue) || 0;
+
+  // Debugging
+  console.log("Discount select element:", discountSelect);
+  console.log("Discount value:", discountValue);
+  console.log("Parsed discount percentage:", discountPercentage);
+
   // Hovednummer har fullpris (ingen rabatt)
   let plansDetails = `<p>Hovedabonnement: ${planName} - ${selectedPlanPrice.toFixed(
     2
@@ -274,6 +288,10 @@ function updateResultDisplay() {
       discountDetails += `<p>${familyPlanName}: Ingen rabatt</p>`;
     }
   }
+
+  // Oppdater 'Rabatt' med rabattinformasjon
+  discountDetailsElement.innerHTML = discountDetails;
+
   // Oppdater 'Valgt Abonnement' med alle abonnementer
   selectedPlanElement.innerHTML = plansDetails;
 

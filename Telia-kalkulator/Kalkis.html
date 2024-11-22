@@ -38,7 +38,7 @@
         </div>
         <div class="form-group">
             <label for="discount">Rabatt for hovednummer:</label>
-            <select id="discount">
+            <select id="discount" onchange="calculateTotalPrice()">
                 <option value="0">Ingen rabatt</option>
                 <option value="10">10%</option>
                 <option value="15">15%</option>
@@ -47,7 +47,7 @@
         </div>
         <div class="form-group family-discount" style="display: none;">
             <label for="familyDiscount">Rabatt:</label>
-            <select id="familyDiscount">
+            <select id="familyDiscount" onchange="calculateTotalPrice()">
                 <option value="0">Ingen rabatt</option>
                 <option value="10">10%</option>
                 <option value="15">15%</option>
