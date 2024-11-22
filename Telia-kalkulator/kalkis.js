@@ -216,9 +216,13 @@ function updateResultDisplay() {
   // Ekstraher kun abonnementsnavnet uten pris
   const planName = planNameFull.split(" - ")[0];
 
+  // Hovednummer har fullpris (ingen rabatt)
   let plansDetails = `<p>Hovedabonnement: ${planName} - ${selectedPlanPrice.toFixed(
     2
   )} kr</p>`;
+
+  // Vis rabattinformasjon for hovedabonnementet (ingen rabatt)
+  let discountDetails = `<p>Hovedabonnement: Ingen rabatt</p>`;
 
   // **Legg til familieabonnementene**
   const familyPlans = document.getElementsByClassName("family-plan");
@@ -232,17 +236,26 @@ function updateResultDisplay() {
     // Ekstraher kun abonnementsnavnet uten pris
     const familyPlanName = familyPlanNameFull.split(" - ")[0];
 
+    // Beregn rabatt
+    const discount = getFamilyDiscount(familyPlanPrice, familyPlanName, false);
+    const discountedPrice = familyPlanPrice - discount;
+
     plansDetails += `<p>Familieabonnement ${
       i + 1
-    }: ${familyPlanName} - ${familyPlanPrice.toFixed(2)} kr</p>`;
+    }: ${familyPlanName} - ${discountedPrice.toFixed(2)} kr</p>`;
+
+    // Legg til rabattinformasjon
+    if (discount > 0) {
+      discountDetails += `<p>${familyPlanName}: Rabatt på ${discount} kr</p>`;
+    } else {
+      discountDetails += `<p>${familyPlanName}: Ingen rabatt</p>`;
+    }
   }
   // Oppdater 'Valgt Abonnement' med alle abonnementer
   selectedPlanElement.innerHTML = plansDetails;
 
-  // Vis rabattinformasjon
-  const discount = document.getElementById("discount");
-  const discountPercentage = parseFloat(discount.value);
-  discountDetailsElement.innerHTML = `<p>Rabatt: ${discountPercentage}%</p>`;
+  // Oppdater 'Rabatt' med rabattinformasjon
+  discountDetailsElement.innerHTML = discountDetails;
 
   // **Vis SIM-valg**
   let simDetails = "";
@@ -278,8 +291,6 @@ function updateResultDisplay() {
     const planSelect = familyPlanDiv.querySelector(".family-plan-select");
     const familyPlanNameFull =
       planSelect.options[planSelect.selectedIndex].text;
-
-    // Ekstraher kun abonnementsnavnet uten pris
     const familyPlanName = familyPlanNameFull.split(" - ")[0];
 
     if (twinSimCount > 0) {
@@ -307,39 +318,74 @@ function updateResultDisplay() {
 
 // Funksjon for å beregne totalprisen i kalkulatoren.
 function calculateTotalPrice() {
-  const familyPlans = document.querySelectorAll(".family-plan");
   let totalPrice = 0;
 
+  // Hent hovedabonnementet
+  const plan = document.getElementById("plan");
+  const planNameFull = plan.options[plan.selectedIndex].text;
+  const selectedPlanPrice = parseFloat(plan.value);
+
+  // Ekstraher kun abonnementsnavnet uten pris
+  const planName = planNameFull.split(" - ")[0];
+  let planPrice = selectedPlanPrice;
+
+  // Hovednummer har fullpris (ingen rabatt)
+  const mainDiscount = getFamilyDiscount(planPrice, planName, true); // Dette vil returnere 0
+  const discountedMainPlanPrice = planPrice - mainDiscount;
+
+  // Legg til hovedabonnementets pris til totalprisen
+  totalPrice += discountedMainPlanPrice;
+
+  // Håndter SIM-kostnader for hovedabonnementet
+  const twinSimCountMain = parseInt(
+    document.getElementById("singleTwinsimSelect").value
+  );
+  const dataSimCountMain = parseInt(
+    document.getElementById("singleDatasimSelect").value
+  );
+
+  // Beregn SIM-priser for hovedabonnementet
+  let simPriceMain = 0;
+  let simPricePerUnitMain = planName.includes("Telia X") ? 89 : 49;
+  simPriceMain += twinSimCountMain * simPricePerUnitMain;
+  simPriceMain += dataSimCountMain * simPricePerUnitMain;
+
+  // Legg til SIM-kostnader til totalpris
+  totalPrice += simPriceMain;
+
+  // Håndter familieabonnementer
+  const familyPlans = document.querySelectorAll(".family-plan");
   familyPlans.forEach(function (plan) {
     let planPrice = parseFloat(plan.querySelector(".family-plan-select").value);
-    const planText = plan.querySelector(
+    const planTextFull = plan.querySelector(
       ".family-plan-select option:checked"
-    ).textContent; // Hent abonnementsnavnet
+    ).textContent;
+    const planText = planTextFull.split(" - ")[0];
 
-    // Logg verdien som vi starter med
-    console.log("Original plan pris:", planPrice);
-    console.log("Plan tekst:", planText);
+    // Beregn rabatt for familieabonnementet
+    const discount = getFamilyDiscount(planPrice, planText, false);
+    let discountedPlanPrice = planPrice - discount;
 
-    // Beregn spesifikk rabatt for Telia 10 GB
-    if (planText.includes("10GB")) {
-      console.log("Telia 10 GB funnet. Før rabatt: ", planPrice);
-      planPrice -= 30; // Trekk fra familierabatten
-      console.log("Telia 10 GB etter rabatt (30 kr trukket fra): ", planPrice);
-    }
+    // Logg rabattberegning
+    console.log(
+      `Plan: ${planText}, Original pris: ${planPrice}, Rabatt: ${discount}, Pris etter rabatt: ${discountedPlanPrice}`
+    );
 
-    // Hent SIM-kostnadene
-    const simPriceText = plan.querySelector(".family-plan-price").textContent;
-    const simPrice =
-      parseFloat(simPriceText.replace("SIM-kort: ", "").replace(" kr", "")) ||
-      0;
+    // Hent SIM-kostnadene for familieabonnementet
+    const twinSimCount = parseInt(plan.querySelector(".twinsim-select").value);
+    const dataSimCount = parseInt(plan.querySelector(".datasim-select").value);
 
-    // Logg SIM-kostnadene
-    console.log("SIM-kostnader for planen:", simPrice);
+    // Beregn SIM-priser for familieabonnementet
+    let simPrice = 0;
+    let simPricePerUnit = planText.includes("Telia X") ? 89 : 49;
+    simPrice += twinSimCount * simPricePerUnit;
+    simPrice += dataSimCount * simPricePerUnit;
 
-    totalPrice += planPrice + simPrice;
+    // Legg til planpris og SIM-kostnader til totalpris
+    totalPrice += discountedPlanPrice + simPrice;
 
-    // Logg den akkumulerte totalprisen etter hver familieplan
-    console.log("Akkumulert totalpris etter denne planen:", totalPrice);
+    // Logg totalpris etter hvert abonnement
+    console.log(`Totalpris etter ${planText}: ${totalPrice}`);
   });
 
   // Oppdater totalprisen i DOM
@@ -349,6 +395,6 @@ function calculateTotalPrice() {
   // Logg sluttresultatet
   console.log("Endelig totalpris:", totalPrice);
 
-  // **Legg til dette kallet for å oppdatere prisdetaljene**
+  // Oppdater resultatvisningen
   updateResultDisplay();
 }
