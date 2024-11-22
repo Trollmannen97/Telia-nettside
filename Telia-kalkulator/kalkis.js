@@ -191,6 +191,17 @@ function updateResultDisplay() {
   const simDetailsElement = document.getElementById("simDetails");
   const addonDetailsElement = document.getElementById("addonDetails");
 
+  // Sjekk om elementene eksisterer
+  if (
+    !selectedPlanElement ||
+    !discountDetailsElement ||
+    !simDetailsElement ||
+    !addonDetailsElement
+  ) {
+    console.error("Ett eller flere nødvendige HTML-elementer ble ikke funnet.");
+    return;
+  }
+
   // Tøm innholdet i elementene for å starte på nytt
   selectedPlanElement.innerHTML = "";
   discountDetailsElement.innerHTML = "";
@@ -292,4 +303,7 @@ function calculateTotalPrice() {
 
   // Logg sluttresultatet
   console.log("Endelig totalpris:", totalPrice);
+
+  // **Legg til dette kallet for å oppdatere prisdetaljene**
+  updateResultDisplay();
 }
