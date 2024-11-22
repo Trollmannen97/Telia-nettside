@@ -228,7 +228,12 @@ function updateResultDisplay() {
   // Debugging
   console.log("Discount select element:", discountSelect);
   console.log("Discount value:", discountValue);
-  console.log("Parsed discount percentage:", discountPercentage);
+  console.log(
+    "discountPercentage:",
+    discountPercentage,
+    "Type:",
+    typeof discountPercentage
+  );
 
   // Hovednummer har fullpris (ingen rabatt)
   let plansDetails = `<p>Hovedabonnement: ${planName} - ${selectedPlanPrice.toFixed(
@@ -260,11 +265,17 @@ function updateResultDisplay() {
 
     // Vis rabattinformasjon for hovedabonnementet
     let discountDetails = "";
+
+    console.log("discountPercentage før if-sjekk:", discountPercentage);
+
     if (discountPercentage > 0) {
+      console.log("Går inn i if-blokken for hovedabonnementets rabatt");
+
       discountDetails += `<p>Hovedabonnement: ${discountPercentage}% rabatt (${mainDiscountAmount.toFixed(
         2
       )} kr trukket fra)</p>`;
     } else {
+      console.log("Går inn i else-blokken for hovedabonnementets rabatt");
       discountDetails += `<p>Hovedabonnement: Ingen rabatt</p>`;
     }
 
