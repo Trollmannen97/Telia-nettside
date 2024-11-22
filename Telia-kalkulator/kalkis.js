@@ -210,8 +210,12 @@ function updateResultDisplay() {
 
   // **Vis hovedabonnementet**
   const plan = document.getElementById("plan");
-  const planName = plan.options[plan.selectedIndex].text;
+  const planNameFull = plan.options[plan.selectedIndex].text;
   const selectedPlanPrice = parseFloat(plan.value);
+
+  // Ekstraher kun abonnementsnavnet uten pris
+  const planName = planNameFull.split(" - ")[0];
+
   let plansDetails = `<p>Hovedabonnement: ${planName} - ${selectedPlanPrice.toFixed(
     2
   )} kr</p>`;
@@ -221,8 +225,12 @@ function updateResultDisplay() {
   for (let i = 0; i < familyPlans.length; i++) {
     const familyPlanDiv = familyPlans[i];
     const planSelect = familyPlanDiv.querySelector(".family-plan-select");
-    const familyPlanName = planSelect.options[planSelect.selectedIndex].text;
+    const familyPlanNameFull =
+      planSelect.options[planSelect.selectedIndex].text;
     const familyPlanPrice = parseFloat(planSelect.value);
+
+    // Ekstraher kun abonnementsnavnet uten pris
+    const familyPlanName = familyPlanNameFull.split(" - ")[0];
 
     plansDetails += `<p>Familieabonnement ${
       i + 1
@@ -268,7 +276,11 @@ function updateResultDisplay() {
 
     // Hent planens navn for hver familieplan
     const planSelect = familyPlanDiv.querySelector(".family-plan-select");
-    const familyPlanName = planSelect.options[planSelect.selectedIndex].text;
+    const familyPlanNameFull =
+      planSelect.options[planSelect.selectedIndex].text;
+
+    // Ekstraher kun abonnementsnavnet uten pris
+    const familyPlanName = familyPlanNameFull.split(" - ")[0];
 
     if (twinSimCount > 0) {
       const twinSimPrice = familyPlanName.includes("Telia X") ? 89 : 49;
