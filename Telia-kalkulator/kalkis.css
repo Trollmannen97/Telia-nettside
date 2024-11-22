@@ -210,10 +210,6 @@ addon-container {
     opacity: 1;
 }
 
-.family-sim-options {
-    display: none;
-
-}
 
 /* Fjern knapp for familieplan */
 .remove-family-plan {
