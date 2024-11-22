@@ -35,7 +35,6 @@ function toggleCustomerType() {
     setDisplay(singleSimOptions, "none");
     setDisplay(familySimOptions, "flex");
     setDisplay(addonsSection, "none");
-    setDisplay(family - sim - options, "none");
   }
 }
 
@@ -338,6 +337,43 @@ function updateResultDisplay() {
   });
   addonDetailsElement.innerHTML =
     addonDetails || "<p>Ingen tilleggstjenester valgt</p>";
+}
+
+// Funksjon for å oppdatere SIM-prisen når brukeren endrer antall SIM-kort
+function updateSimPrice(element) {
+  // Finn det overordnede plan-elementet (kan være enkel kunde eller familieplan)
+  const planDiv =
+    element.closest(".family-plan") ||
+    document.getElementById("singlePlanOptions");
+  let planType = "";
+
+  // Sjekk om det er en familieplan eller enkel kunde
+  if (planDiv.querySelector(".family-plan-select")) {
+    // Familieplan
+    planType = planDiv.querySelector(
+      ".family-plan-select option:checked"
+    ).textContent;
+  } else {
+    // Enkel kunde
+    const planSelect = document.getElementById("plan");
+    planType = planSelect.options[planSelect.selectedIndex].text;
+  }
+
+  // Hent antall TvillingSIM og DataSIM
+  const twinSimCount =
+    parseInt(planDiv.querySelector(".twinsim-select").value) || 0;
+  const dataSimCount =
+    parseInt(planDiv.querySelector(".datasim-select").value) || 0;
+
+  // Beregn SIM-prisen
+  const simPrices = calculateSimPrice(planType, twinSimCount, dataSimCount);
+  const totalSimPrice = simPrices.twinSimPrice + simPrices.dataSimPrice;
+
+  // Oppdater visningen av SIM-prisen
+  const simPriceElement = planDiv.querySelector(".family-plan-price");
+  if (simPriceElement) {
+    simPriceElement.textContent = `SIM-kort: ${totalSimPrice.toFixed(2)} kr`;
+  }
 }
 
 // Funksjon for å beregne totalprisen i kalkulatoren.
