@@ -35,6 +35,7 @@ function toggleCustomerType() {
     setDisplay(singleSimOptions, "none");
     setDisplay(familySimOptions, "flex");
     setDisplay(addonsSection, "none");
+    seetDisplay(family - sim - options, "none");
   }
 }
 
