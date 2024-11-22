@@ -235,10 +235,25 @@ function updateResultDisplay() {
     typeof discountPercentage
   );
 
-  // Hovednummer har fullpris (ingen rabatt)
-  let plansDetails = `<p>Hovedabonnement: ${planName} - ${selectedPlanPrice.toFixed(
+  // **Beregn rabattbeløpet for hovedabonnementet**
+  const mainDiscountAmount = (selectedPlanPrice * discountPercentage) / 100;
+  const discountedMainPlanPrice = selectedPlanPrice - mainDiscountAmount;
+
+  // **Vis hovedabonnementet med rabattert pris**
+  let plansDetails = `<p>Hovedabonnement: ${planName} - ${discountedMainPlanPrice.toFixed(
     2
   )} kr</p>`;
+
+  // **Vis rabattinformasjon for hovedabonnementet**
+  let discountDetails = "";
+
+  if (Number(discountPercentage) > 0) {
+    discountDetails += `<p>Hovedabonnement: ${discountPercentage}% rabatt (${mainDiscountAmount.toFixed(
+      2
+    )} kr trukket fra)</p>`;
+  } else {
+    discountDetails += `<p>Hovedabonnement: Ingen rabatt</p>`;
+  }
 
   // **Legg til familieabonnementene**
   const familyPlans = document.getElementsByClassName("family-plan");
@@ -252,44 +267,16 @@ function updateResultDisplay() {
     // Ekstraher kun abonnementsnavnet uten pris
     const familyPlanName = familyPlanNameFull.split(" - ")[0];
 
-    // Hent den valgte rabattprosenten for hovednummeret
-    const discountSelect = document.getElementById("discount");
-    const discountPercentage = parseFloat(discountSelect.value) || 0;
-
-    // Beregn rabattbeløpet for hovedabonnementet
-    const mainDiscountAmount = (selectedPlanPrice * discountPercentage) / 100;
-    const discountedMainPlanPrice = selectedPlanPrice - mainDiscountAmount;
-
-    // Vis rabattinformasjon for hovedabonnementet
-    let discountDetails = "";
-
-    console.log("discountPercentage før if-sjekk:", discountPercentage);
-
-    if (discountPercentage > 0) {
-      console.log("Går inn i if-blokken for hovedabonnementets rabatt");
-
-      discountDetails += `<p>Hovedabonnement: ${discountPercentage}% rabatt (${mainDiscountAmount.toFixed(
-        2
-      )} kr trukket fra)</p>`;
-    } else {
-      console.log("Går inn i else-blokken for hovedabonnementets rabatt");
-      discountDetails += `<p>Hovedabonnement: Ingen rabatt</p>`;
-    }
-
-    // Vis hovedabonnementet med rabattert pris
-    selectedPlanElement.innerHTML = `<p>Hovedabonnement: ${planName} - ${discountedMainPlanPrice.toFixed(
-      2
-    )} kr</p>`;
-
-    // Beregn rabatt
+    // Beregn rabatt for familieabonnementet
     const discount = getFamilyDiscount(familyPlanPrice, familyPlanName, false);
     const discountedPrice = familyPlanPrice - discount;
 
+    // Legg til familieabonnementet til 'plansDetails'
     plansDetails += `<p>Familieabonnement ${
       i + 1
     }: ${familyPlanName} - ${discountedPrice.toFixed(2)} kr</p>`;
 
-    // Legg til rabattinformasjon
+    // Legg til rabattinformasjon for familieabonnementet
     if (discount > 0) {
       discountDetails += `<p>${familyPlanName}: Rabatt på ${discount} kr</p>`;
     } else {
@@ -297,13 +284,10 @@ function updateResultDisplay() {
     }
   }
 
-  // Oppdater 'Rabatt' med rabattinformasjon
-  discountDetailsElement.innerHTML = discountDetails;
-
-  // Oppdater 'Valgt Abonnement' med alle abonnementer
+  // **Oppdater 'Valgt Abonnement' med alle abonnementer**
   selectedPlanElement.innerHTML = plansDetails;
 
-  // Oppdater 'Rabatt' med rabattinformasjon
+  // **Oppdater 'Rabatt' med rabattinformasjon**
   discountDetailsElement.innerHTML = discountDetails;
 
   // **Vis SIM-valg**
@@ -351,9 +335,11 @@ function updateResultDisplay() {
       simDetails += `<p>${familyPlanName} - DataSIM: ${dataSimCount} x ${dataSimPrice} kr</p>`;
     }
   }
+
+  // **Oppdater 'SIM-valg' med SIM-detaljer**
   simDetailsElement.innerHTML = simDetails || "<p>Ingen SIM-valg</p>";
 
-  // Vis tilleggstjenester
+  // **Vis tilleggstjenester**
   const selectedAddons = document.querySelectorAll(".addon-icon.selected");
   let addonDetails = "";
   selectedAddons.forEach(function (addon) {
