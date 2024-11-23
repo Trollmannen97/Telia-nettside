@@ -140,6 +140,7 @@ button:hover {
     border: 1px solid #ddd;
     margin-top: 25px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    display: none;
     
 }
 
@@ -148,6 +149,7 @@ button:hover {
     justify-content: space-between; /* Sørger for avstand mellom TvillingSIM og DataSIM */
     gap: 10px; /* Avstand mellom TvillingSIM og DataSIM for familien */
     margin-bottom: 15px; /* Litt avstand nederst */
+    display: none;
 }
 
 .family-sim-option {
@@ -172,13 +174,14 @@ button:hover {
 
 /* Flexbox for familieplan */
 .family-plan {
-    display: none;
+    display: flex; 
     flex-direction: column; /* Slik at alle elementer er vertikalt stablet */
     align-items: center;
     margin-bottom: 20px;
     padding-bottom: 15px;
     border-bottom: 1px solid #ddd;
     width: 100%;
+
 }
 
 
