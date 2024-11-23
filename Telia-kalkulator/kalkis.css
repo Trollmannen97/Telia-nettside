@@ -181,7 +181,9 @@ button:hover {
     width: 100%;
 }
 
-
+.family-sim-options {
+    display: none !important;
+}
 
 
 addon-container {
