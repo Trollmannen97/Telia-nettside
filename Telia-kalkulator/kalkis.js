@@ -12,17 +12,17 @@ function toggleCustomerType() {
     "#singlePlanOptions .addon-container"
   );
 
- // Hjelpefunksjon for å sette display-stil
-function setDisplay(element, displayStyle) {
-  if (element) {
+  // Hjelpefunksjon for å sette display-stil
+  function setDisplay(element, displayStyle) {
+    if (element) {
       console.log(`Setting ${element.className} to ${displayStyle}`); // Debugging
       element.style.display = displayStyle;
+    }
   }
-}
 
-// Oppdater radioknapp-logikk
-function updateView() {
-  if (singleRadio.checked) {
+  // Oppdater radioknapp-logikk
+  function updateView() {
+    if (singleRadio.checked) {
       // Enkel kunde er valgt
       setDisplay(familySection, "none");
       setDisplay(familyDiscountSection, "none");
@@ -30,7 +30,7 @@ function updateView() {
       setDisplay(singleSimOptions, "flex");
       setDisplay(familySimOptions, "none");
       setDisplay(addonsSection, "block");
-  } else if (familyRadio.checked) {
+    } else if (familyRadio.checked) {
       // Familie er valgt
       setDisplay(familySection, "block");
       setDisplay(familyDiscountSection, "block");
@@ -38,29 +38,28 @@ function updateView() {
       setDisplay(singleSimOptions, "none");
       setDisplay(familySimOptions, "flex");
       setDisplay(addonsSection, "none");
-  } else {
+    } else {
       console.error("No valid radio button selected!");
+    }
   }
-}
 
-// Legg til event listeners på radio-knapper
-singleRadio.addEventListener("change", updateView);
-familyRadio.addEventListener("change", updateView);
+  // Legg til event listeners på radio-knapper
+  singleRadio.addEventListener("change", updateView);
+  familyRadio.addEventListener("change", updateView);
 
-// Kall funksjonen ved last:
-updateView();
+  // Kall funksjonen ved last:
+  updateView();
 
+  // Funksjon for å legge til et nytt familieabonnement
+  function addFamilyPlan() {
+    const familyPlans = document.getElementById("familyPlans");
 
-// Funksjon for å legge til et nytt familieabonnement
-function addFamilyPlan() {
-  const familyPlans = document.getElementById("familyPlans");
+    // Opprette en ny div for familieabonnement med tilleggstjenester
+    const newDiv = document.createElement("div");
+    newDiv.classList.add("family-plan");
 
-  // Opprette en ny div for familieabonnement med tilleggstjenester
-  const newDiv = document.createElement("div");
-  newDiv.classList.add("family-plan");
-
-  // Bruk malstreng for bedre lesbarhet
-  newDiv.innerHTML = `
+    // Bruk malstreng for bedre lesbarhet
+    newDiv.innerHTML = `
     <select class="family-plan-select">
       <option value="129">Telia Junior 1GB - 129kr</option>
       <option value="179">Telia Junior 5GB - 179kr</option>
@@ -101,389 +100,402 @@ function addFamilyPlan() {
     <button type="button" class="remove-family-plan" onclick="removeFamilyPlan(this)">Fjern</button>
   `;
 
-  familyPlans.appendChild(newDiv);
-}
-
-// Funksjon for å håndtere tilleggstjenester
-function toggleAddon(element) {
-  // Hent prisen fra data-attributten
-  const addonPrice = parseFloat(element.getAttribute("data-price")) || 0;
-
-  // Toggle 'selected'-klassen og oppdater totalprisen
-  const isSelected = element.classList.toggle("selected");
-  updateTotalPrice(isSelected ? addonPrice : -addonPrice);
-}
-
-// Oppdaterer totalprisen
-function updateTotalPrice(amount) {
-  const totalDisplay = document.getElementById("finalPrice"); // Elementet som viser totalprisen
-  const currentTotal = parseFloat(totalDisplay.dataset.total) || 0;
-  const newTotal = currentTotal + amount;
-
-  // Oppdater data-attributten og visningsverdien
-  totalDisplay.dataset.total = newTotal;
-  totalDisplay.innerText = `Endelig pris: ${newTotal.toFixed(2)} kr`;
-}
-
-// Funksjon for å fjerne et familieabonnement
-function removeFamilyPlan(element) {
-  const familyPlans = document.getElementById("familyPlans");
-  const plan = element.parentElement;
-
-  if (familyPlans.contains(plan)) {
-    familyPlans.removeChild(plan);
-  }
-}
-
-// Funksjon for å hente familierabatten basert på valgt plan
-function getFamilyDiscount(planValue, planText, isMainNumber) {
-  const familyDiscountRates = {
-    teliaX: 100, // 100 kr rabatt for Telia X-abonnement
-    teliaMobile: 30, // 30 kr rabatt for Telia Junior, 5GB og 10GB
-  };
-
-  if (isMainNumber) {
-    // Ingen rabatt for hovednummeret
-    return 0;
+    familyPlans.appendChild(newDiv);
   }
 
-  if (planText.includes("Telia X Start")) {
-    return familyDiscountRates.teliaX;
+  // Funksjon for å håndtere tilleggstjenester
+  function toggleAddon(element) {
+    // Hent prisen fra data-attributten
+    const addonPrice = parseFloat(element.getAttribute("data-price")) || 0;
+
+    // Toggle 'selected'-klassen og oppdater totalprisen
+    const isSelected = element.classList.toggle("selected");
+    updateTotalPrice(isSelected ? addonPrice : -addonPrice);
   }
 
-  if (
-    planText.includes("Telia X") &&
-    !planText.includes("Telia X Ung") &&
-    planValue >= 399
-  ) {
-    return familyDiscountRates.teliaX;
+  // Oppdaterer totalprisen
+  function updateTotalPrice(amount) {
+    const totalDisplay = document.getElementById("finalPrice"); // Elementet som viser totalprisen
+    const currentTotal = parseFloat(totalDisplay.dataset.total) || 0;
+    const newTotal = currentTotal + amount;
+
+    // Oppdater data-attributten og visningsverdien
+    totalDisplay.dataset.total = newTotal;
+    totalDisplay.innerText = `Endelig pris: ${newTotal.toFixed(2)} kr`;
   }
 
-  if (
-    planText.includes("5GB") ||
-    planText.includes("10GB") ||
-    planText.includes("Junior")
-  ) {
-    return familyDiscountRates.teliaMobile;
+  // Funksjon for å fjerne et familieabonnement
+  function removeFamilyPlan(element) {
+    const familyPlans = document.getElementById("familyPlans");
+    const plan = element.parentElement;
+
+    if (familyPlans.contains(plan)) {
+      familyPlans.removeChild(plan);
+    }
   }
 
-  return 0; // Ingen rabatt hvis ingen betingelser er oppfylt
-}
+  // Funksjon for å hente familierabatten basert på valgt plan
+  function getFamilyDiscount(planValue, planText, isMainNumber) {
+    const familyDiscountRates = {
+      teliaX: 100, // 100 kr rabatt for Telia X-abonnement
+      teliaMobile: 30, // 30 kr rabatt for Telia Junior, 5GB og 10GB
+    };
 
-// Funksjon for å beregne prisen på TvillingSIM og DataSIM
-function calculateSimPrice(planType, twinSimCount, dataSimCount) {
-  let twinSimPrice = 0;
-  let dataSimPrice = 0;
-  const totalSimCount = twinSimCount + dataSimCount;
-  let simPricePerUnit = 49; // Standardpris
+    if (isMainNumber) {
+      // Ingen rabatt for hovednummeret
+      return 0;
+    }
 
-  if (planType.includes("Max Pluss")) {
-    const freeSimCards = 2;
-    const chargeableSimCount = Math.max(0, totalSimCount - freeSimCards);
-    simPricePerUnit = 89;
-    twinSimPrice = chargeableSimCount * simPricePerUnit;
-    dataSimPrice = chargeableSimCount * simPricePerUnit;
-  } else if (planType.includes("Telia X")) {
-    simPricePerUnit = 89;
-    twinSimPrice = twinSimCount * simPricePerUnit;
-    dataSimPrice = dataSimCount * simPricePerUnit;
-  } else {
-    // For andre abonnementer beholder vi standardprisen på 49
-    twinSimPrice = twinSimCount * simPricePerUnit;
-    dataSimPrice = dataSimCount * simPricePerUnit;
+    if (planText.includes("Telia X Start")) {
+      return familyDiscountRates.teliaX;
+    }
+
+    if (
+      planText.includes("Telia X") &&
+      !planText.includes("Telia X Ung") &&
+      planValue >= 399
+    ) {
+      return familyDiscountRates.teliaX;
+    }
+
+    if (
+      planText.includes("5GB") ||
+      planText.includes("10GB") ||
+      planText.includes("Junior")
+    ) {
+      return familyDiscountRates.teliaMobile;
+    }
+
+    return 0; // Ingen rabatt hvis ingen betingelser er oppfylt
   }
 
-  return { twinSimPrice, dataSimPrice };
-}
+  // Funksjon for å beregne prisen på TvillingSIM og DataSIM
+  function calculateSimPrice(planType, twinSimCount, dataSimCount) {
+    let twinSimPrice = 0;
+    let dataSimPrice = 0;
+    const totalSimCount = twinSimCount + dataSimCount;
+    let simPricePerUnit = 49; // Standardpris
 
-// Funksjon for å vise detaljert resultat
-function updateResultDisplay() {
-  // Hent HTML-elementene for å vise valgt informasjon
-  const selectedPlanElement = document.getElementById("selectedPlan");
-  const discountDetailsElement = document.getElementById("discountDetails");
-  const simDetailsElement = document.getElementById("simDetails");
-  const addonDetailsElement = document.getElementById("addonDetails");
+    if (planType.includes("Max Pluss")) {
+      const freeSimCards = 2;
+      const chargeableSimCount = Math.max(0, totalSimCount - freeSimCards);
+      simPricePerUnit = 89;
+      twinSimPrice = chargeableSimCount * simPricePerUnit;
+      dataSimPrice = chargeableSimCount * simPricePerUnit;
+    } else if (planType.includes("Telia X")) {
+      simPricePerUnit = 89;
+      twinSimPrice = twinSimCount * simPricePerUnit;
+      dataSimPrice = dataSimCount * simPricePerUnit;
+    } else {
+      // For andre abonnementer beholder vi standardprisen på 49
+      twinSimPrice = twinSimCount * simPricePerUnit;
+      dataSimPrice = dataSimCount * simPricePerUnit;
+    }
 
-  // Sjekk om elementene eksisterer
-  if (
-    !selectedPlanElement ||
-    !discountDetailsElement ||
-    !simDetailsElement ||
-    !addonDetailsElement
-  ) {
-    console.error("Ett eller flere nødvendige HTML-elementer ble ikke funnet.");
-    return;
+    return { twinSimPrice, dataSimPrice };
   }
 
-  // Tøm innholdet i elementene for å starte på nytt
-  selectedPlanElement.innerHTML = "";
-  discountDetailsElement.innerHTML = "";
-  simDetailsElement.innerHTML = "";
-  addonDetailsElement.innerHTML = "";
+  // Funksjon for å vise detaljert resultat
+  function updateResultDisplay() {
+    // Hent HTML-elementene for å vise valgt informasjon
+    const selectedPlanElement = document.getElementById("selectedPlan");
+    const discountDetailsElement = document.getElementById("discountDetails");
+    const simDetailsElement = document.getElementById("simDetails");
+    const addonDetailsElement = document.getElementById("addonDetails");
 
-  // **Vis hovedabonnementet**
-  const plan = document.getElementById("plan");
-  const planNameFull = plan.options[plan.selectedIndex].text;
-  const selectedPlanPrice = parseFloat(plan.value);
+    // Sjekk om elementene eksisterer
+    if (
+      !selectedPlanElement ||
+      !discountDetailsElement ||
+      !simDetailsElement ||
+      !addonDetailsElement
+    ) {
+      console.error(
+        "Ett eller flere nødvendige HTML-elementer ble ikke funnet."
+      );
+      return;
+    }
 
-  // Ekstraher kun abonnementsnavnet uten pris
-  const planName = planNameFull.split(" - ")[0];
+    // Tøm innholdet i elementene for å starte på nytt
+    selectedPlanElement.innerHTML = "";
+    discountDetailsElement.innerHTML = "";
+    simDetailsElement.innerHTML = "";
+    addonDetailsElement.innerHTML = "";
 
-  // Hent den valgte rabattprosenten for hovednummeret
-  const discountSelect = document.getElementById("discount");
-  if (!discountSelect) {
-    console.error("Elementet med ID 'discount' ble ikke funnet.");
-    return;
-  }
-  const discountValue = discountSelect.value || "0";
-  const discountPercentage = parseFloat(discountValue) || 0;
-
-  // Debugging
-  console.log("Discount select element:", discountSelect);
-  console.log("Discount value:", discountValue);
-  console.log(
-    "discountPercentage:",
-    discountPercentage,
-    "Type:",
-    typeof discountPercentage
-  );
-
-  // **Beregn rabattbeløpet for hovedabonnementet**
-  const mainDiscountAmount = (selectedPlanPrice * discountPercentage) / 100;
-  const discountedMainPlanPrice = selectedPlanPrice - mainDiscountAmount;
-
-  // **Vis hovedabonnementet med rabattert pris**
-  let plansDetails = `<p>Hovedabonnement: ${planName} - ${discountedMainPlanPrice.toFixed(
-    2
-  )} kr</p>`;
-
-  // **Vis rabattinformasjon for hovedabonnementet**
-  let discountDetails = "";
-
-  if (Number(discountPercentage) > 0) {
-    discountDetails += `<p>Hovedabonnement: ${discountPercentage}% rabatt (${mainDiscountAmount.toFixed(
-      2
-    )} kr trukket fra)</p>`;
-  } else {
-    discountDetails += `<p>Hovedabonnement: Ingen rabatt</p>`;
-  }
-
-  // **Legg til familieabonnementene**
-  const familyPlans = document.getElementsByClassName("family-plan");
-  for (let i = 0; i < familyPlans.length; i++) {
-    const familyPlanDiv = familyPlans[i];
-    const planSelect = familyPlanDiv.querySelector(".family-plan-select");
-    const familyPlanNameFull =
-      planSelect.options[planSelect.selectedIndex].text;
-    const familyPlanPrice = parseFloat(planSelect.value);
+    // **Vis hovedabonnementet**
+    const plan = document.getElementById("plan");
+    const planNameFull = plan.options[plan.selectedIndex].text;
+    const selectedPlanPrice = parseFloat(plan.value);
 
     // Ekstraher kun abonnementsnavnet uten pris
-    const familyPlanName = familyPlanNameFull.split(" - ")[0];
+    const planName = planNameFull.split(" - ")[0];
 
-    // Beregn rabatt for familieabonnementet
-    const discount = getFamilyDiscount(familyPlanPrice, familyPlanName, false);
-    const discountedPrice = familyPlanPrice - discount;
-
-    // Legg til familieabonnementet til 'plansDetails'
-    plansDetails += `<p>Familieabonnement ${
-      i + 1
-    }: ${familyPlanName} - ${discountedPrice.toFixed(2)} kr</p>`;
-
-    // Legg til rabattinformasjon for familieabonnementet
-    if (discount > 0) {
-      discountDetails += `<p>${familyPlanName}: Rabatt på ${discount} kr</p>`;
-    } else {
-      discountDetails += `<p>${familyPlanName}: Ingen rabatt</p>`;
+    // Hent den valgte rabattprosenten for hovednummeret
+    const discountSelect = document.getElementById("discount");
+    if (!discountSelect) {
+      console.error("Elementet med ID 'discount' ble ikke funnet.");
+      return;
     }
-  }
+    const discountValue = discountSelect.value || "0";
+    const discountPercentage = parseFloat(discountValue) || 0;
 
-  // **Oppdater 'Valgt Abonnement' med alle abonnementer**
-  selectedPlanElement.innerHTML = plansDetails;
-
-  // **Oppdater 'Rabatt' med rabattinformasjon**
-  discountDetailsElement.innerHTML = discountDetails;
-
-  // **Vis SIM-valg**
-  let simDetails = "";
-
-  // **Hovedabonnementets SIM-valg**
-  const twinSimCountMain = parseInt(
-    document.getElementById("singleTwinsimSelect").value
-  );
-  const dataSimCountMain = parseInt(
-    document.getElementById("singleDatasimSelect").value
-  );
-
-  if (twinSimCountMain > 0) {
-    const twinSimPriceMain = planName.includes("Telia X") ? 89 : 49;
-    simDetails += `<p>Hovedabonnement - TvillingSIM: ${twinSimCountMain} x ${twinSimPriceMain} kr</p>`;
-  }
-  if (dataSimCountMain > 0) {
-    const dataSimPriceMain = planName.includes("Telia X") ? 89 : 49;
-    simDetails += `<p>Hovedabonnement - DataSIM: ${dataSimCountMain} x ${dataSimPriceMain} kr</p>`;
-  }
-
-  // **Familieabonnementenes SIM-valg**
-  for (let i = 0; i < familyPlans.length; i++) {
-    const familyPlanDiv = familyPlans[i];
-    const twinSimCount = parseInt(
-      familyPlanDiv.querySelector(".twinsim-select").value
-    );
-    const dataSimCount = parseInt(
-      familyPlanDiv.querySelector(".datasim-select").value
-    );
-
-    // Hent planens navn for hver familieplan
-    const planSelect = familyPlanDiv.querySelector(".family-plan-select");
-    const familyPlanNameFull =
-      planSelect.options[planSelect.selectedIndex].text;
-    const familyPlanName = familyPlanNameFull.split(" - ")[0];
-
-    if (twinSimCount > 0) {
-      const twinSimPrice = familyPlanName.includes("Telia X") ? 89 : 49;
-      simDetails += `<p>${familyPlanName} - TvillingSIM: ${twinSimCount} x ${twinSimPrice} kr</p>`;
-    }
-    if (dataSimCount > 0) {
-      const dataSimPrice = familyPlanName.includes("Telia X") ? 89 : 49;
-      simDetails += `<p>${familyPlanName} - DataSIM: ${dataSimCount} x ${dataSimPrice} kr</p>`;
-    }
-  }
-
-  // **Oppdater 'SIM-valg' med SIM-detaljer**
-  simDetailsElement.innerHTML = simDetails || "<p>Ingen SIM-valg</p>";
-
-  // **Vis tilleggstjenester**
-  const selectedAddons = document.querySelectorAll(".addon-icon.selected");
-  let addonDetails = "";
-  selectedAddons.forEach(function (addon) {
-    const addonName = addon.alt;
-    const addonPrice = parseFloat(addon.getAttribute("data-price"));
-    addonDetails += `<p>${addonName} - ${addonPrice.toFixed(2)} kr</p>`;
-  });
-  addonDetailsElement.innerHTML =
-    addonDetails || "<p>Ingen tilleggstjenester valgt</p>";
-}
-
-// Funksjon for å oppdatere SIM-prisen når brukeren endrer antall SIM-kort
-function updateSimPrice(element) {
-  // Finn det overordnede plan-elementet (kan være enkel kunde eller familieplan)
-  const planDiv =
-    element.closest(".family-plan") ||
-    document.getElementById("singlePlanOptions");
-  let planType = "";
-
-  // Sjekk om det er en familieplan eller enkel kunde
-  if (planDiv.querySelector(".family-plan-select")) {
-    // Familieplan
-    planType = planDiv.querySelector(
-      ".family-plan-select option:checked"
-    ).textContent;
-  } else {
-    // Enkel kunde
-    const planSelect = document.getElementById("plan");
-    planType = planSelect.options[planSelect.selectedIndex].text;
-  }
-
-  // Hent antall TvillingSIM og DataSIM
-  const twinSimCount =
-    parseInt(planDiv.querySelector(".twinsim-select").value) || 0;
-  const dataSimCount =
-    parseInt(planDiv.querySelector(".datasim-select").value) || 0;
-
-  // Beregn SIM-prisen
-  const simPrices = calculateSimPrice(planType, twinSimCount, dataSimCount);
-  const totalSimPrice = simPrices.twinSimPrice + simPrices.dataSimPrice;
-
-  // Oppdater visningen av SIM-prisen
-  const simPriceElement = planDiv.querySelector(".family-plan-price");
-  if (simPriceElement) {
-    simPriceElement.textContent = `SIM-kort: ${totalSimPrice.toFixed(2)} kr`;
-  }
-}
-
-// Funksjon for å beregne totalprisen i kalkulatoren.
-function calculateTotalPrice() {
-  let totalPrice = 0;
-
-  // Hent hovedabonnementet
-  const plan = document.getElementById("plan");
-  const planNameFull = plan.options[plan.selectedIndex].text;
-  const selectedPlanPrice = parseFloat(plan.value);
-
-  // Ekstraher kun abonnementsnavnet uten pris
-  const planName = planNameFull.split(" - ")[0];
-  let planPrice = selectedPlanPrice;
-
-  // Hent den valgte rabattprosenten for hovednummeret
-  const discountSelect = document.getElementById("discount");
-  const discountPercentage = parseFloat(discountSelect.value) || 0;
-
-  // Beregn rabattbeløpet for hovedabonnementet
-  const mainDiscountAmount = (planPrice * discountPercentage) / 100;
-  const discountedMainPlanPrice = planPrice - mainDiscountAmount;
-
-  // Legg til hovedabonnementets pris til totalprisen
-  totalPrice += discountedMainPlanPrice;
-
-  // Håndter SIM-kostnader for hovedabonnementet
-  const twinSimCountMain = parseInt(
-    document.getElementById("singleTwinsimSelect").value
-  );
-  const dataSimCountMain = parseInt(
-    document.getElementById("singleDatasimSelect").value
-  );
-
-  // Beregn SIM-priser for hovedabonnementet
-  let simPriceMain = 0;
-  let simPricePerUnitMain = planName.includes("Telia X") ? 89 : 49;
-  simPriceMain += twinSimCountMain * simPricePerUnitMain;
-  simPriceMain += dataSimCountMain * simPricePerUnitMain;
-
-  // Legg til SIM-kostnader til totalpris
-  totalPrice += simPriceMain;
-
-  // Håndter familieabonnementer
-  const familyPlans = document.querySelectorAll(".family-plan");
-  familyPlans.forEach(function (plan) {
-    let planPrice = parseFloat(plan.querySelector(".family-plan-select").value);
-    const planTextFull = plan.querySelector(
-      ".family-plan-select option:checked"
-    ).textContent;
-    const planText = planTextFull.split(" - ")[0];
-
-    // Beregn rabatt for familieabonnementet
-    const discount = getFamilyDiscount(planPrice, planText, false);
-    let discountedPlanPrice = planPrice - discount;
-
-    // Logg rabattberegning
+    // Debugging
+    console.log("Discount select element:", discountSelect);
+    console.log("Discount value:", discountValue);
     console.log(
-      `Plan: ${planText}, Original pris: ${planPrice}, Rabatt: ${discount}, Pris etter rabatt: ${discountedPlanPrice}`
+      "discountPercentage:",
+      discountPercentage,
+      "Type:",
+      typeof discountPercentage
     );
 
-    // Hent SIM-kostnadene for familieabonnementet
-    const twinSimCount = parseInt(plan.querySelector(".twinsim-select").value);
-    const dataSimCount = parseInt(plan.querySelector(".datasim-select").value);
+    // **Beregn rabattbeløpet for hovedabonnementet**
+    const mainDiscountAmount = (selectedPlanPrice * discountPercentage) / 100;
+    const discountedMainPlanPrice = selectedPlanPrice - mainDiscountAmount;
 
-    // Beregn SIM-priser for familieabonnementet
-    let simPrice = 0;
-    let simPricePerUnit = planText.includes("Telia X") ? 89 : 49;
-    simPrice += twinSimCount * simPricePerUnit;
-    simPrice += dataSimCount * simPricePerUnit;
+    // **Vis hovedabonnementet med rabattert pris**
+    let plansDetails = `<p>Hovedabonnement: ${planName} - ${discountedMainPlanPrice.toFixed(
+      2
+    )} kr</p>`;
 
-    // Legg til planpris og SIM-kostnader til totalpris
-    totalPrice += discountedPlanPrice + simPrice;
+    // **Vis rabattinformasjon for hovedabonnementet**
+    let discountDetails = "";
 
-    // Logg totalpris etter hvert abonnement
-    console.log(`Totalpris etter ${planText}: ${totalPrice}`);
-  });
+    if (Number(discountPercentage) > 0) {
+      discountDetails += `<p>Hovedabonnement: ${discountPercentage}% rabatt (${mainDiscountAmount.toFixed(
+        2
+      )} kr trukket fra)</p>`;
+    } else {
+      discountDetails += `<p>Hovedabonnement: Ingen rabatt</p>`;
+    }
 
-  // Oppdater totalprisen i DOM
-  document.getElementById("finalPrice").textContent =
-    "Endelig pris: " + totalPrice.toFixed(2) + " kr";
+    // **Legg til familieabonnementene**
+    const familyPlans = document.getElementsByClassName("family-plan");
+    for (let i = 0; i < familyPlans.length; i++) {
+      const familyPlanDiv = familyPlans[i];
+      const planSelect = familyPlanDiv.querySelector(".family-plan-select");
+      const familyPlanNameFull =
+        planSelect.options[planSelect.selectedIndex].text;
+      const familyPlanPrice = parseFloat(planSelect.value);
 
-  // Logg sluttresultatet
-  console.log("Endelig totalpris:", totalPrice);
+      // Ekstraher kun abonnementsnavnet uten pris
+      const familyPlanName = familyPlanNameFull.split(" - ")[0];
 
-  // Oppdater resultatvisningen
-  updateResultDisplay();
+      // Beregn rabatt for familieabonnementet
+      const discount = getFamilyDiscount(
+        familyPlanPrice,
+        familyPlanName,
+        false
+      );
+      const discountedPrice = familyPlanPrice - discount;
+
+      // Legg til familieabonnementet til 'plansDetails'
+      plansDetails += `<p>Familieabonnement ${
+        i + 1
+      }: ${familyPlanName} - ${discountedPrice.toFixed(2)} kr</p>`;
+
+      // Legg til rabattinformasjon for familieabonnementet
+      if (discount > 0) {
+        discountDetails += `<p>${familyPlanName}: Rabatt på ${discount} kr</p>`;
+      } else {
+        discountDetails += `<p>${familyPlanName}: Ingen rabatt</p>`;
+      }
+    }
+
+    // **Oppdater 'Valgt Abonnement' med alle abonnementer**
+    selectedPlanElement.innerHTML = plansDetails;
+
+    // **Oppdater 'Rabatt' med rabattinformasjon**
+    discountDetailsElement.innerHTML = discountDetails;
+
+    // **Vis SIM-valg**
+    let simDetails = "";
+
+    // **Hovedabonnementets SIM-valg**
+    const twinSimCountMain = parseInt(
+      document.getElementById("singleTwinsimSelect").value
+    );
+    const dataSimCountMain = parseInt(
+      document.getElementById("singleDatasimSelect").value
+    );
+
+    if (twinSimCountMain > 0) {
+      const twinSimPriceMain = planName.includes("Telia X") ? 89 : 49;
+      simDetails += `<p>Hovedabonnement - TvillingSIM: ${twinSimCountMain} x ${twinSimPriceMain} kr</p>`;
+    }
+    if (dataSimCountMain > 0) {
+      const dataSimPriceMain = planName.includes("Telia X") ? 89 : 49;
+      simDetails += `<p>Hovedabonnement - DataSIM: ${dataSimCountMain} x ${dataSimPriceMain} kr</p>`;
+    }
+
+    // **Familieabonnementenes SIM-valg**
+    for (let i = 0; i < familyPlans.length; i++) {
+      const familyPlanDiv = familyPlans[i];
+      const twinSimCount = parseInt(
+        familyPlanDiv.querySelector(".twinsim-select").value
+      );
+      const dataSimCount = parseInt(
+        familyPlanDiv.querySelector(".datasim-select").value
+      );
+
+      // Hent planens navn for hver familieplan
+      const planSelect = familyPlanDiv.querySelector(".family-plan-select");
+      const familyPlanNameFull =
+        planSelect.options[planSelect.selectedIndex].text;
+      const familyPlanName = familyPlanNameFull.split(" - ")[0];
+
+      if (twinSimCount > 0) {
+        const twinSimPrice = familyPlanName.includes("Telia X") ? 89 : 49;
+        simDetails += `<p>${familyPlanName} - TvillingSIM: ${twinSimCount} x ${twinSimPrice} kr</p>`;
+      }
+      if (dataSimCount > 0) {
+        const dataSimPrice = familyPlanName.includes("Telia X") ? 89 : 49;
+        simDetails += `<p>${familyPlanName} - DataSIM: ${dataSimCount} x ${dataSimPrice} kr</p>`;
+      }
+    }
+
+    // **Oppdater 'SIM-valg' med SIM-detaljer**
+    simDetailsElement.innerHTML = simDetails || "<p>Ingen SIM-valg</p>";
+
+    // **Vis tilleggstjenester**
+    const selectedAddons = document.querySelectorAll(".addon-icon.selected");
+    let addonDetails = "";
+    selectedAddons.forEach(function (addon) {
+      const addonName = addon.alt;
+      const addonPrice = parseFloat(addon.getAttribute("data-price"));
+      addonDetails += `<p>${addonName} - ${addonPrice.toFixed(2)} kr</p>`;
+    });
+    addonDetailsElement.innerHTML =
+      addonDetails || "<p>Ingen tilleggstjenester valgt</p>";
+  }
+
+  // Funksjon for å oppdatere SIM-prisen når brukeren endrer antall SIM-kort
+  function updateSimPrice(element) {
+    // Finn det overordnede plan-elementet (kan være enkel kunde eller familieplan)
+    const planDiv =
+      element.closest(".family-plan") ||
+      document.getElementById("singlePlanOptions");
+    let planType = "";
+
+    // Sjekk om det er en familieplan eller enkel kunde
+    if (planDiv.querySelector(".family-plan-select")) {
+      // Familieplan
+      planType = planDiv.querySelector(
+        ".family-plan-select option:checked"
+      ).textContent;
+    } else {
+      // Enkel kunde
+      const planSelect = document.getElementById("plan");
+      planType = planSelect.options[planSelect.selectedIndex].text;
+    }
+
+    // Hent antall TvillingSIM og DataSIM
+    const twinSimCount =
+      parseInt(planDiv.querySelector(".twinsim-select").value) || 0;
+    const dataSimCount =
+      parseInt(planDiv.querySelector(".datasim-select").value) || 0;
+
+    // Beregn SIM-prisen
+    const simPrices = calculateSimPrice(planType, twinSimCount, dataSimCount);
+    const totalSimPrice = simPrices.twinSimPrice + simPrices.dataSimPrice;
+
+    // Oppdater visningen av SIM-prisen
+    const simPriceElement = planDiv.querySelector(".family-plan-price");
+    if (simPriceElement) {
+      simPriceElement.textContent = `SIM-kort: ${totalSimPrice.toFixed(2)} kr`;
+    }
+  }
+
+  // Funksjon for å beregne totalprisen i kalkulatoren.
+  function calculateTotalPrice() {
+    let totalPrice = 0;
+
+    // Hent hovedabonnementet
+    const plan = document.getElementById("plan");
+    const planNameFull = plan.options[plan.selectedIndex].text;
+    const selectedPlanPrice = parseFloat(plan.value);
+
+    // Ekstraher kun abonnementsnavnet uten pris
+    const planName = planNameFull.split(" - ")[0];
+    let planPrice = selectedPlanPrice;
+
+    // Hent den valgte rabattprosenten for hovednummeret
+    const discountSelect = document.getElementById("discount");
+    const discountPercentage = parseFloat(discountSelect.value) || 0;
+
+    // Beregn rabattbeløpet for hovedabonnementet
+    const mainDiscountAmount = (planPrice * discountPercentage) / 100;
+    const discountedMainPlanPrice = planPrice - mainDiscountAmount;
+
+    // Legg til hovedabonnementets pris til totalprisen
+    totalPrice += discountedMainPlanPrice;
+
+    // Håndter SIM-kostnader for hovedabonnementet
+    const twinSimCountMain = parseInt(
+      document.getElementById("singleTwinsimSelect").value
+    );
+    const dataSimCountMain = parseInt(
+      document.getElementById("singleDatasimSelect").value
+    );
+
+    // Beregn SIM-priser for hovedabonnementet
+    let simPriceMain = 0;
+    let simPricePerUnitMain = planName.includes("Telia X") ? 89 : 49;
+    simPriceMain += twinSimCountMain * simPricePerUnitMain;
+    simPriceMain += dataSimCountMain * simPricePerUnitMain;
+
+    // Legg til SIM-kostnader til totalpris
+    totalPrice += simPriceMain;
+
+    // Håndter familieabonnementer
+    const familyPlans = document.querySelectorAll(".family-plan");
+    familyPlans.forEach(function (plan) {
+      let planPrice = parseFloat(
+        plan.querySelector(".family-plan-select").value
+      );
+      const planTextFull = plan.querySelector(
+        ".family-plan-select option:checked"
+      ).textContent;
+      const planText = planTextFull.split(" - ")[0];
+
+      // Beregn rabatt for familieabonnementet
+      const discount = getFamilyDiscount(planPrice, planText, false);
+      let discountedPlanPrice = planPrice - discount;
+
+      // Logg rabattberegning
+      console.log(
+        `Plan: ${planText}, Original pris: ${planPrice}, Rabatt: ${discount}, Pris etter rabatt: ${discountedPlanPrice}`
+      );
+
+      // Hent SIM-kostnadene for familieabonnementet
+      const twinSimCount = parseInt(
+        plan.querySelector(".twinsim-select").value
+      );
+      const dataSimCount = parseInt(
+        plan.querySelector(".datasim-select").value
+      );
+
+      // Beregn SIM-priser for familieabonnementet
+      let simPrice = 0;
+      let simPricePerUnit = planText.includes("Telia X") ? 89 : 49;
+      simPrice += twinSimCount * simPricePerUnit;
+      simPrice += dataSimCount * simPricePerUnit;
+
+      // Legg til planpris og SIM-kostnader til totalpris
+      totalPrice += discountedPlanPrice + simPrice;
+
+      // Logg totalpris etter hvert abonnement
+      console.log(`Totalpris etter ${planText}: ${totalPrice}`);
+    });
+
+    // Oppdater totalprisen i DOM
+    document.getElementById("finalPrice").textContent =
+      "Endelig pris: " + totalPrice.toFixed(2) + " kr";
+
+    // Logg sluttresultatet
+    console.log("Endelig totalpris:", totalPrice);
+
+    // Oppdater resultatvisningen
+    updateResultDisplay();
+  }
 }
