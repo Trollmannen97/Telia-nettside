@@ -51,28 +51,58 @@ label {
     font-size: 1.1em;
 }
 
-/* Styling for select og radio */
-select, input[type="radio"] {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 1.1em;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    border-color: black;
-}
-
-select:focus, input[type="radio"]:focus {
-    border-color: #8300e9;
-    box-shadow: 0 0 8px rgba(131, 0, 233, 0.3);
-    outline: none;
-}
-
+/* Forbedret styling for radioknappene */
 input[type="radio"] {
-    width: auto;
-    margin-right: 8px;
+    display: none; /* Skjul standard radioknapp */
 }
+
+input[type="radio"] + label {
+    position: relative;
+    padding-left: 30px; /* Plass til den tilpassede knappen */
+    cursor: pointer;
+    font-size: 1.2em;
+    color: #333;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+/* Tilpasset sirkel for radioknapp */
+input[type="radio"] + label:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid #8300e9; /* Lilla ramme */
+    border-radius: 50%; /* Gjør den rund */
+    background-color: white;
+    transition: all 0.3s ease;
+}
+
+/* Utfylt sirkel når radioknappen er valgt */
+input[type="radio"]:checked + label:after {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%; /* Gjør den rund */
+    background-color: #8300e9; /* Lilla farge for valgt */
+    transition: all 0.3s ease;
+}
+
+/* Hover-effekt for label */
+input[type="radio"] + label:hover:before {
+    background-color: #f3e7fc; /* Lys lilla ved hover */
+}
+
+
+
+
 
 /* Knapp-styling */
 button {
