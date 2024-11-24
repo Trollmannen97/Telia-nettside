@@ -144,7 +144,7 @@ button {
 }
 
 button:hover {
-    background: linear-gradient(135deg, #04020200, #1c020200);
+    background: linear-gradient(135deg, #ef555500, #e0393900);
     transform: translateY(-3px);
 }
 
