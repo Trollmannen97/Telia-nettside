@@ -12,31 +12,44 @@ function toggleCustomerType() {
     "#singlePlanOptions .addon-container"
   );
 
-  // Hjelpefunksjon for å sette display-stil
-  function setDisplay(element, displayStyle) {
-    if (element) {
+ // Hjelpefunksjon for å sette display-stil
+function setDisplay(element, displayStyle) {
+  if (element) {
+      console.log(`Setting ${element.className} to ${displayStyle}`); // Debugging
       element.style.display = displayStyle;
-    }
-  }
-
-  if (singleRadio.checked) {
-    // Enkel kunde er valgt
-    setDisplay(familySection, "none");
-    setDisplay(familyDiscountSection, "none");
-    setDisplay(singlePlanOptions, "block");
-    setDisplay(singleSimOptions, "flex");
-    setDisplay(familySimOptions, "none");
-    setDisplay(addonsSection, "block");
-  } else {
-    // Familie er valgt
-    setDisplay(familySection, "block");
-    setDisplay(familyDiscountSection, "block");
-    setDisplay(singlePlanOptions, "none");
-    setDisplay(singleSimOptions, "none");
-    setDisplay(familySimOptions, "flex");
-    setDisplay(addonsSection, "none");
   }
 }
+
+// Oppdater radioknapp-logikk
+function updateView() {
+  if (singleRadio.checked) {
+      // Enkel kunde er valgt
+      setDisplay(familySection, "none");
+      setDisplay(familyDiscountSection, "none");
+      setDisplay(singlePlanOptions, "block");
+      setDisplay(singleSimOptions, "flex");
+      setDisplay(familySimOptions, "none");
+      setDisplay(addonsSection, "block");
+  } else if (familyRadio.checked) {
+      // Familie er valgt
+      setDisplay(familySection, "block");
+      setDisplay(familyDiscountSection, "block");
+      setDisplay(singlePlanOptions, "none");
+      setDisplay(singleSimOptions, "none");
+      setDisplay(familySimOptions, "flex");
+      setDisplay(addonsSection, "none");
+  } else {
+      console.error("No valid radio button selected!");
+  }
+}
+
+// Legg til event listeners på radio-knapper
+singleRadio.addEventListener("change", updateView);
+familyRadio.addEventListener("change", updateView);
+
+// Kall funksjonen ved last:
+updateView();
+
 
 // Funksjon for å legge til et nytt familieabonnement
 function addFamilyPlan() {
