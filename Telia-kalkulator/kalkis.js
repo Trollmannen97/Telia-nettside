@@ -1,23 +1,21 @@
-// Funksjon for å vise/skjule elementer basert på kundetype
-function toggleCustomerType() {
-  const familySection = document.getElementById("familySection");
-  const familyDiscountSection = document.querySelector(
-    ".form-group.family-discount"
-  );
-  const singlePlanOptions = document.getElementById("singlePlanOptions");
-  const singleRadio = document.getElementById("single");
-  const singleSimOptions = document.querySelector(".single-sim-options");
-  const familySimOptions = document.querySelector(".family-sim-options");
-  const addonsSection = document.querySelector(
-    "#singlePlanOptions .addon-container"
-  );
+// Funksjon for å vise/skjule elementer basert på kundetypefunction toggleCustomerType() {
+    const singlePlanOptions = document.getElementById("singlePlanOptions");
+    const familySection = document.getElementById("familySection");
 
-  // Hjelpefunksjon for å sette display-stil
-  function setDisplay(element, displayStyle) {
-    if (element) {
-      element.style.display = displayStyle;
+    if (document.getElementById("single").checked) {
+        console.log("Enkel kunde er valgt.");
+        singlePlanOptions.style.display = "block"; // Vis enkel kunde-seksjon
+        familySection.style.display = "none"; // Skjul familie-seksjon
+    } else if (document.getElementById("family").checked) {
+        console.log("Familie er valgt.");
+        singlePlanOptions.style.display = "none"; // Skjul enkel kunde-seksjon
+        familySection.style.display = "block"; // Vis familie-seksjon
+    } else {
+        console.error("Ingen gyldig radioknapp er valgt.");
     }
-  }
+// Kjør funksjonen for å sette initial visning
+toggleCustomerType();
+
 
   if (singleRadio.checked) {
     // Enkel kunde er valgt
