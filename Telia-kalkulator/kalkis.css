@@ -51,6 +51,31 @@ label {
     font-size: 1.1em;
 }
 
+/* Styling for select og radio */
+select, input[type="radio"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1.1em;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    border-color: black;
+}
+
+select:focus, input[type="radio"]:focus {
+    border-color: #8300e9;
+    box-shadow: 0 0 8px rgba(131, 0, 233, 0.3);
+    outline: none;
+}
+
+input[type="radio"] {
+    width: auto;
+    margin-right: 8px;
+}
+
+
+
 /* Forbedret styling for radioknappene */
 input[type="radio"] {
     display: none; /* Skjul standard radioknapp */
@@ -99,7 +124,6 @@ input[type="radio"]:checked + label:after {
 input[type="radio"] + label:hover:before {
     background-color: #f3e7fc; /* Lys lilla ved hover */
 }
-
 
 
 
