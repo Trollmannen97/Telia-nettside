@@ -76,6 +76,8 @@ input[type="radio"] {
 
 
 
+
+
 /* Forbedret styling for radioknappene */
 input[type="radio"] {
     display: none; /* Skjul standard radioknapp */
@@ -130,7 +132,7 @@ input[type="radio"] + label:hover:before {
 
 /* Knapp-styling */
 button {
-    background: linear-gradient(135deg, #e5006e, #ff336e);
+    background: linear-gradient(135deg, #8300e9, #e1ccf1);
     color: #fff;
     border: none;
     padding: 12px 25px;
