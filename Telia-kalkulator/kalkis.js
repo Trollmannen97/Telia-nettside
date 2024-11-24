@@ -1,39 +1,40 @@
 // Funksjon for å vise/skjule elementer basert på kundetypefunction toggleCustomerType() {
-    const singlePlanOptions = document.getElementById("singlePlanOptions");
-    const familySection = document.getElementById("familySection");
+function toggleCustomerType() {
+  const singlePlanOptions = document.getElementById("singlePlanOptions");
+  const familySection = document.getElementById("familySection");
 
-    if (document.getElementById("single").checked) {
-        console.log("Enkel kunde er valgt.");
-        singlePlanOptions.style.display = "block"; // Vis enkel kunde-seksjon
-        familySection.style.display = "none"; // Skjul familie-seksjon
-    } else if (document.getElementById("family").checked) {
-        console.log("Familie er valgt.");
-        singlePlanOptions.style.display = "none"; // Skjul enkel kunde-seksjon
-        familySection.style.display = "block"; // Vis familie-seksjon
-    } else {
-        console.error("Ingen gyldig radioknapp er valgt.");
-    }
+  if (document.getElementById("single").checked) {
+    console.log("Enkel kunde er valgt.");
+    singlePlanOptions.style.display = "block"; // Vis enkel kunde-seksjon
+    familySection.style.display = "none"; // Skjul familie-seksjon
+  } else if (document.getElementById("family").checked) {
+    console.log("Familie er valgt.");
+    singlePlanOptions.style.display = "none"; // Skjul enkel kunde-seksjon
+    familySection.style.display = "block"; // Vis familie-seksjon
+  } else {
+    console.error("Ingen gyldig radioknapp er valgt.");
+  }
+}
+
 // Kjør funksjonen for å sette initial visning
 toggleCustomerType();
 
-
-  if (singleRadio.checked) {
-    // Enkel kunde er valgt
-    setDisplay(familySection, "none");
-    setDisplay(familyDiscountSection, "none");
-    setDisplay(singlePlanOptions, "block");
-    setDisplay(singleSimOptions, "flex");
-    setDisplay(familySimOptions, "none");
-    setDisplay(addonsSection, "block");
-  } else {
-    // Familie er valgt
-    setDisplay(familySection, "block");
-    setDisplay(familyDiscountSection, "block");
-    setDisplay(singlePlanOptions, "none");
-    setDisplay(singleSimOptions, "none");
-    setDisplay(familySimOptions, "flex");
-    setDisplay(addonsSection, "none");
-  }
+if (singleRadio.checked) {
+  // Enkel kunde er valgt
+  setDisplay(familySection, "none");
+  setDisplay(familyDiscountSection, "none");
+  setDisplay(singlePlanOptions, "block");
+  setDisplay(singleSimOptions, "flex");
+  setDisplay(familySimOptions, "none");
+  setDisplay(addonsSection, "block");
+} else {
+  // Familie er valgt
+  setDisplay(familySection, "block");
+  setDisplay(familyDiscountSection, "block");
+  setDisplay(singlePlanOptions, "none");
+  setDisplay(singleSimOptions, "none");
+  setDisplay(familySimOptions, "flex");
+  setDisplay(addonsSection, "none");
 }
 
 // Funksjon for å legge til et nytt familieabonnement
