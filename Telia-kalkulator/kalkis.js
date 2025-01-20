@@ -387,31 +387,25 @@ function updateSimPrice(element) {
   }
 }
 
-// Funksjon for å beregne totalprisen i kalkulatoren.
 function calculateTotalPrice() {
   let totalPrice = 0;
 
   // Hent hovedabonnementet
   const plan = document.getElementById("plan");
   const planNameFull = plan.options[plan.selectedIndex].text;
-  const selectedPlanPrice = parseFloat(plan.value);
-
-  // Ekstraher kun abonnementsnavnet uten pris
   const planName = planNameFull.split(" - ")[0];
-  let planPrice = selectedPlanPrice;
+  let planPrice = parseFloat(plan.value);
 
-  // Hent den valgte rabattprosenten for hovednummeret
+  // Hent rabattprosent for hovednummeret
   const discountSelect = document.getElementById("discount");
   const discountPercentage = parseFloat(discountSelect.value) || 0;
 
-  // Beregn rabattbeløpet for hovedabonnementet
+  // Beregn rabattert pris for hovedabonnement
   const mainDiscountAmount = (planPrice * discountPercentage) / 100;
   const discountedMainPlanPrice = planPrice - mainDiscountAmount;
-
-  // Legg til hovedabonnementets pris til totalprisen
   totalPrice += discountedMainPlanPrice;
 
-  // Håndter SIM-kostnader for hovedabonnementet
+  // **Håndter SIM-kostnader for hovedabonnementet via calculateSimPrice**
   const twinSimCountMain = parseInt(
     document.getElementById("singleTwinsimSelect").value
   );
@@ -419,57 +413,52 @@ function calculateTotalPrice() {
     document.getElementById("singleDatasimSelect").value
   );
 
-  // Beregn SIM-priser for hovedabonnementet
-  let simPriceMain = 0;
-  let simPricePerUnitMain = planName.includes("Telia X") ? 89 : 49;
-  simPriceMain += twinSimCountMain * simPricePerUnitMain;
-  simPriceMain += dataSimCountMain * simPricePerUnitMain;
+  const { twinSimPrice: mainTwinSimPrice, dataSimPrice: mainDataSimPrice } =
+    calculateSimPrice(planNameFull, twinSimCountMain, dataSimCountMain);
 
-  // Legg til SIM-kostnader til totalpris
-  totalPrice += simPriceMain;
+  totalPrice += mainTwinSimPrice + mainDataSimPrice;
 
-  // Håndter familieabonnementer
+  // **Familieabonnementer**
   const familyPlans = document.querySelectorAll(".family-plan");
-  familyPlans.forEach(function (plan) {
-    let planPrice = parseFloat(plan.querySelector(".family-plan-select").value);
-    const planTextFull = plan.querySelector(
+  familyPlans.forEach(function (planDiv) {
+    // Finn pris og navn
+    let planPrice = parseFloat(
+      planDiv.querySelector(".family-plan-select").value
+    );
+    const planTextFull = planDiv.querySelector(
       ".family-plan-select option:checked"
     ).textContent;
     const planText = planTextFull.split(" - ")[0];
 
-    // Beregn rabatt for familieabonnementet
-    const discount = getFamilyDiscount(planPrice, planText, false);
-    let discountedPlanPrice = planPrice - discount;
+    // Beregn rabatt (hvis noe)
+    const discount = getFamilyDiscount(
+      planPrice,
+      planText,
+      /*isMainNumber=*/ false
+    );
+    const discountedPlanPrice = planPrice - discount;
 
-    // Logg rabattberegning
-    console.log(
-      `Plan: ${planText}, Original pris: ${planPrice}, Rabatt: ${discount}, Pris etter rabatt: ${discountedPlanPrice}`
+    // Hent antall SIM
+    const twinSimCount =
+      parseInt(planDiv.querySelector(".twinsim-select").value) || 0;
+    const dataSimCount =
+      parseInt(planDiv.querySelector(".datasim-select").value) || 0;
+
+    // **Beregn SIM-priser via calculateSimPrice**
+    const { twinSimPrice, dataSimPrice } = calculateSimPrice(
+      planTextFull,
+      twinSimCount,
+      dataSimCount
     );
 
-    // Hent SIM-kostnadene for familieabonnementet
-    const twinSimCount = parseInt(plan.querySelector(".twinsim-select").value);
-    const dataSimCount = parseInt(plan.querySelector(".datasim-select").value);
-
-    // Beregn SIM-priser for familieabonnementet
-    let simPrice = 0;
-    let simPricePerUnit = planText.includes("Telia X") ? 89 : 49;
-    simPrice += twinSimCount * simPricePerUnit;
-    simPrice += dataSimCount * simPricePerUnit;
-
-    // Legg til planpris og SIM-kostnader til totalpris
-    totalPrice += discountedPlanPrice + simPrice;
-
-    // Logg totalpris etter hvert abonnement
-    console.log(`Totalpris etter ${planText}: ${totalPrice}`);
+    // Total = rabattjustert pris + SIM-kostnader
+    totalPrice += discountedPlanPrice + (twinSimPrice + dataSimPrice);
   });
 
-  // Oppdater totalprisen i DOM
+  // Oppdater totalen i DOM
   document.getElementById("finalPrice").textContent =
     "Endelig pris: " + totalPrice.toFixed(2) + " kr";
 
-  // Logg sluttresultatet
-  console.log("Endelig totalpris:", totalPrice);
-
-  // Oppdater resultatvisningen
+  // Oppdater detaljvisningen
   updateResultDisplay();
 }
