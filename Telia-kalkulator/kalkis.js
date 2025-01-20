@@ -60,6 +60,13 @@ function addFamilyPlan() {
       <option value="699">Telia X Max Pluss - 699 kr</option>
       <option value="1099">Telia X + Viaplay Total - 1099 kr</option>
     </select>
+    <label for="familyExtraDiscount">Ekstra rabatt:</label>
+    <select class="family-extra-discount" onchange="calculateTotalPrice()">
+      <option value="0">Ingen ekstra rabatt</option>
+      <option value="10">10%</option>
+      <option value="15">15%</option>
+      <option value="20">20%</option>
+    </select>
     <div class="sim-options">
       <label for="twinsim">TvillingSIM:</label>
       <select class="twinsim-select" onchange="updateSimPrice(this)">
