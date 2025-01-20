@@ -321,6 +321,15 @@ function updateResultDisplay() {
     } else {
       discountDetails += `<p>${familyPlanName}: Ingen rabatt</p>`;
     }
+
+    const extraDiscountSelect = familyPlanDiv.querySelector(
+      ".family-extra-discount"
+    );
+    const extraDiscountPercentage = parseFloat(extraDiscountSelect.value) || 0;
+
+    if (extraDiscountPercentage > 0) {
+      discountDetails += `<p>${familyPlanName}: Ekstra rabatt ${extraDiscountPercentage}%</p>`;
+    }
   }
 
   // **Oppdater 'Valgt Abonnement' med alle abonnementer**
@@ -458,10 +467,10 @@ function calculateTotalPrice() {
 
   totalPrice += mainTwinSimPrice + mainDataSimPrice;
 
-  // **Familieabonnementer**
+  // **Familieabonnementer*
   const familyPlans = document.querySelectorAll(".family-plan");
   familyPlans.forEach(function (planDiv) {
-    // Finn pris og navn
+    // 1) Finn pris og navn
     let planPrice = parseFloat(
       planDiv.querySelector(".family-plan-select").value
     );
@@ -470,7 +479,7 @@ function calculateTotalPrice() {
     ).textContent;
     const planText = planTextFull.split(" - ")[0];
 
-    // Beregn rabatt (hvis noe)
+    // 2) Beregn familierabatt (kr)
     const discount = getFamilyDiscount(
       planPrice,
       planText,
@@ -478,21 +487,33 @@ function calculateTotalPrice() {
     );
     const discountedPlanPrice = planPrice - discount;
 
-    // Hent antall SIM
+    // 3) Hent den nye ekstra rabatt-prosenten
+    const extraDiscountSelect = planDiv.querySelector(".family-extra-discount");
+    const extraDiscountPercentage = parseFloat(extraDiscountSelect.value) || 0;
+
+    // 4) Beregn ekstrarabatten i kroner, basert på discountet beløp
+    const extraDiscountAmount =
+      (discountedPlanPrice * extraDiscountPercentage) / 100;
+
+    // 5) Summen etter familie- og ekstra rabatt
+    const finalPlanPrice = discountedPlanPrice - extraDiscountAmount;
+
+    // 6) Hent antall SIM
     const twinSimCount =
       parseInt(planDiv.querySelector(".twinsim-select").value) || 0;
     const dataSimCount =
       parseInt(planDiv.querySelector(".datasim-select").value) || 0;
 
-    // **Beregn SIM-priser via calculateSimPrice**
+    // 7) Beregn SIM-priser via calculateSimPrice
     const { twinSimPrice, dataSimPrice } = calculateSimPrice(
       planTextFull,
       twinSimCount,
       dataSimCount
     );
 
-    // Total = rabattjustert pris + SIM-kostnader
-    totalPrice += discountedPlanPrice + (twinSimPrice + dataSimPrice);
+    // 8) Legg til i totalen:
+    //    (sluttpris på abonnement) + (tvillingSIM + dataSIM)
+    totalPrice += finalPlanPrice + (twinSimPrice + dataSimPrice);
   });
 
   // Oppdater totalen i DOM
