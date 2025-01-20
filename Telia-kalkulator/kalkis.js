@@ -157,26 +157,59 @@ function getFamilyDiscount(planValue, planText, isMainNumber) {
 }
 
 // Funksjon for å beregne prisen på TvillingSIM og DataSIM
+
 function calculateSimPrice(planType, twinSimCount, dataSimCount) {
   let twinSimPrice = 0;
   let dataSimPrice = 0;
   const totalSimCount = twinSimCount + dataSimCount;
-  let simPricePerUnit = 49; // Standardpris
+  const simPricePerUnit = 89; // Pris for Telia X (Max, Max Pluss etc.) eller 49 for vanlige
 
   if (planType.includes("Max Pluss")) {
+    // Telia X Max Pluss har 2 gratis SIM-kort
     const freeSimCards = 2;
-    const chargeableSimCount = Math.max(0, totalSimCount - freeSimCards);
-    simPricePerUnit = 89;
-    twinSimPrice = chargeableSimCount * simPricePerUnit;
-    dataSimPrice = chargeableSimCount * simPricePerUnit;
+    let chargeable = totalSimCount - freeSimCards;
+
+    // Hvis totalSimCount <= 2 er alt gratis
+    if (chargeable <= 0) {
+      twinSimPrice = 0;
+      dataSimPrice = 0;
+    } else {
+      // chargeable > 0 betyr at vi har f.eks. 3 eller flere SIM-kort
+      // Vi må fordele "chargeable" antall på tvilling vs data for å få riktig linjepris
+      // Eksempel: 3 TvillingSIM => 2 gratis, 1 betalt
+      // Eksempel: 1 Tvilling + 2 Data => 3 totalt => 1 betalt osv.
+
+      // Hvor mange av TvillingSIM er "gratis"?
+      // Om brukeren har f.eks. twinSimCount = 3, dataSimCount = 0 => 3 total
+      // De to første TvillingSIM er gratis, den tredje er betalt
+      // => leftoverTwinSim = 1 => twinSimPrice = 1 * 89
+
+      // Om brukeren har 1 Tvilling og 2 Data => 3 total => 1 betalt
+      // Vi “bruker opp” gratis-SIM først på TvillingSIM og evt. DataSIM:
+
+      // Trekker fra tvillingSIM først
+      let leftoverTwinSim = Math.min(twinSimCount, freeSimCards);
+      let leftoverFreeSlots = freeSimCards - leftoverTwinSim;
+
+      // Bruker eventuelle resterende gratis-slots på dataSIM
+      let leftoverDataSim = Math.min(dataSimCount, leftoverFreeSlots);
+
+      // Nå har vi brukt opp 'leftoverTwinSim + leftoverDataSim' gratis SIM.
+      // Resten av TvillingSIM/dataSIM belastes.
+      const chargeableTwinSim = twinSimCount - leftoverTwinSim;
+      const chargeableDataSim = dataSimCount - leftoverDataSim;
+
+      twinSimPrice = chargeableTwinSim * simPricePerUnit;
+      dataSimPrice = chargeableDataSim * simPricePerUnit;
+    }
   } else if (planType.includes("Telia X")) {
-    simPricePerUnit = 89;
-    twinSimPrice = twinSimCount * simPricePerUnit;
-    dataSimPrice = dataSimCount * simPricePerUnit;
+    // Telia X (uten Max Pluss) tar 89 kr pr. SIM fra første kort
+    twinSimPrice = twinSimCount * 89;
+    dataSimPrice = dataSimCount * 89;
   } else {
-    // For andre abonnementer beholder vi standardprisen på 49
-    twinSimPrice = twinSimCount * simPricePerUnit;
-    dataSimPrice = dataSimCount * simPricePerUnit;
+    // For alle andre abonnement (f.eks. Telia Mobil 5GB/10GB osv.) er prisen 49 kr pr. SIM
+    twinSimPrice = twinSimCount * 49;
+    dataSimPrice = dataSimCount * 49;
   }
 
   return { twinSimPrice, dataSimPrice };
@@ -386,7 +419,7 @@ function updateSimPrice(element) {
     simPriceElement.textContent = `SIM-kort: ${totalSimPrice.toFixed(2)} kr`;
   }
 }
-
+//Funksjonen for totalpris
 function calculateTotalPrice() {
   let totalPrice = 0;
 
