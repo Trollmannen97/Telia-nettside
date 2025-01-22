@@ -277,7 +277,7 @@ addon-container {
 
 /* Fjern knapp for familieplan */
 .remove-family-plan {
-    background-color: #d32f2f;
+    background-color: #0000;
     color: white;
     padding: 8px 12px;
     border: none;
@@ -287,7 +287,7 @@ addon-container {
 }
 
 .remove-family-plan:hover {
-    background-color: #b71c1c;
+    background-color: #0000;
 }
 
 .family-sim-options {
