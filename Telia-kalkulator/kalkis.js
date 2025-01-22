@@ -391,41 +391,41 @@ function updateResultDisplay() {
       const dataSimPrice = familyPlanName.includes("Telia X") ? 89 : 49;
       simDetails += `<p>${familyPlanName} - DataSIM: ${dataSimCount} x ${dataSimPrice} kr</p>`;
     }
-  }
 
-  // Hent delbetalingsfeltet for dette familieabonnementet
-  const devicePaymentInput = familyPlanDiv.querySelector(".device-payment");
-  if (devicePaymentInput) {
-    const devicePayment = parseFloat(devicePaymentInput.value) || 0;
-    if (devicePayment > 0) {
-      // Legg til en egen linje for delbetaling i "devicePaymentDetails"
-      devicePaymentDetails += `<p>${familyPlanName} - Svitsj/delbetaling: ${devicePayment.toFixed(
-        2
-      )} kr</p>`;
+    // Hent delbetalingsfeltet for dette familieabonnementet
+    const devicePaymentInput = familyPlanDiv.querySelector(".device-payment");
+    if (devicePaymentInput) {
+      const devicePayment = parseFloat(devicePaymentInput.value) || 0;
+      if (devicePayment > 0) {
+        // Legg til en egen linje for delbetaling i "devicePaymentDetails"
+        devicePaymentDetails += `<p>${familyPlanName} - Svitsj/delbetaling: ${devicePayment.toFixed(
+          2
+        )} kr</p>`;
+      }
     }
   }
+
+  // **Oppdater 'SIM-valg' med SIM-detaljer**
+  simDetailsElement.innerHTML = simDetails || "<p>Ingen SIM-valg</p>";
+
+  // Sett inn devicePaymentDetails i eget HTML-element
+  const devicePaymentDiv = document.getElementById("devicePaymentDetails");
+  if (devicePaymentDiv) {
+    devicePaymentDiv.innerHTML =
+      devicePaymentDetails || "<p>Ingen delbetaling/Svitsj valgt</p>";
+  }
+
+  // **Vis tilleggstjenester**
+  const selectedAddons = document.querySelectorAll(".addon-icon.selected");
+  let addonDetails = "";
+  selectedAddons.forEach(function (addon) {
+    const addonName = addon.alt;
+    const addonPrice = parseFloat(addon.getAttribute("data-price"));
+    addonDetails += `<p>${addonName} - ${addonPrice.toFixed(2)} kr</p>`;
+  });
+  addonDetailsElement.innerHTML =
+    addonDetails || "<p>Ingen tilleggstjenester valgt</p>";
 }
-
-// **Oppdater 'SIM-valg' med SIM-detaljer**
-simDetailsElement.innerHTML = simDetails || "<p>Ingen SIM-valg</p>";
-
-// Sett inn devicePaymentDetails i eget HTML-element
-const devicePaymentDiv = document.getElementById("devicePaymentDetails");
-if (devicePaymentDiv) {
-  devicePaymentDiv.innerHTML =
-    devicePaymentDetails || "<p>Ingen delbetaling/Svitsj valgt</p>";
-}
-
-// **Vis tilleggstjenester**
-const selectedAddons = document.querySelectorAll(".addon-icon.selected");
-let addonDetails = "";
-selectedAddons.forEach(function (addon) {
-  const addonName = addon.alt;
-  const addonPrice = parseFloat(addon.getAttribute("data-price"));
-  addonDetails += `<p>${addonName} - ${addonPrice.toFixed(2)} kr</p>`;
-});
-addonDetailsElement.innerHTML =
-  addonDetails || "<p>Ingen tilleggstjenester valgt</p>";
 
 // Funksjon for å oppdatere SIM-prisen når brukeren endrer antall SIM-kort
 function updateSimPrice(element) {
