@@ -339,18 +339,21 @@ addon-container {
 }
 
 
-device-payment {
-    width: 160px;
-    height: 160px;
-    margin: 0 auto;
-    border-radius: 50%;
-    overflow: hidden;
-    /* eventuelle andre stylingregler */
+.device-payment-container {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
   }
   
-  /* eventuelt styling for boksen som helhet */
-  .device-payment-container {
-    /* Padding, margin, border osv. */
-    margin-top: 10px;
-    margin-bottom: 10px;
+  .device-payment-container label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .device-payment-container input.device-payment {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
   }

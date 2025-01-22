@@ -84,8 +84,6 @@ function addFamilyPlan() {
       </select>
       <span class="family-plan-price">SIM-kort: 0.00 kr</span>
     </div>
-      <!-- NYTT FELT for Svitsj/delbetaling -->
- <!-- I stedet for inline style... -->
 <div class="device-payment-container">
   <label for="devicePayment">Svitsj/delbetaling (kr/mnd):</label>
   <input
