@@ -511,6 +511,17 @@ function calculateTotalPrice() {
       dataSimCount
     );
 
+    // **Legg til prisene for alle valgte addons**
+    const allSelectedAddons = document.querySelectorAll(".addon-icon.selected");
+    let addonsSum = 0;
+    allSelectedAddons.forEach(function (addon) {
+      const addonPrice = parseFloat(addon.getAttribute("data-price")) || 0;
+      addonsSum += addonPrice;
+    });
+
+    // Legg addonsSummen til totalPrice
+    totalPrice += addonsSum;
+
     // 8) Legg til i totalen:
     //    (sluttpris på abonnement) + (tvillingSIM + dataSIM)
     totalPrice += finalPlanPrice + (twinSimPrice + dataSimPrice);
