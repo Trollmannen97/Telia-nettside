@@ -89,7 +89,7 @@ function addFamilyPlan() {
       <label for="devicePayment">Svitsj/delbetaling (kr/mnd):</label>
       <input type="number" class="device-payment" value="0" min="0"
              onchange="calculateTotalPrice()"
-             style="width:100px;">
+             style="width:160px;">
     </div>
     <div class="addons">
       <img src="/Telia-nettside/Bilder/maxlogo.webp" alt="Max" class="addon-icon" data-price="89" onclick="toggleAddon(this)">
@@ -348,6 +348,8 @@ function updateResultDisplay() {
   // **Vis SIM-valg**
   let simDetails = "";
 
+  let devicePaymentDetails = ""; // <--- Ny streng for delbetaling
+
   // **Hovedabonnementets SIM-valg**
   const twinSimCountMain = parseInt(
     document.getElementById("singleTwinsimSelect").value
@@ -391,20 +393,39 @@ function updateResultDisplay() {
     }
   }
 
-  // **Oppdater 'SIM-valg' med SIM-detaljer**
-  simDetailsElement.innerHTML = simDetails || "<p>Ingen SIM-valg</p>";
-
-  // **Vis tilleggstjenester**
-  const selectedAddons = document.querySelectorAll(".addon-icon.selected");
-  let addonDetails = "";
-  selectedAddons.forEach(function (addon) {
-    const addonName = addon.alt;
-    const addonPrice = parseFloat(addon.getAttribute("data-price"));
-    addonDetails += `<p>${addonName} - ${addonPrice.toFixed(2)} kr</p>`;
-  });
-  addonDetailsElement.innerHTML =
-    addonDetails || "<p>Ingen tilleggstjenester valgt</p>";
+  // Hent delbetalingsfeltet for dette familieabonnementet
+  const devicePaymentInput = familyPlanDiv.querySelector(".device-payment");
+  if (devicePaymentInput) {
+    const devicePayment = parseFloat(devicePaymentInput.value) || 0;
+    if (devicePayment > 0) {
+      // Legg til en egen linje for delbetaling i "devicePaymentDetails"
+      devicePaymentDetails += `<p>${familyPlanName} - Svitsj/delbetaling: ${devicePayment.toFixed(
+        2
+      )} kr</p>`;
+    }
+  }
 }
+
+// **Oppdater 'SIM-valg' med SIM-detaljer**
+simDetailsElement.innerHTML = simDetails || "<p>Ingen SIM-valg</p>";
+
+// Sett inn devicePaymentDetails i eget HTML-element
+const devicePaymentDiv = document.getElementById("devicePaymentDetails");
+if (devicePaymentDiv) {
+  devicePaymentDiv.innerHTML =
+    devicePaymentDetails || "<p>Ingen delbetaling/Svitsj valgt</p>";
+}
+
+// **Vis tilleggstjenester**
+const selectedAddons = document.querySelectorAll(".addon-icon.selected");
+let addonDetails = "";
+selectedAddons.forEach(function (addon) {
+  const addonName = addon.alt;
+  const addonPrice = parseFloat(addon.getAttribute("data-price"));
+  addonDetails += `<p>${addonName} - ${addonPrice.toFixed(2)} kr</p>`;
+});
+addonDetailsElement.innerHTML =
+  addonDetails || "<p>Ingen tilleggstjenester valgt</p>";
 
 // Funksjon for å oppdatere SIM-prisen når brukeren endrer antall SIM-kort
 function updateSimPrice(element) {
