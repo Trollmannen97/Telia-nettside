@@ -84,6 +84,13 @@ function addFamilyPlan() {
       </select>
       <span class="family-plan-price">SIM-kort: 0.00 kr</span>
     </div>
+      <!-- NYTT FELT for Svitsj/delbetaling -->
+    <div class="device-payment-container">
+      <label for="devicePayment">Svitsj/delbetaling (kr/mnd):</label>
+      <input type="number" class="device-payment" value="0" min="0"
+             onchange="calculateTotalPrice()"
+             style="width:100px;">
+    </div>
     <div class="addons">
       <img src="/Telia-nettside/Bilder/maxlogo.webp" alt="Max" class="addon-icon" data-price="89" onclick="toggleAddon(this)">
       <img src="/Telia-nettside/Bilder/Storytel's_logo.png" alt="Storytel" class="addon-icon" data-price="199" onclick="toggleAddon(this)">
@@ -470,7 +477,7 @@ function calculateTotalPrice() {
   // **Familieabonnementer*
   const familyPlans = document.querySelectorAll(".family-plan");
   familyPlans.forEach(function (planDiv) {
-    // 1) Finn pris og navn
+    // 1) Finn pris, tekst, rabatt osv.
     let planPrice = parseFloat(
       planDiv.querySelector(".family-plan-select").value
     );
@@ -479,41 +486,35 @@ function calculateTotalPrice() {
     ).textContent;
     const planText = planTextFull.split(" - ")[0];
 
-    // 2) Beregn familierabatt (kr)
-    const discount = getFamilyDiscount(
-      planPrice,
-      planText,
-      /*isMainNumber=*/ false
-    );
+    // 2) Familierabatt og evt. ekstra rabatt
+    const discount = getFamilyDiscount(planPrice, planText, false);
     const discountedPlanPrice = planPrice - discount;
 
-    // 3) Hent den nye ekstra rabatt-prosenten
     const extraDiscountSelect = planDiv.querySelector(".family-extra-discount");
     const extraDiscountPercentage = parseFloat(extraDiscountSelect.value) || 0;
-
-    // 4) Beregn ekstrarabatten i kroner, basert på discountet beløp
     const extraDiscountAmount =
       (discountedPlanPrice * extraDiscountPercentage) / 100;
-
-    // 5) Summen etter familie- og ekstra rabatt
     const finalPlanPrice = discountedPlanPrice - extraDiscountAmount;
 
-    // 6) Hent antall SIM
+    // 3) SIM-kostnader
     const twinSimCount =
       parseInt(planDiv.querySelector(".twinsim-select").value) || 0;
     const dataSimCount =
       parseInt(planDiv.querySelector(".datasim-select").value) || 0;
-
-    // 7) Beregn SIM-priser via calculateSimPrice
     const { twinSimPrice, dataSimPrice } = calculateSimPrice(
       planTextFull,
       twinSimCount,
       dataSimCount
     );
 
-    // 8) Legg til i totalen:
-    //    (sluttpris på abonnement) + (tvillingSIM + dataSIM)
-    totalPrice += finalPlanPrice + (twinSimPrice + dataSimPrice);
+    // 4) Hent inn delbetalingsverdi
+    const devicePaymentInput = planDiv.querySelector(".device-payment");
+    const devicePayment = devicePaymentInput
+      ? parseFloat(devicePaymentInput.value) || 0
+      : 0;
+
+    // 5) Legg alt til totalen
+    totalPrice += finalPlanPrice + twinSimPrice + dataSimPrice + devicePayment;
   });
 
   // **Legg til prisene for alle valgte addons**
