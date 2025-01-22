@@ -85,12 +85,17 @@ function addFamilyPlan() {
       <span class="family-plan-price">SIM-kort: 0.00 kr</span>
     </div>
       <!-- NYTT FELT for Svitsj/delbetaling -->
-    <div class="device-payment-container">
-      <label for="devicePayment">Svitsj/delbetaling (kr/mnd):</label>
-      <input type="number" class="device-payment" value="0" min="0"
-             onchange="calculateTotalPrice()"
-             style="width:160px;">
-    </div>
+ <!-- I stedet for inline style... -->
+<div class="device-payment-container">
+  <label for="devicePayment">Svitsj/delbetaling (kr/mnd):</label>
+  <input
+    type="number"
+    class="device-payment"
+    value="0"
+    min="0"
+    onchange="calculateTotalPrice()"
+  />
+</div>
     <div class="addons">
       <img src="/Telia-nettside/Bilder/maxlogo.webp" alt="Max" class="addon-icon" data-price="89" onclick="toggleAddon(this)">
       <img src="/Telia-nettside/Bilder/Storytel's_logo.png" alt="Storytel" class="addon-icon" data-price="199" onclick="toggleAddon(this)">

@@ -337,3 +337,15 @@ addon-container {
     text-align: center;
     margin-top: 20px;
 }
+
+
+device-payment {
+    width: 160px;
+    /* eventuelle andre stylingregler */
+  }
+  
+  /* eventuelt styling for boksen som helhet */
+  .device-payment-container {
+    /* Padding, margin, border osv. */
+    margin-top: 10px;
+  }
