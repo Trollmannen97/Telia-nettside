@@ -341,6 +341,10 @@ addon-container {
 
 device-payment {
     width: 160px;
+    height: 160px;
+    margin: 0 auto;
+    border-radius: 50%;
+    overflow: hidden;
     /* eventuelle andre stylingregler */
   }
   
@@ -348,4 +352,5 @@ device-payment {
   .device-payment-container {
     /* Padding, margin, border osv. */
     margin-top: 10px;
+    margin-bottom: 10px;
   }
