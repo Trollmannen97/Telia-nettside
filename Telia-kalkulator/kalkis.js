@@ -398,7 +398,7 @@ function updateResultDisplay() {
       const devicePayment = parseFloat(devicePaymentInput.value) || 0;
       if (devicePayment > 0) {
         // Legg til en egen linje for delbetaling i "devicePaymentDetails"
-        devicePaymentDetails += `<p>${familyPlanName} - Svitsj/delbetaling: ${devicePayment.toFixed(
+        devicePaymentDetails += `<p> Svitsj/delbetaling: ${devicePayment.toFixed(
           2
         )} kr</p>`;
       }
