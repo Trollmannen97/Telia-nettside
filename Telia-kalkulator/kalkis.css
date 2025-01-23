@@ -17,12 +17,12 @@ body {
     background: #ffffff;
     padding: 35px;
     border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     width: 900px; /* Økt bredde for å få plass til alt */
     text-align: center;
     border: 2px solid #8300e9;
-    margin: 0 auto;
-    transition: transform 0.3s ease;
+    margin: 0 auto 50px auto;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     margin-bottom: 50px; /* Ekstra margin nederst */
     max-height: 90vh; /* Begrens høyden til 90% av vinduet */
     overflow-y: auto; /* Legg til intern scrolling om nødvendig */
@@ -41,6 +41,7 @@ h1 {
 /* Formgrupper */
 .form-group {
     margin-bottom: 25px;
+    padding: 10px;
 }
 
 label {
@@ -57,7 +58,7 @@ select, input[type="radio"] {
     padding: 12px;
     margin-bottom: 10px;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 1.1em;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
     border-color: black;
