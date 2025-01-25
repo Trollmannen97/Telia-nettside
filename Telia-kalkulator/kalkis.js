@@ -498,6 +498,16 @@ function calculateTotalPrice() {
 
   totalPrice += mainTwinSimPrice + mainDataSimPrice;
 
+  // 1) Hent verdien fra singleDevicePayment
+  const singleDevicePaymentInput = document.getElementById(
+    "singleDevicePayment"
+  );
+  if (singleDevicePaymentInput) {
+    const singleDevicePayment = parseFloat(singleDevicePaymentInput.value) || 0;
+    // 2) Legg den til totalPrice
+    totalPrice += singleDevicePayment;
+  }
+
   // **Familieabonnementer*
   const familyPlans = document.querySelectorAll(".family-plan");
   familyPlans.forEach(function (planDiv) {

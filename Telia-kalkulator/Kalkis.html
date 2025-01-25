@@ -70,7 +70,20 @@
         </div>
     </div>
     <span class="family-plan-price"></span>
-
+    <!-- NYTT FELT for Svitsj/delbetaling for enkel kunde -->
+    <div class="device-payment-container">
+        <label for="singleDevicePayment">Svitsj/delbetaling (kr/mnd):</label>
+        <input 
+          type="number"
+          id="singleDevicePayment"
+          class="device-payment"
+          value="0"
+          min="0"
+          onchange="calculateTotalPrice()"
+          style="width:160px;"
+        />
+      </div>
+      
  <!-- Legger tilleggstjenester i en egen container for å sikre at den plasseres under -->
  <div class="addon-container">
     <h4>Velg tilleggstjenester:</h4>
