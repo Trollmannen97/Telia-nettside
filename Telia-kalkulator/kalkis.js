@@ -369,19 +369,12 @@ function updateResultDisplay() {
     const dataSimPriceMain = planName.includes("Telia X") ? 89 : 49;
     simDetails += `<p>Hovedabonnement - DataSIM: ${dataSimCountMain} x ${dataSimPriceMain} kr</p>`;
   }
-  // Hent feltet for enkel kundes delbetaling (hvis det finnes)
-  const singleDevicePaymentInput = document.getElementById(
-    "singleDevicePayment"
-  );
-  if (singleDevicePaymentInput) {
-    const singleDevicePayment = parseFloat(singleDevicePaymentInput.value) || 0;
-    if (singleDevicePayment > 0) {
-      // Velg hvor du vil vise den:
-      // her legger vi det inn i simDetails, men du kan bruke en egen seksjon hvis du vil.
-      simDetails += `<p>Svitsj/delbetaling: ${singleDevicePayment.toFixed(
-        2
-      )} kr</p>`;
-    }
+
+  // Hent feltet for enkel kundes delbetaling (hvis det finnes.)
+  if (singleDevicePayment > 0) {
+    devicePaymentDetails += `<p>Svitsj/delbetaling: ${singleDevicePayment.toFixed(
+      2
+    )} kr</p>`;
   }
 
   // **Familieabonnementenes SIM-valg**
