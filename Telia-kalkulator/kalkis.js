@@ -370,13 +370,6 @@ function updateResultDisplay() {
     simDetails += `<p>Hovedabonnement - DataSIM: ${dataSimCountMain} x ${dataSimPriceMain} kr</p>`;
   }
 
-  // Hent feltet for enkel kundes delbetaling (hvis det finnes.)
-  if (singleDevicePayment > 0) {
-    devicePaymentDetails += `<p>Svitsj/delbetaling: ${singleDevicePayment.toFixed(
-      2
-    )} kr</p>`;
-  }
-
   // **Familieabonnementenes SIM-valg**
   for (let i = 0; i < familyPlans.length; i++) {
     const familyPlanDiv = familyPlans[i];
@@ -505,14 +498,20 @@ function calculateTotalPrice() {
 
   totalPrice += mainTwinSimPrice + mainDataSimPrice;
 
-  // 1) Hent verdien fra singleDevicePayment
+  // Hent feltet for enkel kundes delbetaling (hvis det finnes)
   const singleDevicePaymentInput = document.getElementById(
     "singleDevicePayment"
   );
+  let singleDevicePayment = 0;
   if (singleDevicePaymentInput) {
-    const singleDevicePayment = parseFloat(singleDevicePaymentInput.value) || 0;
-    // 2) Legg den til totalPrice
-    totalPrice += singleDevicePayment;
+    singleDevicePayment = parseFloat(singleDevicePaymentInput.value) || 0;
+  }
+
+  // Nå kan du sjekke verdien
+  if (singleDevicePayment > 0) {
+    devicePaymentDetails += `<p>Svitsj/delbetaling: ${singleDevicePayment.toFixed(
+      2
+    )} kr</p>`;
   }
 
   // **Familieabonnementer*
