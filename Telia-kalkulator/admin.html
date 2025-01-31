@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Telia Kalkulator</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+    <div id="loginContainer">
+        <h2>Admin Login</h2>
+        <input type="text" id="username" placeholder="Brukernavn">
+        <input type="password" id="password" placeholder="Passord">
+        <button onclick="login()">Logg inn</button>
+        <p id="errorMessage" style="color: red;"></p>
+    </div>
+
+    <div id="adminPanel" style="display: none;">
+        <h2>Adminpanel - Oppdater priser</h2>
+        <button onclick="logout()">Logg ut</button>
+
+        <h3>Abonnementer</h3>
+        <div id="abonnementContainer"></div>
+        
+        <h3>Rabatter</h3>
+        <div id="rabattContainer"></div>
+
+        <h3>SIM-kort priser</h3>
+        <div id="simContainer"></div>
+
+        <h3>Tilleggstjenester</h3>
+        <div id="addonsContainer"></div>
+
+        <button onclick="saveChanges()">Lagre endringer</button>
+        <p id="saveMessage" style="color: green;"></p>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
