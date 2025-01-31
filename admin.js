@@ -40,7 +40,20 @@ function logout() {
 async function loadData() {
   try {
     const response = await fetch(`${backendUrl}/api/prices`);
-    teliaData = await response.json();
+    const data = await response.json();
+
+    // Debugging: Sjekk hva backend returnerer
+    console.log("Data fra backend:", data);
+
+    teliaData = {
+      abonnementer: data.abonnementer || [],
+      rabatter: data.rabatter || [], // Sikrer at rabatter ikke er undefined
+      simKort: {
+        normal: data.simKort?.normal ?? 0,
+        teliaX: data.simKort?.teliaX ?? 0,
+      },
+      tilleggsProdukter: data.tilleggsProdukter || [],
+    };
 
     buildAbonnementEditor();
     buildRabattEditor();
@@ -67,11 +80,19 @@ function buildAbonnementEditor() {
 function buildRabattEditor() {
   const container = document.getElementById("rabattContainer");
   container.innerHTML = "";
-  teliaData.rabatter.hovednummer.forEach((r) => {
+
+  if (!teliaData.rabatter || teliaData.rabatter.length === 0) {
+    container.innerHTML = "<p>Ingen rabatter funnet</p>";
+    return;
+  }
+
+  teliaData.rabatter.forEach((r) => {
     container.innerHTML += `
             <div>
-                <label>${r.type} rabatt:</label>
-                <input type="number" id="rabatt-${r.id}" value="${r.rabatt}">
+                <label>${r.type || "Ukjent"} rabatt:</label>
+                <input type="number" id="rabatt-${r.id}" value="${
+      r.rabatt ?? 0
+    }">
             </div>
         `;
   });
