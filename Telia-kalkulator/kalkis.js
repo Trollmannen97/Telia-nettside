@@ -303,6 +303,18 @@ function updateResultDisplay() {
   } else {
     discountDetails += `<p>Hovedabonnement: Ingen rabatt</p>`;
   }
+  // Hent delbetaling fra enkel kunde
+  const singleDevicePaymentInput = document.getElementById(
+    "singleDevicePayment"
+  );
+  if (singleDevicePaymentInput) {
+    const singleDevicePayment = parseFloat(singleDevicePaymentInput.value) || 0;
+    if (singleDevicePayment > 0) {
+      devicePaymentDetails += `<p>Svitsj/delbetaling: ${singleDevicePayment.toFixed(
+        2
+      )} kr</p>`;
+    }
+  }
 
   // **Legg til familieabonnementene**
   const familyPlans = document.getElementsByClassName("family-plan");
@@ -506,7 +518,7 @@ function calculateTotalPrice() {
   if (singleDevicePaymentInput) {
     singleDevicePayment = parseFloat(singleDevicePaymentInput.value) || 0;
   }
-
+  totalPrice += singleDevicePayment;
   // Nå kan du sjekke verdien
   if (singleDevicePayment > 0) {
     devicePaymentDetails += `<p>Svitsj/delbetaling: ${singleDevicePayment.toFixed(
