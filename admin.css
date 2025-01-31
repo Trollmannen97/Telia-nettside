@@ -1,37 +1,73 @@
+/* Generelle justeringer for kroppen */
 body {
     font-family: Arial, sans-serif;
     text-align: center;
     margin: 20px;
-    background-color: #f4f4f4;
+    background-color: #f9f4fc; /* Lys lilla bakgrunn for Telia-stil */
 }
 
+/* Container for innlogging og admin-panel */
 #loginContainer, #adminPanel {
     background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(131, 0, 233, 0.2); /* Telia-lilla skyggeeffekt */
+    max-width: 420px;
     margin: auto;
+    border: 2px solid #8300e9; /* Telia-lilla kant */
 }
 
-input, button {
-    margin: 10px 0;
-    padding: 10px;
-    width: 80%;
+/* Input-felt og knapper */
+input {
+    margin: 12px 0;
+    padding: 12px;
+    width: 85%;
+    border: 1px solid #8300e9; /* Telia-lilla kant */
+    border-radius: 6px;
+    font-size: 1em;
+    transition: all 0.3s ease;
 }
 
+input:focus {
+    border-color: #e5006e; /* Telia-magenta når fokusert */
+    box-shadow: 0 0 8px rgba(229, 0, 110, 0.3);
+    outline: none;
+}
+
+/* Knappestil */
 button {
-    background: #007bff;
+    background: linear-gradient(135deg, #e5006e, #ff336e);
     color: white;
     border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
     cursor: pointer;
+    font-size: 1.1em;
+    transition: background 0.3s, transform 0.2s;
 }
 
 button:hover {
-    background: #0056b3;
+    background: linear-gradient(135deg, #c7005b, #ff006e);
+    transform: translateY(-2px);
 }
 
+/* Overskrift-styling */
 h3 {
     margin-top: 20px;
-    color: #333;
+    color: #8300e9; /* Telia-lilla */
+    font-weight: bold;
+    font-size: 1.4em;
+    letter-spacing: 1px;
 }
+
+/* Responsiv justering */
+@media (max-width: 500px) {
+    #loginContainer, #adminPanel {
+        max-width: 90%;
+    }
+
+    input, button {
+        width: 100%;
+    }
+}
+
