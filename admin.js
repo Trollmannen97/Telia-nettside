@@ -125,22 +125,31 @@ function buildAddonsEditor() {
  * 3) LAGRE ENDRINGER TIL BACKEND
  ****************************************************/
 async function saveChanges() {
+  // Sjekk om `teliaData` er definert
+  if (!teliaData) {
+    console.error("teliaData er ikke lastet inn.");
+    return;
+  }
+
+  // Bygger opp riktig JSON-format for backend
   const updatedData = {
     abonnementer: teliaData.abonnementer.map((plan) => ({
       id: plan.id,
       pris: parseFloat(document.getElementById(`plan-${plan.id}`).value),
     })),
-    rabatter: teliaData.rabatter.hovednummer.map((rabatt) => ({
-      id: rabatt.id,
-      rabatt: parseFloat(document.getElementById(`rabatt-${rabatt.id}`).value),
-    })),
+    rabatter: teliaData.rabatter
+      ? teliaData.rabatter.map((r) => ({
+          id: r.id,
+          rabatt: parseFloat(document.getElementById(`rabatt-${r.id}`).value),
+        }))
+      : [], // Sikrer at rabatter ikke er undefined
     simKort: [
       {
-        type: "normal",
+        id: "sim_normal",
         pris: parseFloat(document.getElementById("sim-normal").value),
       },
       {
-        type: "teliaX",
+        id: "sim_teliaX",
         pris: parseFloat(document.getElementById("sim-teliaX").value),
       },
     ],
