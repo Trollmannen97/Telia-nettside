@@ -120,3 +120,40 @@ function saveChanges() {
   console.log("Nye data:", teliaData);
   document.getElementById("saveMessage").innerText = "Endringer lagret!";
 }
+
+async function saveChanges() {
+  teliaData.abonnementer.forEach((plan, index) => {
+    plan.pris = parseFloat(document.getElementById(`plan-${index}`).value);
+  });
+
+  teliaData.rabatter.hovednummer.forEach((r, index) => {
+    teliaData.rabatter.hovednummer[index] = parseFloat(
+      document.getElementById(`rabatt-${index}`).value
+    );
+  });
+
+  teliaData.simKort.normal = parseFloat(
+    document.getElementById("sim-normal").value
+  );
+  teliaData.simKort.teliaX = parseFloat(
+    document.getElementById("sim-teliaX").value
+  );
+
+  teliaData.tilleggsProdukter.forEach((addon, index) => {
+    addon.pris = parseFloat(document.getElementById(`addon-${index}`).value);
+  });
+
+  try {
+    const response = await fetch("http://localhost:3000/api/update-prices", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(teliaData),
+    });
+
+    const result = await response.json();
+    document.getElementById("saveMessage").innerText = result.message;
+    console.log("Oppdatering vellykket:", result);
+  } catch (error) {
+    console.error("Kunne ikke lagre JSON-data:", error);
+  }
+}
