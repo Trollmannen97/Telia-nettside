@@ -99,25 +99,32 @@ async function buildHovednummerDiscountSelect() {
   const data = await fetchTeliaData();
   if (!data) return;
 
-  // For eksempel data.rabatter.hovednummer = [0, 10, 15, 20]
   const discountSelect = document.getElementById("discount");
   if (!discountSelect) {
     console.error("Fant ikke #discount i HTML.");
     return;
   }
 
-  discountSelect.innerHTML = ""; // Tømmer <select>
+  discountSelect.innerHTML = ""; // Tømmer <select> før vi legger inn nye verdier
 
-  // Legger inn hver rabattprosent i en <option>
-  const hovednummerRabatter = data.rabatter.hovednummer || [0, 10, 15, 20];
-  hovednummerRabatter.forEach((prosent) => {
+  // Legg først til "Ingen rabatt" som standardvalg
+  const defaultOption = document.createElement("option");
+  defaultOption.value = 0;
+  defaultOption.textContent = "Ingen rabatt";
+  discountSelect.appendChild(defaultOption);
+
+  // Deretter legg til rabattene fra databasen
+  data.rabatter.hovednummer.forEach((prosent) => {
     const opt = document.createElement("option");
     opt.value = prosent;
-    opt.textContent = prosent === 0 ? "Ingen rabatt" : prosent + "%";
+    opt.textContent = prosent + "%";
     discountSelect.appendChild(opt);
   });
 
-  // Koble event for å kjøre calculateTotalPrice() når man endrer rabatt
+  // Sett "Ingen rabatt" som valgt som standard
+  discountSelect.value = 0;
+
+  // Koble event for å kjøre calculateTotalPrice() når brukeren endrer rabatt
   discountSelect.addEventListener("change", calculateTotalPrice);
 }
 
