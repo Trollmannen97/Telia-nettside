@@ -233,19 +233,22 @@ function calculateSimPrice(planType, twinSimCount, dataSimCount) {
 }
 
 // Funksjon for å vise detaljert resultat
+// Funksjon for å vise detaljert resultat
 function updateResultDisplay() {
   // Hent HTML-elementene for å vise valgt informasjon
   const selectedPlanElement = document.getElementById("selectedPlan");
   const discountDetailsElement = document.getElementById("discountDetails");
   const simDetailsElement = document.getElementById("simDetails");
   const addonDetailsElement = document.getElementById("addonDetails");
+  const devicePaymentDiv = document.getElementById("devicePaymentDetails");
 
   // Sjekk om elementene eksisterer
   if (
     !selectedPlanElement ||
     !discountDetailsElement ||
     !simDetailsElement ||
-    !addonDetailsElement
+    !addonDetailsElement ||
+    !devicePaymentDiv
   ) {
     console.error("Ett eller flere nødvendige HTML-elementer ble ikke funnet.");
     return;
@@ -256,6 +259,7 @@ function updateResultDisplay() {
   discountDetailsElement.innerHTML = "";
   simDetailsElement.innerHTML = "";
   addonDetailsElement.innerHTML = "";
+  devicePaymentDiv.innerHTML = "";
 
   // **Vis hovedabonnementet**
   const plan = document.getElementById("plan");
@@ -274,36 +278,35 @@ function updateResultDisplay() {
   const discountValue = discountSelect.value || "0";
   const discountPercentage = parseFloat(discountValue) || 0;
 
-  // Debugging
-  console.log("Discount select element:", discountSelect);
-  console.log("Discount value:", discountValue);
-  console.log(
-    "discountPercentage:",
-    discountPercentage,
-    "Type:",
-    typeof discountPercentage
-  );
-
-  // **Beregn rabattbeløpet for hovedabonnementet**
+  // Beregn rabattbeløpet for hovedabonnementet
   const mainDiscountAmount = (selectedPlanPrice * discountPercentage) / 100;
   const discountedMainPlanPrice = selectedPlanPrice - mainDiscountAmount;
 
-  // **Vis hovedabonnementet med rabattert pris**
+  // Oppdater oversikt for hovedabonnement
   let plansDetails = `<p>Hovedabonnement: ${planName} - ${discountedMainPlanPrice.toFixed(
     2
   )} kr</p>`;
 
-  // **Vis rabattinformasjon for hovedabonnementet**
+  // Oppdater rabatt-detaljer
   let discountDetails = "";
-
-  if (Number(discountPercentage) > 0) {
+  if (discountPercentage > 0) {
     discountDetails += `<p>Hovedabonnement: ${discountPercentage}% rabatt (${mainDiscountAmount.toFixed(
       2
     )} kr trukket fra)</p>`;
   } else {
     discountDetails += `<p>Hovedabonnement: Ingen rabatt</p>`;
   }
-  // Hent delbetaling fra enkel kunde
+
+  // ======================================
+  // Definer strengvariabler for SIM og Delbetaling
+  // før vi bruker dem
+  // ======================================
+  let simDetails = "";
+  let devicePaymentDetails = "";
+
+  // ======================================
+  // Hent delbetaling for enkel kunde
+  // ======================================
   const singleDevicePaymentInput = document.getElementById(
     "singleDevicePayment"
   );
@@ -316,7 +319,7 @@ function updateResultDisplay() {
     }
   }
 
-  // **Legg til familieabonnementene**
+  // **Familieabonnement**
   const familyPlans = document.getElementsByClassName("family-plan");
   for (let i = 0; i < familyPlans.length; i++) {
     const familyPlanDiv = familyPlans[i];
@@ -324,48 +327,41 @@ function updateResultDisplay() {
     const familyPlanNameFull =
       planSelect.options[planSelect.selectedIndex].text;
     const familyPlanPrice = parseFloat(planSelect.value);
-
-    // Ekstraher kun abonnementsnavnet uten pris
     const familyPlanName = familyPlanNameFull.split(" - ")[0];
 
     // Beregn rabatt for familieabonnementet
     const discount = getFamilyDiscount(familyPlanPrice, familyPlanName, false);
     const discountedPrice = familyPlanPrice - discount;
 
-    // Legg til familieabonnementet til 'plansDetails'
+    // Legg til i oversikten
     plansDetails += `<p>Familieabonnement ${
       i + 1
     }: ${familyPlanName} - ${discountedPrice.toFixed(2)} kr</p>`;
 
-    // Legg til rabattinformasjon for familieabonnementet
+    // Legg til rabattinformasjon
     if (discount > 0) {
       discountDetails += `<p>${familyPlanName}: Rabatt på ${discount} kr</p>`;
     } else {
       discountDetails += `<p>${familyPlanName}: Ingen rabatt</p>`;
     }
 
+    // Ekstra rabatt
     const extraDiscountSelect = familyPlanDiv.querySelector(
       ".family-extra-discount"
     );
     const extraDiscountPercentage = parseFloat(extraDiscountSelect.value) || 0;
-
     if (extraDiscountPercentage > 0) {
       discountDetails += `<p>${familyPlanName}: Ekstra rabatt ${extraDiscountPercentage}%</p>`;
     }
   }
 
-  // **Oppdater 'Valgt Abonnement' med alle abonnementer**
+  // Oppdater 'Valgt Abonnement'
   selectedPlanElement.innerHTML = plansDetails;
 
-  // **Oppdater 'Rabatt' med rabattinformasjon**
+  // Oppdater 'Rabatt'
   discountDetailsElement.innerHTML = discountDetails;
 
-  // **Vis SIM-valg**
-  let simDetails = "";
-
-  let devicePaymentDetails = ""; // <--- Ny streng for delbetaling
-
-  // **Hovedabonnementets SIM-valg**
+  // ============== Hovedabonnementets SIM-valg ============
   const twinSimCountMain = parseInt(
     document.getElementById("singleTwinsimSelect").value
   );
@@ -382,17 +378,13 @@ function updateResultDisplay() {
     simDetails += `<p>Hovedabonnement - DataSIM: ${dataSimCountMain} x ${dataSimPriceMain} kr</p>`;
   }
 
-  // **Familieabonnementenes SIM-valg**
+  // ============== Familieabonnementenes SIM-valg ===========
   for (let i = 0; i < familyPlans.length; i++) {
     const familyPlanDiv = familyPlans[i];
-    const twinSimCount = parseInt(
-      familyPlanDiv.querySelector(".twinsim-select").value
-    );
-    const dataSimCount = parseInt(
-      familyPlanDiv.querySelector(".datasim-select").value
-    );
-
-    // Hent planens navn for hver familieplan
+    const twinSimCount =
+      parseInt(familyPlanDiv.querySelector(".twinsim-select").value) || 0;
+    const dataSimCount =
+      parseInt(familyPlanDiv.querySelector(".datasim-select").value) || 0;
     const planSelect = familyPlanDiv.querySelector(".family-plan-select");
     const familyPlanNameFull =
       planSelect.options[planSelect.selectedIndex].text;
@@ -407,30 +399,26 @@ function updateResultDisplay() {
       simDetails += `<p>${familyPlanName} - DataSIM: ${dataSimCount} x ${dataSimPrice} kr</p>`;
     }
 
-    // Hent delbetalingsfeltet for dette familieabonnementet
+    // Delbetaling for familie
     const devicePaymentInput = familyPlanDiv.querySelector(".device-payment");
     if (devicePaymentInput) {
       const devicePayment = parseFloat(devicePaymentInput.value) || 0;
       if (devicePayment > 0) {
-        // Legg til en egen linje for delbetaling i "devicePaymentDetails"
-        devicePaymentDetails += `<p> Svitsj/delbetaling: ${devicePayment.toFixed(
+        devicePaymentDetails += `<p>Svitsj/delbetaling: ${devicePayment.toFixed(
           2
         )} kr</p>`;
       }
     }
   }
 
-  // **Oppdater 'SIM-valg' med SIM-detaljer**
+  // Oppdater 'SIM-valg'
   simDetailsElement.innerHTML = simDetails || "<p>Ingen SIM-valg</p>";
 
-  // Sett inn devicePaymentDetails i eget HTML-element
-  const devicePaymentDiv = document.getElementById("devicePaymentDetails");
-  if (devicePaymentDiv) {
-    devicePaymentDiv.innerHTML =
-      devicePaymentDetails || "<p>Ingen delbetaling/Svitsj valgt</p>";
-  }
+  // Oppdater delbetaling i DOM (devicePaymentDetails)
+  devicePaymentDiv.innerHTML =
+    devicePaymentDetails || "<p>Ingen delbetaling/Svitsj valgt</p>";
 
-  // **Vis tilleggstjenester**
+  // ========== Tilleggstjenester =========
   const selectedAddons = document.querySelectorAll(".addon-icon.selected");
   let addonDetails = "";
   selectedAddons.forEach(function (addon) {
