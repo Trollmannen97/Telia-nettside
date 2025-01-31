@@ -7,16 +7,28 @@ let teliaData = null;
 /****************************************************
  * 2) HENT JSON-FIL (prices.json)
  ****************************************************/
+const backendUrl = "https://telia-backend.onrender.com"; // Bytt til din faktiske Render-URL
+
 async function fetchTeliaData() {
   if (teliaData) return teliaData; // Hvis vi allerede har lastet data, bruk det
   try {
-    const response = await fetch("http://localhost:3000/api/prices");
-
+    const response = await fetch(`${backendUrl}/api/prices`);
     const data = await response.json();
-    teliaData = data; // Lagre i global variabel
-    return data;
+
+    if (!data || !data.abonnementer) {
+      throw new Error("Ugyldig dataformat fra backend");
+    }
+
+    teliaData = {
+      abonnementer: data.abonnementer, // Hovedabonnementer
+      rabatter: data.rabatter || { hovednummer: [] }, // Rabattstruktur
+      simKort: data.simKort || { normal: 0, teliaX: 0 }, // SIM-kort priser
+      tilleggsProdukter: data.tilleggsProdukter || [], // Tilleggstjenester
+    };
+
+    return teliaData;
   } catch (error) {
-    console.error("Kunne ikke laste prices.json:", error);
+    console.error("Kunne ikke laste data fra backend:", error);
     return null;
   }
 }

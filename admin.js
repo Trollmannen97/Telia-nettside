@@ -8,7 +8,7 @@ async function login() {
   const password = document.getElementById("password").value;
 
   try {
-    const response = await fetch("http://localhost:3000/api/login", {
+    const response = await fetch(`${backendUrl}/api/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
@@ -38,17 +38,30 @@ function logout() {
  ****************************************************/
 async function loadData() {
   try {
-    const response = await fetch(
-      "/Telia-nettside/Telia-kalkulator/prices.json"
-    );
-    teliaData = await response.json();
+    const response = await fetch(`${backendUrl}/api/prices`);
+    const data = await response.json();
+
+    // Strukturér dataen slik frontend forventer
+    teliaData = {
+      abonnementer: data.filter((item) => item.type === "abonnement"),
+      rabatter: {
+        hovednummer: data
+          .filter((item) => item.type === "rabatt")
+          .map((r) => r.pris),
+      },
+      simKort: {
+        normal: data.find((item) => item.id === "sim_normal")?.pris || 0,
+        teliaX: data.find((item) => item.id === "sim_teliaX")?.pris || 0,
+      },
+      tilleggsProdukter: data.filter((item) => item.type === "tillegg"),
+    };
 
     buildAbonnementEditor();
     buildRabattEditor();
     buildSimEditor();
     buildAddonsEditor();
   } catch (error) {
-    console.error("Kunne ikke laste JSON:", error);
+    console.error("Kunne ikke laste data fra backend:", error);
   }
 }
 
@@ -128,38 +141,43 @@ function saveChanges() {
 }
 
 async function saveChanges() {
-  teliaData.abonnementer.forEach((plan, index) => {
-    plan.pris = parseFloat(document.getElementById(`plan-${index}`).value);
-  });
-
-  teliaData.rabatter.hovednummer.forEach((r, index) => {
-    teliaData.rabatter.hovednummer[index] = parseFloat(
-      document.getElementById(`rabatt-${index}`).value
-    );
-  });
-
-  teliaData.simKort.normal = parseFloat(
-    document.getElementById("sim-normal").value
-  );
-  teliaData.simKort.teliaX = parseFloat(
-    document.getElementById("sim-teliaX").value
-  );
-
-  teliaData.tilleggsProdukter.forEach((addon, index) => {
-    addon.pris = parseFloat(document.getElementById(`addon-${index}`).value);
-  });
+  // Bygger opp riktig JSON-format for backend
+  const updatedData = {
+    abonnementer: teliaData.abonnementer.map((plan, index) => ({
+      id: plan.id,
+      pris: parseFloat(document.getElementById(`plan-${index}`).value),
+    })),
+    rabatter: teliaData.rabatter.hovednummer.map((pris, index) => ({
+      id: `rabatt_${index}`,
+      pris: parseFloat(document.getElementById(`rabatt-${index}`).value),
+    })),
+    simKort: [
+      {
+        id: "sim_normal",
+        pris: parseFloat(document.getElementById("sim-normal").value),
+      },
+      {
+        id: "sim_teliaX",
+        pris: parseFloat(document.getElementById("sim-teliaX").value),
+      },
+    ],
+    tilleggsProdukter: teliaData.tilleggsProdukter.map((addon, index) => ({
+      id: addon.id,
+      pris: parseFloat(document.getElementById(`addon-${index}`).value),
+    })),
+  };
 
   try {
-    const response = await fetch("http://localhost:3000/api/update-prices", {
+    const response = await fetch(`${backendUrl}/api/update-prices`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(teliaData),
+      body: JSON.stringify(updatedData),
     });
 
     const result = await response.json();
     document.getElementById("saveMessage").innerText = result.message;
     console.log("Oppdatering vellykket:", result);
   } catch (error) {
-    console.error("Kunne ikke lagre JSON-data:", error);
+    console.error("Kunne ikke lagre data til backend:", error);
   }
 }
