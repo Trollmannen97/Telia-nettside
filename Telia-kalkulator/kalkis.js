@@ -10,7 +10,9 @@ let teliaData = null;
 async function fetchTeliaData() {
   if (teliaData) return teliaData; // Hvis vi allerede har lastet data, bruk det
   try {
-    const response = await fetch("/Telia-nettside/prices.json");
+    const response = await fetch(
+      "/Telia-nettside/Telia-kalkulator/prices.json"
+    );
     // juster stien om nødvendig, eller bruk full URL fra GitHub Pages
 
     const data = await response.json();
