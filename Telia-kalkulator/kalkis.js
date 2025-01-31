@@ -84,6 +84,35 @@ async function buildFamilyExtraDiscountSelect(selectElement) {
 }
 
 /****************************************************
+ * 4c) FYLL <select id="discount"> med hovednummer-rabatter
+ ****************************************************/
+async function buildHovednummerDiscountSelect() {
+  const data = await fetchTeliaData();
+  if (!data) return;
+
+  // For eksempel data.rabatter.hovednummer = [0, 10, 15, 20]
+  const discountSelect = document.getElementById("discount");
+  if (!discountSelect) {
+    console.error("Fant ikke #discount i HTML.");
+    return;
+  }
+
+  discountSelect.innerHTML = ""; // Tømmer <select>
+
+  // Legger inn hver rabattprosent i en <option>
+  const hovednummerRabatter = data.rabatter.hovednummer || [0, 10, 15, 20];
+  hovednummerRabatter.forEach((prosent) => {
+    const opt = document.createElement("option");
+    opt.value = prosent;
+    opt.textContent = prosent === 0 ? "Ingen rabatt" : prosent + "%";
+    discountSelect.appendChild(opt);
+  });
+
+  // Koble event for å kjøre calculateTotalPrice() når man endrer rabatt
+  discountSelect.addEventListener("change", calculateTotalPrice);
+}
+
+/****************************************************
  * 5) NÅ BYTTER VI UT DIN HARDCODEDE <option>
  *    I addFamilyPlan() MED EN TOM <select>, SOM SÅ FYLLES
  *    AV buildFamilyPlanOptions(...).
@@ -151,9 +180,11 @@ function addFamilyPlan() {
  ****************************************************/
 // I stedet for dine gamle 'toggleCustomerType()' i global scope,
 // gjør vi:
+
 window.addEventListener("DOMContentLoaded", async () => {
-  await buildMainPlanOptions(); // Fyll <select id="plan">
-  toggleCustomerType(); // Vis/skjul riktig seksjon
+  await buildMainPlanOptions(); // Bygger <select id="plan">
+  await buildHovednummerDiscountSelect(); // Bygger <select id="discount">
+  toggleCustomerType(); // Viser/skjuler enkel/familie-seksjon
 });
 
 // Funksjon for å vise/skjule elementer basert på kundetypefunction toggleCustomerType() {
