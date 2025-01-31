@@ -1,3 +1,4 @@
+const backendUrl = "https://telia-backend.onrender.com"; // Oppdater med riktig backend-URL
 let teliaData = null;
 
 /****************************************************
@@ -34,27 +35,12 @@ function logout() {
 }
 
 /****************************************************
- * 2) HENT JSON-DATA OG FYLL SKJEMA
+ * 2) HENT DATA FRA BACKEND OG FYLL SKJEMA
  ****************************************************/
 async function loadData() {
   try {
     const response = await fetch(`${backendUrl}/api/prices`);
-    const data = await response.json();
-
-    // Strukturér dataen slik frontend forventer
-    teliaData = {
-      abonnementer: data.filter((item) => item.type === "abonnement"),
-      rabatter: {
-        hovednummer: data
-          .filter((item) => item.type === "rabatt")
-          .map((r) => r.pris),
-      },
-      simKort: {
-        normal: data.find((item) => item.id === "sim_normal")?.pris || 0,
-        teliaX: data.find((item) => item.id === "sim_teliaX")?.pris || 0,
-      },
-      tilleggsProdukter: data.filter((item) => item.type === "tillegg"),
-    };
+    teliaData = await response.json();
 
     buildAbonnementEditor();
     buildRabattEditor();
@@ -68,11 +54,11 @@ async function loadData() {
 function buildAbonnementEditor() {
   const container = document.getElementById("abonnementContainer");
   container.innerHTML = "";
-  teliaData.abonnementer.forEach((plan, index) => {
+  teliaData.abonnementer.forEach((plan) => {
     container.innerHTML += `
             <div>
                 <label>${plan.navn}:</label>
-                <input type="number" id="plan-${index}" value="${plan.pris}">
+                <input type="number" id="plan-${plan.id}" value="${plan.pris}">
             </div>
         `;
   });
@@ -81,11 +67,11 @@ function buildAbonnementEditor() {
 function buildRabattEditor() {
   const container = document.getElementById("rabattContainer");
   container.innerHTML = "";
-  teliaData.rabatter.hovednummer.forEach((r, index) => {
+  teliaData.rabatter.hovednummer.forEach((r) => {
     container.innerHTML += `
             <div>
-                <label>Hovednummer rabatt ${index + 1}:</label>
-                <input type="number" id="rabatt-${index}" value="${r}">
+                <label>${r.type} rabatt:</label>
+                <input type="number" id="rabatt-${r.id}" value="${r.rabatt}">
             </div>
         `;
   });
@@ -104,66 +90,42 @@ function buildSimEditor() {
 function buildAddonsEditor() {
   const container = document.getElementById("addonsContainer");
   container.innerHTML = "";
-  teliaData.tilleggsProdukter.forEach((addon, index) => {
+  teliaData.tilleggsProdukter.forEach((addon) => {
     container.innerHTML += `
             <div>
                 <label>${addon.navn}:</label>
-                <input type="number" id="addon-${index}" value="${addon.pris}">
+                <input type="number" id="addon-${addon.id}" value="${addon.pris}">
             </div>
         `;
   });
 }
 
 /****************************************************
- * 3) LAGRE ENDRINGER TIL JSON
+ * 3) LAGRE ENDRINGER TIL BACKEND
  ****************************************************/
-function saveChanges() {
-  teliaData.abonnementer.forEach((plan, index) => {
-    plan.pris = document.getElementById(`plan-${index}`).value;
-  });
-
-  teliaData.rabatter.hovednummer.forEach((r, index) => {
-    teliaData.rabatter.hovednummer[index] = document.getElementById(
-      `rabatt-${index}`
-    ).value;
-  });
-
-  teliaData.simKort.normal = document.getElementById("sim-normal").value;
-  teliaData.simKort.teliaX = document.getElementById("sim-teliaX").value;
-
-  teliaData.tilleggsProdukter.forEach((addon, index) => {
-    addon.pris = document.getElementById(`addon-${index}`).value;
-  });
-
-  // Her må en backend-løsning brukes for å lagre filen
-  console.log("Nye data:", teliaData);
-  document.getElementById("saveMessage").innerText = "Endringer lagret!";
-}
-
 async function saveChanges() {
-  // Bygger opp riktig JSON-format for backend
   const updatedData = {
-    abonnementer: teliaData.abonnementer.map((plan, index) => ({
+    abonnementer: teliaData.abonnementer.map((plan) => ({
       id: plan.id,
-      pris: parseFloat(document.getElementById(`plan-${index}`).value),
+      pris: parseFloat(document.getElementById(`plan-${plan.id}`).value),
     })),
-    rabatter: teliaData.rabatter.hovednummer.map((pris, index) => ({
-      id: `rabatt_${index}`,
-      pris: parseFloat(document.getElementById(`rabatt-${index}`).value),
+    rabatter: teliaData.rabatter.hovednummer.map((rabatt) => ({
+      id: rabatt.id,
+      rabatt: parseFloat(document.getElementById(`rabatt-${rabatt.id}`).value),
     })),
     simKort: [
       {
-        id: "sim_normal",
+        type: "normal",
         pris: parseFloat(document.getElementById("sim-normal").value),
       },
       {
-        id: "sim_teliaX",
+        type: "teliaX",
         pris: parseFloat(document.getElementById("sim-teliaX").value),
       },
     ],
-    tilleggsProdukter: teliaData.tilleggsProdukter.map((addon, index) => ({
+    tilleggsProdukter: teliaData.tilleggsProdukter.map((addon) => ({
       id: addon.id,
-      pris: parseFloat(document.getElementById(`addon-${index}`).value),
+      pris: parseFloat(document.getElementById(`addon-${addon.id}`).value),
     })),
   };
 
