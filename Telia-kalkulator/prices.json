@@ -1,0 +1,60 @@
+{
+    "abonnementer": [
+      {
+        "id": "junior1gb",
+        "navn": "Telia Junior 1GB",
+        "pris": 129
+      },
+      {
+        "id": "junior5gb",
+        "navn": "Telia Junior 5GB",
+        "pris": 179
+      },
+      {
+        "id": "telia5gb",
+        "navn": "Telia 5GB",
+        "pris": 329
+      },
+      {
+        "id": "telia10gb",
+        "navn": "Telia 10GB",
+        "pris": 379
+      },
+      {
+        "id": "telia10gb-ung",
+        "navn": "Telia 10GB Ung",
+        "pris": 329
+      },
+      {
+        "id": "teliaxstart",
+        "navn": "Telia X Start",
+        "pris": 429
+      },
+      {
+        "id": "teliaxung",
+        "navn": "Telia X Ung",
+        "pris": 399
+      },
+      {
+        "id": "teliabasic",
+        "navn": "Telia X Basic",
+        "pris": 499
+      },
+      {
+        "id": "teliamax",
+        "navn": "Telia X Max",
+        "pris": 599
+      },
+      {
+        "id": "teliamaxpluss",
+        "navn": "Telia X Max Pluss",
+        "pris": 699
+      },
+      {
+        "id": "teliaviaplay",
+        "navn": "Telia X + Viaplay Total",
+        "pris": 1099
+      }
+    ]
+  }
+  
