@@ -107,17 +107,26 @@ async function buildHovednummerDiscountSelect() {
 
   discountSelect.innerHTML = ""; // Tømmer <select>
 
+  // Legg til "Ingen rabatt" som standardvalg
+  const defaultOption = document.createElement("option");
+  defaultOption.value = "0";
+  defaultOption.textContent = "Ingen rabatt";
+  discountSelect.appendChild(defaultOption);
+
   // Hent kun "hovednummer"-rabatter fra arrayen
   const hovednummerRabatter = data.rabatter
     .filter((r) => r.type === "hovednummer")
-    .map((r) => r.rabatt) || [0, 10, 15, 20];
+    .map((r) => r.rabatt);
 
   hovednummerRabatter.forEach((prosent) => {
     const opt = document.createElement("option");
     opt.value = prosent;
-    opt.textContent = prosent === 0 ? "Ingen rabatt" : prosent + "%";
+    opt.textContent = prosent + "%";
     discountSelect.appendChild(opt);
   });
+
+  // Sett standard til "Ingen rabatt"
+  discountSelect.value = "0";
 
   // Koble event for å kjøre calculateTotalPrice() når man endrer rabatt
   discountSelect.addEventListener("change", calculateTotalPrice);
