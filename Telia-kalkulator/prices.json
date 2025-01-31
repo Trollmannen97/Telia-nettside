@@ -1,4 +1,5 @@
 {
+   
     "abonnementer": [
       {
         "id": "junior1gb",
@@ -21,39 +22,92 @@
         "pris": 379
       },
       {
-        "id": "telia10gb-ung",
+        "id": "telia10gbUng",
         "navn": "Telia 10GB Ung",
         "pris": 329
       },
       {
-        "id": "teliaxstart",
+        "id": "teliaXstart",
         "navn": "Telia X Start",
         "pris": 429
       },
       {
-        "id": "teliaxung",
+        "id": "teliaXung",
         "navn": "Telia X Ung",
         "pris": 399
       },
       {
-        "id": "teliabasic",
+        "id": "teliaXbasic",
         "navn": "Telia X Basic",
         "pris": 499
       },
       {
-        "id": "teliamax",
+        "id": "teliaXmax",
         "navn": "Telia X Max",
         "pris": 599
       },
       {
-        "id": "teliamaxpluss",
+        "id": "teliaXmaxPluss",
         "navn": "Telia X Max Pluss",
         "pris": 699
       },
       {
-        "id": "teliaviaplay",
+        "id": "teliaXviaplay",
         "navn": "Telia X + Viaplay Total",
         "pris": 1099
+      }
+    ],
+  
+    
+    "rabatter": {
+    
+      "familie": {
+        "teliaX": 100,        
+        "teliaMobile": 30,
+        "ekstraProsent": [0, 10, 15, 20]      
+      },
+     
+      "hovednummer": [0, 10, 15, 20]
+    },
+ 
+   
+    "simKort": {
+      "normal": 49,           
+      "teliaX": 89,           
+      "maxPlussGratis": 2     
+    },
+  
+   
+    "tilleggsProdukter": [
+      {
+        "id": "max",
+        "navn": "Max",
+        "pris": 89,
+        "ikon": "/Telia-nettside/Bilder/maxlogo.webp"
+      },
+      {
+        "id": "storytel",
+        "navn": "Storytel",
+        "pris": 199,
+        "ikon": "/Telia-nettside/Bilder/Storytel's_logo.png"
+      },
+      {
+        "id": "viaplay",
+        "navn": "Viaplay",
+        "pris": 149,
+        "ikon": "/Telia-nettside/Bilder/via.png"
+      },
+      {
+        "id": "teliaSky",
+        "navn": "Telia Sky",
+        "pris": 69,
+        "ikon": "/Telia-nettside/Bilder/218706.png"
+      },
+      {
+        "id": "teliaTrygg",
+        "navn": "Telia Trygg",
+        "pris": 109,
+        "ikon": "/Telia-nettside/Bilder/trygg.webp"
       }
     ]
   }

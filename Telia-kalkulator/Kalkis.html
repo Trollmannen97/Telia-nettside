@@ -23,26 +23,11 @@
         <div class="form-group">
             <label for="plan">Velg abonnement:</label>
             <select id="plan">
-                <option value="129">Telia Junior 1GB - 129kr</option>
-                <option value="179">Telia Junior 5GB - 179kr</option>
-                <option value="329">Telia 5GB - 329 kr</option>
-                <option value="379">Telia 10GB - 379 kr</option>
-                <option value="329">Telia 10GB Ung - 329 kr</option>
-                <option value="429">Telia X Start - 429 kr</option>
-                <option value="399">Telia X Ung - 399 kr</option>
-                <option value="499">Telia X Basic - 499 kr</option>
-                <option value="599">Telia X Max - 599 kr</option>
-                <option value="699">Telia X Max Pluss - 699 kr</option>
-                <option value="1099">Telia X + Viaplay Total - 1099 kr</option>
             </select>
         </div>
         <div class="form-group">
             <label for="discount">Rabatt for hovednummer:</label>
             <select id="discount" onchange="calculateTotalPrice()">
-                <option value="0">Ingen rabatt</option>
-                <option value="10">10%</option>
-                <option value="15">15%</option>
-                <option value="20">20%</option>
             </select>
         </div>
    <!-- Ny seksjon for SIM-kort og tilleggstjenester for enkel kunde -->
@@ -87,12 +72,8 @@
  <!-- Legger tilleggstjenester i en egen container for å sikre at den plasseres under -->
  <div class="addon-container">
     <h4>Velg tilleggstjenester:</h4>
-    <div class="addons">
-        <img src="/Telia-nettside/Bilder/mx3.webp" alt="Max" class="addon-icon" data-price="89" onclick="toggleAddon(this)">
-        <img src="/Telia-nettside/Bilder/Storytel's_logo.png" alt="Storytel" class="addon-icon" data-price="199" onclick="toggleAddon(this)">
-        <img src="/Telia-nettside/Bilder/via.png" alt="Viaplay" class="addon-icon" data-price="149" onclick="toggleAddon(this)">
-        <img src="/Telia-nettside/Bilder/218706.png" alt="Telia Sky" class="addon-icon" data-price="69" onclick="toggleAddon(this)">
-        <img src="/Telia-nettside/Bilder/trygg.webp" alt="Telia Trygg" class="addon-icon" data-price="109" onclick="toggleAddon(this)">
+    <div class="addons" id="addonContainer">
+        <!-- Bli fylt av JavaScript -->
     </div>
 </div>
 </div>

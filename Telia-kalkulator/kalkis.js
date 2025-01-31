@@ -1,71 +1,101 @@
-// Funksjon for å vise/skjule elementer basert på kundetypefunction toggleCustomerType() {
-function toggleCustomerType() {
-  const singlePlanOptions = document.getElementById("singlePlanOptions");
-  const familySection = document.getElementById("familySection");
+/****************************************************
+ * 1) GLOBALE VARIABLER ELLER KONSTANTER
+ ****************************************************/
+let teliaData = null;
+// Her vil vi lagre innholdet fra prices.json (abonnementer, rabatter, simKort, tilleggsProdukter, etc.)
 
-  if (document.getElementById("single").checked) {
-    console.log("Enkel kunde er valgt.");
-    singlePlanOptions.style.display = "block"; // Vis enkel kunde-seksjon
-    familySection.style.display = "none"; // Skjul familie-seksjon
-  } else if (document.getElementById("family").checked) {
-    console.log("Familie er valgt.");
-    singlePlanOptions.style.display = "none"; // Skjul enkel kunde-seksjon
-    familySection.style.display = "block"; // Vis familie-seksjon
-  } else {
-    console.error("Ingen gyldig radioknapp er valgt.");
+/****************************************************
+ * 2) HENT JSON-FIL (prices.json)
+ ****************************************************/
+async function fetchTeliaData() {
+  if (teliaData) return teliaData; // Hvis vi allerede har lastet data, bruk det
+  try {
+    const response = await fetch("/Telia-nettside/prices.json");
+    // juster stien om nødvendig, eller bruk full URL fra GitHub Pages
+
+    const data = await response.json();
+    teliaData = data; // Lagre i global variabel
+    return data;
+  } catch (error) {
+    console.error("Kunne ikke laste prices.json:", error);
+    return null;
   }
 }
 
-// Kjør funksjonen for å sette initial visning
-toggleCustomerType();
+/****************************************************
+ * 3) FYLL <select id="plan"> DYNAMISK
+ ****************************************************/
+async function buildMainPlanOptions() {
+  const data = await fetchTeliaData();
+  if (!data) return;
 
-if (singleRadio.checked) {
-  // Enkel kunde er valgt
-  setDisplay(familySection, "none");
-  setDisplay(familyDiscountSection, "none");
-  setDisplay(singlePlanOptions, "block");
-  setDisplay(singleSimOptions, "flex");
-  setDisplay(familySimOptions, "none");
-  setDisplay(addonsSection, "block");
-} else {
-  // Familie er valgt
-  setDisplay(familySection, "block");
-  setDisplay(familyDiscountSection, "block");
-  setDisplay(singlePlanOptions, "none");
-  setDisplay(singleSimOptions, "none");
-  setDisplay(familySimOptions, "flex");
-  setDisplay(addonsSection, "none");
+  const planSelect = document.getElementById("plan");
+  if (!planSelect) {
+    console.error("Fant ikke #plan i HTML.");
+    return;
+  }
+  planSelect.innerHTML = ""; // Fjern evt. placeholder
+
+  // data.abonnementer er en array med { id, navn, pris }
+  data.abonnementer.forEach((ab) => {
+    const opt = document.createElement("option");
+    opt.value = ab.pris; // Fortsatt 'pris' som .value, så rest av koden funker
+    opt.textContent = `${ab.navn} - ${ab.pris} kr`;
+    planSelect.appendChild(opt);
+  });
 }
 
-// Funksjon for å legge til et nytt familieabonnement
+/****************************************************
+ * 4) FYLL <select class="family-plan-select"> DYNAMISK
+ ****************************************************/
+async function buildFamilyPlanOptions(selectElement) {
+  const data = await fetchTeliaData();
+  if (!data) return;
+
+  selectElement.innerHTML = "";
+  data.abonnementer.forEach((ab) => {
+    const opt = document.createElement("option");
+    opt.value = ab.pris;
+    opt.textContent = `${ab.navn} - ${ab.pris} kr`;
+    selectElement.appendChild(opt);
+  });
+}
+
+/****************************************************
+ * 4b) FYLL <select class="family-extra-discount"> DYNAMISK
+ *     (Kalles inni addFamilyPlan() etter at newDiv
+ *      er lagt til i DOM.)
+ ****************************************************/
+async function buildFamilyExtraDiscountSelect(selectElement) {
+  const data = await fetchTeliaData();
+  if (!data) return;
+
+  // Leser “ekstraProsent” fra JSON, eller fallback til [0,10,15,20]
+  const prosenter = data.rabatter.familie.ekstraProsent || [0, 10, 15, 20];
+  selectElement.innerHTML = "";
+  prosenter.forEach((p) => {
+    const opt = document.createElement("option");
+    opt.value = p;
+    opt.textContent = p === 0 ? "Ingen ekstra rabatt" : p + "%";
+    selectElement.appendChild(opt);
+  });
+}
+
+/****************************************************
+ * 5) NÅ BYTTER VI UT DIN HARDCODEDE <option>
+ *    I addFamilyPlan() MED EN TOM <select>, SOM SÅ FYLLES
+ *    AV buildFamilyPlanOptions(...).
+ ****************************************************/
 function addFamilyPlan() {
   const familyPlans = document.getElementById("familyPlans");
 
-  // Opprette en ny div for familieabonnement med tilleggstjenester
   const newDiv = document.createElement("div");
   newDiv.classList.add("family-plan");
 
-  // Bruk malstreng for bedre lesbarhet
   newDiv.innerHTML = `
-    <select class="family-plan-select">
-      <option value="129">Telia Junior 1GB - 129kr</option>
-      <option value="179">Telia Junior 5GB - 179kr</option>
-      <option value="329">Telia 5GB - 329 kr</option>
-      <option value="379">Telia 10GB - 379 kr</option>
-      <option value="329">Telia 10GB Ung - 329 kr</option>
-      <option value="429">Telia X Start - 429 kr</option>
-      <option value="399">Telia X Ung - 399 kr</option>
-      <option value="499">Telia X Basic - 499 kr</option>
-      <option value="599">Telia X Max - 599 kr</option>
-      <option value="699">Telia X Max Pluss - 699 kr</option>
-      <option value="1099">Telia X + Viaplay Total - 1099 kr</option>
-    </select>
+    <select class="family-plan-select"></select>
     <label for="familyExtraDiscount">Ekstra rabatt:</label>
     <select class="family-extra-discount" onchange="calculateTotalPrice()">
-      <option value="0">Ingen ekstra rabatt</option>
-      <option value="10">10%</option>
-      <option value="15">15%</option>
-      <option value="20">20%</option>
     </select>
     <div class="sim-options">
       <label for="twinsim">TvillingSIM:</label>
@@ -84,17 +114,18 @@ function addFamilyPlan() {
       </select>
       <span class="family-plan-price">SIM-kort: 0.00 kr</span>
     </div>
-<div class="device-payment-container">
-  <label for="devicePayment">Svitsj/delbetaling (kr/mnd):</label>
-  <input
-    type="number"
-    class="device-payment"
-    value="0"
-    min="0"
-    onchange="calculateTotalPrice()"
-  />
-</div>
+    <div class="device-payment-container">
+      <label for="devicePayment">Svitsj/delbetaling (kr/mnd):</label>
+      <input
+        type="number"
+        class="device-payment"
+        value="0"
+        min="0"
+        onchange="calculateTotalPrice()"
+      />
+    </div>
     <div class="addons">
+      <!-- Her kunne du OGSÅ generert addon <img> dynamisk om du vil -->
       <img src="/Telia-nettside/Bilder/maxlogo.webp" alt="Max" class="addon-icon" data-price="89" onclick="toggleAddon(this)">
       <img src="/Telia-nettside/Bilder/Storytel's_logo.png" alt="Storytel" class="addon-icon" data-price="199" onclick="toggleAddon(this)">
       <img src="/Telia-nettside/Bilder/via.png" alt="Viaplay" class="addon-icon" data-price="149" onclick="toggleAddon(this)">
@@ -105,6 +136,40 @@ function addFamilyPlan() {
   `;
 
   familyPlans.appendChild(newDiv);
+
+  const familySelect = newDiv.querySelector(".family-plan-select");
+  buildFamilyPlanOptions(familySelect);
+
+  const discountSelect = newDiv.querySelector(".family-extra-discount");
+  buildFamilyExtraDiscountSelect(discountSelect);
+}
+
+/****************************************************
+ * 6) KJØR buildMainPlanOptions() VED OPPSTART
+ ****************************************************/
+// I stedet for dine gamle 'toggleCustomerType()' i global scope,
+// gjør vi:
+window.addEventListener("DOMContentLoaded", async () => {
+  await buildMainPlanOptions(); // Fyll <select id="plan">
+  toggleCustomerType(); // Vis/skjul riktig seksjon
+});
+
+// Funksjon for å vise/skjule elementer basert på kundetypefunction toggleCustomerType() {
+function toggleCustomerType() {
+  const singlePlanOptions = document.getElementById("singlePlanOptions");
+  const familySection = document.getElementById("familySection");
+
+  if (document.getElementById("single").checked) {
+    console.log("Enkel kunde er valgt.");
+    singlePlanOptions.style.display = "block"; // Vis enkel kunde-seksjon
+    familySection.style.display = "none"; // Skjul familie-seksjon
+  } else if (document.getElementById("family").checked) {
+    console.log("Familie er valgt.");
+    singlePlanOptions.style.display = "none"; // Skjul enkel kunde-seksjon
+    familySection.style.display = "block"; // Vis familie-seksjon
+  } else {
+    console.error("Ingen gyldig radioknapp er valgt.");
+  }
 }
 
 // Funksjon for å håndtere tilleggstjenester
@@ -508,11 +573,6 @@ function calculateTotalPrice() {
   }
   totalPrice += singleDevicePayment;
   // Nå kan du sjekke verdien
-  if (singleDevicePayment > 0) {
-    devicePaymentDetails += `<p>Svitsj/delbetaling: ${singleDevicePayment.toFixed(
-      2
-    )} kr</p>`;
-  }
 
   // **Familieabonnementer*
   const familyPlans = document.querySelectorAll(".family-plan");
