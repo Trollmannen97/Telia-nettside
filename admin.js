@@ -3,22 +3,28 @@ let teliaData = null;
 /****************************************************
  * 1) ADMIN LOGIN SYSTEM
  ****************************************************/
-const adminCredentials = { username: "teliaAdmin", password: "superhemmelig" };
-
-function login() {
+async function login() {
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
 
-  if (
-    username === adminCredentials.username &&
-    password === adminCredentials.password
-  ) {
-    document.getElementById("loginContainer").style.display = "none";
-    document.getElementById("adminPanel").style.display = "block";
-    loadData();
-  } else {
-    document.getElementById("errorMessage").innerText =
-      "Feil brukernavn eller passord.";
+  try {
+    const response = await fetch("http://localhost:3000/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password }),
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      document.getElementById("loginContainer").style.display = "none";
+      document.getElementById("adminPanel").style.display = "block";
+      loadData();
+    } else {
+      document.getElementById("errorMessage").innerText = data.message;
+    }
+  } catch (error) {
+    console.error("Innloggingsfeil:", error);
   }
 }
 
