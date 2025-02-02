@@ -235,8 +235,8 @@ button:hover {
 
 
 .addon-icon {
-    width: 100px; /* Match størrelsen du har valgt i Canva */
-    height: 100px;
+    width: 50px; /* Match størrelsen du har valgt i Canva */
+    height: 50px;
     margin: 5px;
     cursor: pointer;
     border-radius: 10px;
