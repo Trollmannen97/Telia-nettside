@@ -70,7 +70,7 @@ async function buildAddons() {
 
   data.tilleggsProdukter.forEach((addon) => {
     const img = document.createElement("img");
-    img.src = `/Bilder/${addon.navn.toLowerCase().replace(/\s+/g, "_")}.png`; // Bruker navn som filnavn
+    img.src = `Bilder/${addon.navn.toLowerCase().replace(/\s+/g, "_")}.png`; // Bruker navn som filnavn
     img.alt = addon.navn;
     img.classList.add("addon-icon");
     img.setAttribute("data-price", addon.pris);
