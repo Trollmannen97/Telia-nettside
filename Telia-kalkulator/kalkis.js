@@ -206,14 +206,8 @@ function addFamilyPlan() {
         onchange="calculateTotalPrice()"
       />
     </div>
-    <div class="addons">
-      <!-- Her kunne du OGSÅ generert addon <img> dynamisk om du vil -->
-      <img src="/Telia-nettside/Bilder/maxlogo.webp" alt="Max" class="addon-icon" data-price="89" onclick="toggleAddon(this)">
-      <img src="/Telia-nettside/Bilder/Storytel's_logo.png" alt="Storytel" class="addon-icon" data-price="199" onclick="toggleAddon(this)">
-      <img src="/Telia-nettside/Bilder/via.png" alt="Viaplay" class="addon-icon" data-price="149" onclick="toggleAddon(this)">
-      <img src="/Telia-nettside/Bilder/218706.png" alt="Telia Sky" class="addon-icon" data-price="69" onclick="toggleAddon(this)">
-      <img src="/Telia-nettside/Bilder/trygg.webp" alt="Telia Trygg" class="addon-icon" data-price="109" onclick="toggleAddon(this)">
-    </div>
+    /div>
+    <div class="addons-container"></div> <!-- Dynamisk generert -->
     <button type="button" class="remove-family-plan" onclick="removeFamilyPlan(this)">Fjern</button>
   `;
 
@@ -224,6 +218,29 @@ function addFamilyPlan() {
 
   const discountSelect = newDiv.querySelector(".family-extra-discount");
   buildFamilyExtraDiscountSelect(discountSelect);
+
+  // Kaller en ny funksjon for å bygge tilleggstjenester dynamisk
+  buildFamilyAddons(newDiv.querySelector(".addons-container"));
+}
+
+async function buildFamilyAddons(container) {
+  const data = await fetchTeliaData();
+  if (!data || !data.tilleggsProdukter) return;
+
+  container.innerHTML = ""; // Tøm container før vi fyller den
+
+  data.tilleggsProdukter.forEach((addon) => {
+    const img = document.createElement("img");
+    img.src = `/Telia-nettside/Bilder/${addon.navn
+      .toLowerCase()
+      .replace(/\s+/g, "_")}.png`;
+    img.alt = addon.navn;
+    img.classList.add("addon-icon");
+    img.setAttribute("data-price", addon.pris);
+    img.onclick = () => toggleAddon(img);
+
+    container.appendChild(img);
+  });
 }
 
 /****************************************************
