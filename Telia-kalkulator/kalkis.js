@@ -56,6 +56,37 @@ async function buildMainPlanOptions() {
   });
 }
 
+async function buildAddons() {
+  const data = await fetchTeliaData();
+  if (!data || !data.tilleggsProdukter) return;
+
+  const addonContainer = document.getElementById("addonContainer");
+  if (!addonContainer) {
+    console.error("Fant ikke #addonContainer i HTML.");
+    return;
+  }
+
+  addonContainer.innerHTML = ""; // Tøm container før vi fyller den
+
+  data.tilleggsProdukter.forEach((addon) => {
+    const img = document.createElement("img");
+    img.src = `/Bilder/${addon.navn.toLowerCase().replace(/\s+/g, "_")}.png`; // Bruker navn som filnavn
+    img.alt = addon.navn;
+    img.classList.add("addon-icon");
+    img.setAttribute("data-price", addon.pris);
+    img.onclick = () => toggleAddon(img);
+
+    addonContainer.appendChild(img);
+  });
+}
+
+// Funksjon for å velge/avvelge en tilleggstjeneste
+function toggleAddon(element) {
+  element.classList.toggle("selected");
+  const price = parseFloat(element.getAttribute("data-price")) || 0;
+  updateTotalPrice(element.classList.contains("selected") ? price : -price);
+}
+
 /****************************************************
  * 4) FYLL <select class="family-plan-select"> DYNAMISK
  ****************************************************/
@@ -91,29 +122,6 @@ async function buildFamilyExtraDiscountSelect(selectElement) {
     selectElement.appendChild(opt);
   });
 }
-
-async function buildAddons() {
-  const data = await fetchTeliaData();
-  if (!data || !data.tilleggsProdukter) return;
-
-  const addonContainer = document.getElementById("addonContainer");
-  if (!addonContainer) {
-    console.error("Fant ikke #addonContainer i HTML.");
-    return;
-  }
-
-  addonContainer.innerHTML = ""; // Tøm container før vi fyller den
-
-  data.tilleggsProdukter.forEach((addon) => {
-    const label = document.createElement("label");
-    label.innerHTML = `
-      <input type="checkbox" class="addon-checkbox" data-price="${addon.pris}">
-      ${addon.navn} - ${addon.pris} kr
-    `;
-    addonContainer.appendChild(label);
-  });
-}
-
 /****************************************************
  * 4c) FYLL <select id="discount"> med hovednummer-rabatter
  ****************************************************/

@@ -234,38 +234,24 @@ button:hover {
 }
 
 
-
-addon-container {
-    margin-top: 20px; /* Avstand mellom SIM-valg og tilleggstjenester */
-    text-align: center;
-}
-
-.addons {
-    display: flex;
-    gap: 20px; /* Avstand mellom ikoner */
-    justify-content: center;
-    margin-top: 10px;
-}
-
 .addon-icon {
-    width: 45px;
-    height: 40px;
+    width: 100px; /* Match størrelsen du har valgt i Canva */
+    height: 100px;
+    margin: 5px;
     cursor: pointer;
-    transition: transform 0.3s, opacity 0.3s;
-    opacity: 0.7;
-}
-
-.addon-icon.active {
+    border-radius: 10px;
+    transition: transform 0.2s ease-in-out, border 0.2s ease-in-out;
+  }
+  
+  .addon-icon:hover {
+    transform: scale(1.1); /* Gir en fin "hover"-effekt */
+  }
+  
+  .addon-icon.selected {
+    border: 3px solid #6a0dad; /* Markerer valgte tilleggstjenester */
     transform: scale(1.1);
-    border: 2px solid #8300e9;
-    opacity: 1;
-}
-
-
-.addon-icon:hover {
-    transform: scale(1.1);
-    opacity: 1;
-}
+  }
+  
 
 
 /* Fjern knapp for familieplan */
