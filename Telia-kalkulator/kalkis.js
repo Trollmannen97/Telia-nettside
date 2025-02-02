@@ -295,31 +295,35 @@ function removeFamilyPlan(element) {
 // Funksjon for å hente familierabatten basert på valgt plan
 
 function getFamilyDiscount(planValue, planText, isMainNumber) {
-  if (!teliaData) return 0;
+  if (!teliaData || !teliaData.rabatter || !teliaData.rabatter.familie) {
+    console.warn("⚠️ Feil: Rabatter for familie er ikke definert.");
+    return 0; // Returnerer 0 for å unngå feilen
+  }
+
   const fam = teliaData.rabatter.familie;
-  // fam.teliaX = 100, fam.teliaMobile = 30, ...
 
   if (isMainNumber) {
     return 0;
   }
-  // Eksempel på strengsjekk
+
   if (planText.includes("Telia X Start")) {
-    return fam.teliaX;
+    return fam.teliaX || 0; // Unngå undefined-feil
   }
   if (
     planText.includes("Telia X") &&
     !planText.includes("Telia X Ung") &&
     planValue >= 399
   ) {
-    return fam.teliaX;
+    return fam.teliaX || 0;
   }
   if (
     planText.includes("5GB") ||
     planText.includes("10GB") ||
     planText.includes("Junior")
   ) {
-    return fam.teliaMobile;
+    return fam.teliaMobile || 0; // Her oppstod feilen, sikrer at den ikke krasjer
   }
+
   return 0;
 }
 
