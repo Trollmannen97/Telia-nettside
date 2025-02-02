@@ -206,7 +206,6 @@ function addFamilyPlan() {
         onchange="calculateTotalPrice()"
       />
     </div>
-    /div>
     <div class="addons-container"></div> <!-- Dynamisk generert -->
     <button type="button" class="remove-family-plan" onclick="removeFamilyPlan(this)">Fjern</button>
   `;

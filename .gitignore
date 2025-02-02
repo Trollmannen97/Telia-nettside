@@ -1,0 +1,9 @@
+node_modules/
+package-lock.json
+
+# Miljøvariabler (ikke last opp sensitive data!)
+.env
+
+# OS-spesifikke filer
+.DS_Store
+Thumbs.db
