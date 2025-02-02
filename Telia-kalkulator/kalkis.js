@@ -194,6 +194,13 @@ function addFamilyPlan() {
         <option value="2">2</option>
         <option value="3">3</option>
       </select>
+      <label for="klokke">Smartklokke:</label>
+      <select class="klokke-select" onchange="updateSimPrice(this)">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
       <span class="family-plan-price">SIM-kort: 0.00 kr</span>
     </div>
     <div class="device-payment-container">
