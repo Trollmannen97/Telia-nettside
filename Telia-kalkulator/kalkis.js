@@ -325,34 +325,28 @@ function getFamilyDiscount(planValue, planText, isMainNumber) {
 
 // Funksjon for å beregne prisen på TvillingSIM og DataSIM
 function calculateSimPrice(planType, twinSimCount, dataSimCount) {
-  // 1) Pass på at JSON er lastet
   if (!teliaData) {
     console.warn("teliaData ikke lastet - returnerer 0");
     return { twinSimPrice: 0, dataSimPrice: 0 };
   }
 
-  // 2) Hent ut simKort-data fra JSON
-  const sim = teliaData.simKort;
-  // -> { normal: 49, teliaX: 89, maxPlussGratis: 2 }
-
+  const sim = teliaData.simKort; // Henter SIM-kort priser fra JSON
   let twinSimPrice = 0;
   let dataSimPrice = 0;
   const totalSimCount = twinSimCount + dataSimCount;
 
-  // 3) Sjekk om planType inneholder "Max Pluss" / "Telia X"
+  // **Sjekk om det er Telia X Max Pluss**
   if (planType.includes("Max Pluss")) {
-    // Eks: “Telia X Max Pluss”
-    const freeSimCards = sim.maxPlussGratis; // ex. 2
-    const simPricePerUnit = sim.teliaX; // ex. 89
+    const freeSimCards = sim.teliaX.gratisSim || 0; // Bruker gratisSim fra databasen
+    const simPricePerUnit = sim.teliaX.pris; // Telia X SIM-pris
 
-    let chargeable = totalSimCount - freeSimCards;
+    let chargeable = totalSimCount - freeSimCards; // Hvor mange SIM som skal betales for
 
     if (chargeable <= 0) {
-      // Alle SIM er gratis
       twinSimPrice = 0;
       dataSimPrice = 0;
     } else {
-      // Fordel gratis-SIM på Tvilling vs Data
+      // **Fordel gratis-SIM mellom Tvilling og Data**
       let leftoverTwinSim = Math.min(twinSimCount, freeSimCards);
       let leftoverFreeSlots = freeSimCards - leftoverTwinSim;
       let leftoverDataSim = Math.min(dataSimCount, leftoverFreeSlots);
@@ -364,13 +358,11 @@ function calculateSimPrice(planType, twinSimCount, dataSimCount) {
       dataSimPrice = chargeableDataSim * simPricePerUnit;
     }
   } else if (planType.includes("Telia X")) {
-    // Vanlig Telia X => 89 kr pr. SIM
-    const simPricePerUnit = sim.teliaX;
+    const simPricePerUnit = sim.teliaX.pris; // Telia X SIM-pris
     twinSimPrice = twinSimCount * simPricePerUnit;
     dataSimPrice = dataSimCount * simPricePerUnit;
   } else {
-    // Alle andre (vanlige) abonnement => 49 kr pr. SIM
-    const simPricePerUnit = sim.normal;
+    const simPricePerUnit = sim.normal.pris; // Standard SIM-pris
     twinSimPrice = twinSimCount * simPricePerUnit;
     dataSimPrice = dataSimCount * simPricePerUnit;
   }
