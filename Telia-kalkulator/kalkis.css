@@ -1,239 +1,116 @@
 
 /* Generelle justeringer for kroppen */
+/* Generelle justeringer for kroppen */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
+    background-color: #f8f6fb; /* Lys lilla bakgrunn */
     margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Endret fra center for å kunne rulle */
-    min-height: 100vh; /* Sørg for at innholdet dekker hele vinduet */
-    overflow-y: auto; /* Tillater vertikal scrolling */
+    align-items: flex-start;
+    min-height: 100vh;
+    overflow-y: auto;
 }
 
 /* Kalkulator-styling */
 .calculator {
-    background: #ffffff;
+    background: white;
     padding: 35px;
-    border-radius: 20px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    width: 900px; /* Økt bredde for å få plass til alt */
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(131, 0, 233, 0.2);
+    width: 900px;
     text-align: center;
     border: 2px solid #8300e9;
     margin: 0 auto 50px auto;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    margin-bottom: 50px; /* Ekstra margin nederst */
-    max-height: 90vh; /* Begrens høyden til 90% av vinduet */
-    overflow-y: auto; /* Legg til intern scrolling om nødvendig */
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
-/* Overskrift-styling */
+/* Overskrifter */
 h1 {
     color: #8300e9;
     margin-bottom: 20px;
-    font-size: 2.4em;
+    font-size: 2.5em;
     text-transform: uppercase;
     font-weight: bold;
     letter-spacing: 1.5px;
 }
 
-/* Formgrupper */
+h3 {
+    color: #8300e9;
+    font-size: 1.3em;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* Forbedret styling for form-felt */
 .form-group {
     margin-bottom: 25px;
-    padding: 10px;
+    padding: 15px;
+    background: #f3ecfa;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(131, 0, 233, 0.1);
 }
 
+/* Labels */
 label {
     display: block;
-    margin-bottom: 8px;
     font-weight: bold;
-    color: #333;
+    color: #4d007d;
     font-size: 1.1em;
+    margin-bottom: 6px;
 }
 
-/* Styling for select og radio */
-select, input[type="radio"] {
+/* Input og select */
+select, input[type="text"], input[type="number"] {
     width: 100%;
     padding: 12px;
-    margin-bottom: 10px;
-    border: 1px solid black;
-    border-radius: 8px;
+    border: 2px solid #8300e9;
+    border-radius: 10px;
     font-size: 1.1em;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.3s ease;
+    background-color: white;
 }
-    
-    
 
-select:focus, input[type="radio"]:focus {
-    border-color: #8300e9;
-    box-shadow: 0 0 8px rgba(131, 0, 233, 0.3);
+select:focus, input:focus {
+    border-color: #e5006e;
+    box-shadow: 0 0 8px rgba(229, 0, 110, 0.3);
     outline: none;
 }
 
-
-
-/* Forbedret styling for radioknappene */
-input[type="radio"] {
-    display: none; /* Skjul standard radioknapp */
+/* Tilpasset styling for SIM- og tilleggstjenester */
+.sim-options {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
 }
 
-input[type="radio"] + label {
-    position: relative;
-    padding-left: 30px; /* Plass til den tilpassede knappen */
-    cursor: pointer;
-    font-size: 1.2em;
-    color: #333;
-    display: inline-block;
-    margin-bottom: 10px;
+.sim-options select {
+    width: 48%;
 }
-
-/* Tilpasset sirkel for radioknapp */
-input[type="radio"] + label:before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 20px;
-    height: 20px;
-    border: 2px solid #8300e9; /* Lilla ramme */
-    border-radius: 50%; /* Gjør den rund */
-    background-color: white;
-    transition: all 0.3s ease;
-}
-
-/* Utfylt sirkel når radioknappen er valgt */
-input[type="radio"]:checked + label:after {
-    content: '';
-    position: absolute;
-    left: 6px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 10px;
-    height: 10px;
-    border-radius: 50%; /* Gjør den rund */
-    background-color: #8300e9; /* Lilla farge for valgt */
-    transition: all 0.3s ease;
-}
-
-/* Hover-effekt for label */
-input[type="radio"] + label:hover:before {
-    background-color: #f3e7fc; /* Lys lilla ved hover */
-}
-
 
 /* Knapp-styling */
 button {
     background: linear-gradient(135deg, #8300e9, #e1ccf1);
-    color: #fff;
+    color: white;
     border: none;
-    padding: 12px 25px;
-    border-radius: 8px;
+    padding: 14px 30px;
+    border-radius: 12px;
     cursor: pointer;
-    margin-top: 20px;
     font-size: 1.2em;
-    transition: background 0.3s, transform 0.3s;
+    font-weight: bold;
+    transition: all 0.3s;
+    box-shadow: 0 4px 10px rgba(131, 0, 233, 0.2);
 }
 
 button:hover {
-    background: linear-gradient(135deg, #010101, #505050);
-    transform: translateY(-3px);
+    background: linear-gradient(135deg, #6a0dad, #b68dea);
+    transform: scale(1.05);
 }
 
-
-/* Enkel Kunde - SIM-valg Styling */
-#singlePlanOptions {
-    background-color: #f0f0f0;
-    padding: 50px;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-    margin-top: 25px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-#singlePlanOptions .sim-select-container {
-    display: flex;
-    flex-direction: row; /* Holder SIM-valgene i en rad */
-    justify-content: center; /* Jevn fordeling mellom SIM-valg */
-    gap: 10px; /* Mellomrom mellom TvillingSIM og DataSIM */
-    margin-bottom: 15px; /* Litt avstand nederst */
-}
-
-#singlePlanOptions .sim-option {
-    width: 45%; /* Litt mindre bredde slik at de passer ved siden av hverandre */
-    text-align: center;
-}
-
-#singlePlanOptions select {
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    width: 100%;
-    border-color: black;
-}
-
-/* Tilleggstjenester under SIM-valgene for enkel kunde */
-#singlePlanOptions .addon-container {
-    margin-top: 20px; /* Avstand mellom SIM-valg og tilleggstjenester */
-    text-align: center;
-}
-
-
-
-/* Familieplan - SIM-valg Styling */
-#familySection {
-    background-color: #f9f9f9;
-    padding: 50px;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-    margin-top: 25px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    display: none;
-    
-}
-
-.family-sim-options {
-    flex-direction: row;
-    justify-content: space-between; /* Sørger for avstand mellom TvillingSIM og DataSIM */
-    gap: 10px; /* Avstand mellom TvillingSIM og DataSIM for familien */
-    margin-bottom: 15px; /* Litt avstand nederst */
-    display: none;
-}
-
-.family-sim-option {
-    width: 45%;
-    text-align: center;
-}
-
-.family-sim-option select {
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    width: 100%;
-    border-color: black;
-}
-
-/* Familieplan-pris */
-.family-plan-price {
-    font-weight: bold;
-    font-size: 1.2em;
-    align-items: center;
-}
-
-/* Flexbox for familieplan */
-.family-plan {
-    display: flex; 
-    flex-direction: column; /* Slik at alle elementer er vertikalt stablet */
-    align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #ddd;
-    width: 100%;
-
-}
-
-
+/* Tilleggstjenester */
 .addon-icon {
     width: 50px; /* Match størrelsen du har valgt i Canva */
     height: 50px;
@@ -251,64 +128,49 @@ button:hover {
     border: 3px solid #6a0dad; /* Markerer valgte tilleggstjenester */
     transform: scale(1.1);
   }
-  
 
+/* Familieplan-seksjon */
+#familySection {
+    background: #f3ecfa;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(131, 0, 233, 0.15);
+    margin-top: 25px;
+}
 
-/* Fjern knapp for familieplan */
+/* Fjern-knapp */
 .remove-family-plan {
-    background-color: #0000;
+    background: #ff4d4d;
     color: white;
-    padding: 8px 12px;
-    border: none;
+    padding: 10px;
     border-radius: 8px;
     cursor: pointer;
     margin-top: 15px;
 }
 
 .remove-family-plan:hover {
-    background-color: #0000;
+    background: #d32f2f;
 }
 
-.family-sim-options {
-    display: none;
-}
-
-
-
-/* Styling for resultat-seksjonen */
+/* Resultat-seksjon */
 .result {
-    margin-top: 25px;
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 12px;
-    border: 1px solid #8300e9;
+    margin-top: 30px;
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+    border: 2px solid #8300e9;
     text-align: left;
+    box-shadow: 0 5px 15px rgba(131, 0, 233, 0.15);
 }
 
 .result h2 {
     color: #8300e9;
-    margin-bottom: 15px;
-    font-size: 1.4em;
+    font-size: 1.5em;
     text-align: center;
 }
 
-#priceDetails {
-    margin-bottom: 15px;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-    font-size: 1em;
-}
-
-#priceDetails p {
-    margin: 5px 0;
-    font-weight: bold;
-    color: #555;
-    display: flex;
-    justify-content: space-between;
-}
-
 .total-price {
-    font-size: 1.8em;
+    font-size: 2em;
     font-weight: bold;
     color: #8300e9;
     padding: 10px;
@@ -317,20 +179,23 @@ button:hover {
     margin-top: 20px;
 }
 
+/* Responsivt design */
+@media (max-width: 768px) {
+    .calculator {
+        width: 95%;
+        padding: 25px;
+    }
 
-.device-payment-container {
-    margin: 10px 0;
-    padding: 10px;
-  }
-  
-  .device-payment-container label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  .device-payment-container input.device-payment {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-  }
+    .sim-options {
+        flex-direction: column;
+    }
+
+    .sim-options select {
+        width: 100%;
+    }
+
+    .addons {
+        justify-content: space-around;
+    }
+}
+
