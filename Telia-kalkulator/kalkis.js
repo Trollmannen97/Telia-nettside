@@ -92,6 +92,28 @@ async function buildFamilyExtraDiscountSelect(selectElement) {
   });
 }
 
+async function buildAddons() {
+  const data = await fetchTeliaData();
+  if (!data || !data.tilleggsProdukter) return;
+
+  const addonContainer = document.getElementById("addonContainer");
+  if (!addonContainer) {
+    console.error("Fant ikke #addonContainer i HTML.");
+    return;
+  }
+
+  addonContainer.innerHTML = ""; // Tøm container før vi fyller den
+
+  data.tilleggsProdukter.forEach((addon) => {
+    const label = document.createElement("label");
+    label.innerHTML = `
+      <input type="checkbox" class="addon-checkbox" data-price="${addon.pris}">
+      ${addon.navn} - ${addon.pris} kr
+    `;
+    addonContainer.appendChild(label);
+  });
+}
+
 /****************************************************
  * 4c) FYLL <select id="discount"> med hovednummer-rabatter
  ****************************************************/
@@ -204,6 +226,7 @@ function addFamilyPlan() {
 window.addEventListener("DOMContentLoaded", async () => {
   await buildMainPlanOptions(); // Bygger <select id="plan">
   await buildHovednummerDiscountSelect(); // Bygger <select id="discount">
+  await buildAddons(); // Bygg tilleggstjenester for enkel kunde
   toggleCustomerType(); // Viser/skjuler enkel/familie-seksjon
 });
 
@@ -211,15 +234,18 @@ window.addEventListener("DOMContentLoaded", async () => {
 function toggleCustomerType() {
   const singlePlanOptions = document.getElementById("singlePlanOptions");
   const familySection = document.getElementById("familySection");
+  const addonContainer = document.querySelector(".addon-container");
 
   if (document.getElementById("single").checked) {
     console.log("Enkel kunde er valgt.");
-    singlePlanOptions.style.display = "block"; // Vis enkel kunde-seksjon
-    familySection.style.display = "none"; // Skjul familie-seksjon
+    singlePlanOptions.style.display = "block";
+    familySection.style.display = "none";
+    addonContainer.style.display = "block"; // Viser tilleggstjenester
   } else if (document.getElementById("family").checked) {
     console.log("Familie er valgt.");
-    singlePlanOptions.style.display = "none"; // Skjul enkel kunde-seksjon
-    familySection.style.display = "block"; // Vis familie-seksjon
+    singlePlanOptions.style.display = "none";
+    familySection.style.display = "block";
+    addonContainer.style.display = "none"; // Skjuler tilleggstjenester
   } else {
     console.error("Ingen gyldig radioknapp er valgt.");
   }
