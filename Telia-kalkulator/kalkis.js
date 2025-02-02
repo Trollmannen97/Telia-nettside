@@ -343,21 +343,29 @@ function getFamilyDiscount(planValue, planText, isMainNumber) {
 }
 
 // Funksjon for å beregne prisen på TvillingSIM og DataSIM
-function calculateSimPrice(planType, twinSimCount, dataSimCount) {
+// Funksjon for å beregne prisen på TvillingSIM, DataSIM og KlokkeSIM
+function calculateSimPrice(
+  planType,
+  twinSimCount,
+  dataSimCount,
+  klokkeSimCount
+) {
   if (!teliaData) {
     console.warn("teliaData ikke lastet - returnerer 0");
-    return { twinSimPrice: 0, dataSimPrice: 0 };
+    return { twinSimPrice: 0, dataSimPrice: 0, klokkeSimPrice: 0 };
   }
 
   const sim = teliaData.simKort; // Henter SIM-kort priser fra JSON
   let twinSimPrice = 0;
   let dataSimPrice = 0;
+  let klokkeSimPrice = klokkeSimCount * (sim.klokke?.pris || 30); // Setter 30 kr som fallback-pris hvis klokke-SIM ikke finnes i databasen
+
   const totalSimCount = twinSimCount + dataSimCount;
 
   // **Sjekk om det er Telia X Max Pluss**
   if (planType.includes("Max Pluss")) {
-    const freeSimCards = sim.teliaX.gratisSim || 0; // Bruker gratisSim fra databasen
-    const simPricePerUnit = sim.teliaX.pris; // Telia X SIM-pris
+    const freeSimCards = sim.teliaX?.gratisSim || 0; // Bruker gratisSim fra databasen
+    const simPricePerUnit = sim.teliaX?.pris || 89; // Telia X SIM-pris
 
     let chargeable = totalSimCount - freeSimCards; // Hvor mange SIM som skal betales for
 
@@ -377,16 +385,16 @@ function calculateSimPrice(planType, twinSimCount, dataSimCount) {
       dataSimPrice = chargeableDataSim * simPricePerUnit;
     }
   } else if (planType.includes("Telia X")) {
-    const simPricePerUnit = sim.teliaX.pris; // Telia X SIM-pris
+    const simPricePerUnit = sim.teliaX?.pris || 89; // Telia X SIM-pris
     twinSimPrice = twinSimCount * simPricePerUnit;
     dataSimPrice = dataSimCount * simPricePerUnit;
   } else {
-    const simPricePerUnit = sim.normal.pris; // Standard SIM-pris
+    const simPricePerUnit = sim.normal?.pris || 49; // Standard SIM-pris
     twinSimPrice = twinSimCount * simPricePerUnit;
     dataSimPrice = dataSimCount * simPricePerUnit;
   }
 
-  return { twinSimPrice, dataSimPrice };
+  return { twinSimPrice, dataSimPrice, klokkeSimPrice };
 }
 
 // Funksjon for å vise detaljert resultat
@@ -611,18 +619,27 @@ function updateSimPrice(element) {
     parseInt(planDiv.querySelector(".twinsim-select").value) || 0;
   const dataSimCount =
     parseInt(planDiv.querySelector(".datasim-select").value) || 0;
+  const klokkeSimCount =
+    parseInt(planDiv.querySelector(".klokke-select")?.value) || 0;
 
-  // Beregn SIM-prisen
-  const simPrices = calculateSimPrice(planType, twinSimCount, dataSimCount);
-  const totalSimPrice = simPrices.twinSimPrice + simPrices.dataSimPrice;
+  const simPrices = calculateSimPrice(
+    planType,
+    twinSimCount,
+    dataSimCount,
+    klokkeSimCount
+  );
+  const totalSimPrice =
+    simPrices.twinSimPrice + simPrices.dataSimPrice + simPrices.klokkeSimPrice;
 
-  // Oppdater visningen av SIM-prisen
-  const simPriceElement = planDiv.querySelector(".family-plan-price");
+  const simPriceElement =
+    planDiv.querySelector(".family-plan-price") ||
+    document.getElementById("singleSimPrice");
   if (simPriceElement) {
     simPriceElement.textContent = `SIM-kort: ${totalSimPrice.toFixed(2)} kr`;
   }
 }
 //Funksjonen for totalpris
+// Funksjonen for totalpris
 function calculateTotalPrice() {
   let totalPrice = 0;
 
@@ -648,11 +665,21 @@ function calculateTotalPrice() {
   const dataSimCountMain = parseInt(
     document.getElementById("singleDatasimSelect").value
   );
+  const klokkeSimCountMain =
+    parseInt(document.getElementById("singleKlokkeSelect").value) || 0; // Henter klokke-SIM antall
 
-  const { twinSimPrice: mainTwinSimPrice, dataSimPrice: mainDataSimPrice } =
-    calculateSimPrice(planNameFull, twinSimCountMain, dataSimCountMain);
+  const {
+    twinSimPrice: mainTwinSimPrice,
+    dataSimPrice: mainDataSimPrice,
+    klokkeSimPrice: mainKlokkeSimPrice,
+  } = calculateSimPrice(
+    planNameFull,
+    twinSimCountMain,
+    dataSimCountMain,
+    klokkeSimCountMain
+  );
 
-  totalPrice += mainTwinSimPrice + mainDataSimPrice;
+  totalPrice += mainTwinSimPrice + mainDataSimPrice + mainKlokkeSimPrice; // Inkluderer klokke-SIM i totalen
 
   // Hent feltet for enkel kundes delbetaling (hvis det finnes)
   const singleDevicePaymentInput = document.getElementById(
@@ -663,12 +690,10 @@ function calculateTotalPrice() {
     singleDevicePayment = parseFloat(singleDevicePaymentInput.value) || 0;
   }
   totalPrice += singleDevicePayment;
-  // Nå kan du sjekke verdien
 
-  // **Familieabonnementer*
+  // **Familieabonnementer**
   const familyPlans = document.querySelectorAll(".family-plan");
   familyPlans.forEach(function (planDiv) {
-    // 1) Finn pris, tekst, rabatt osv.
     let planPrice = parseFloat(
       planDiv.querySelector(".family-plan-select").value
     );
@@ -677,7 +702,7 @@ function calculateTotalPrice() {
     ).textContent;
     const planText = planTextFull.split(" - ")[0];
 
-    // 2) Familierabatt og evt. ekstra rabatt
+    // Familierabatt og evt. ekstra rabatt
     const discount = getFamilyDiscount(planPrice, planText, false);
     const discountedPlanPrice = planPrice - discount;
 
@@ -687,25 +712,34 @@ function calculateTotalPrice() {
       (discountedPlanPrice * extraDiscountPercentage) / 100;
     const finalPlanPrice = discountedPlanPrice - extraDiscountAmount;
 
-    // 3) SIM-kostnader
+    // **SIM-kostnader for familie**
     const twinSimCount =
       parseInt(planDiv.querySelector(".twinsim-select").value) || 0;
     const dataSimCount =
       parseInt(planDiv.querySelector(".datasim-select").value) || 0;
-    const { twinSimPrice, dataSimPrice } = calculateSimPrice(
+    const klokkeSimCount =
+      parseInt(planDiv.querySelector(".klokke-select")?.value) || 0; // Henter klokke-SIM for familie
+
+    const { twinSimPrice, dataSimPrice, klokkeSimPrice } = calculateSimPrice(
       planTextFull,
       twinSimCount,
-      dataSimCount
+      dataSimCount,
+      klokkeSimCount
     );
 
-    // 4) Hent inn delbetalingsverdi
+    // Hent inn delbetalingsverdi
     const devicePaymentInput = planDiv.querySelector(".device-payment");
     const devicePayment = devicePaymentInput
       ? parseFloat(devicePaymentInput.value) || 0
       : 0;
 
-    // 5) Legg alt til totalen
-    totalPrice += finalPlanPrice + twinSimPrice + dataSimPrice + devicePayment;
+    // Legg alt til totalen
+    totalPrice +=
+      finalPlanPrice +
+      twinSimPrice +
+      dataSimPrice +
+      klokkeSimPrice +
+      devicePayment; // Inkluderer klokke-SIM
   });
 
   // **Legg til prisene for alle valgte addons**

@@ -53,6 +53,15 @@
                 <option value="3">3</option>
             </select>
         </div>
+        <div class="single-sim-options">
+            <label for="klokke">Smartklokke:</label>
+            <select id="singleKlokkeSelect" class="klokke-select" onchange="updateSimPrice(this)">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+        </div>
     </div>
     <span class="family-plan-price"></span>
     <!-- NYTT FELT for Svitsj/delbetaling for enkel kunde -->
@@ -68,8 +77,7 @@
           style="width:160px;"
         />
       </div>
-      
- <!-- Legger tilleggstjenester i en egen container for å sikre at den plasseres under -->
+       <!-- Legger tilleggstjenester i en egen container for å sikre at den plasseres under -->
  <div class="addon-container">
     <h4>Velg tilleggstjenester:</h4>
     <div class="addons" id="addonContainer">
