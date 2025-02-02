@@ -129,7 +129,10 @@ async function buildFamilyExtraDiscountSelect(selectElement) {
  ****************************************************/
 async function buildHovednummerDiscountSelect() {
   const data = await fetchTeliaData();
-  if (!data) return;
+  if (!data || !data.rabatter || !Array.isArray(data.rabatter.hovednummer)) {
+    console.error("Rabattdata for hovednummer mangler eller er feil format.");
+    return;
+  }
 
   const discountSelect = document.getElementById("discount");
   if (!discountSelect) {
@@ -145,15 +148,11 @@ async function buildHovednummerDiscountSelect() {
   defaultOption.textContent = "Ingen rabatt";
   discountSelect.appendChild(defaultOption);
 
-  // Hent kun "hovednummer"-rabatter fra arrayen
-  const hovednummerRabatter = data.rabatter
-    .filter((r) => r.type === "hovednummer")
-    .map((r) => r.rabatt);
-
-  hovednummerRabatter.forEach((prosent) => {
+  // Bruk den riktige arrayen `hovednummer`
+  data.rabatter.hovednummer.forEach((prosent) => {
     const opt = document.createElement("option");
     opt.value = prosent;
-    opt.textContent = prosent + "%";
+    opt.textContent = `${prosent}%`;
     discountSelect.appendChild(opt);
   });
 
