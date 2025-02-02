@@ -47,10 +47,11 @@ async function loadData() {
 
     teliaData = {
       abonnementer: data.abonnementer || [],
-      rabatter: data.rabatter || [], // Sikrer at rabatter ikke er undefined
+      rabatter: Array.isArray(data.rabatter) ? data.rabatter : [],
       simKort: {
         normal: data.simKort?.normal ?? 0,
         teliaX: data.simKort?.teliaX ?? 0,
+        klokke: data.simKort?.klokke,
       },
       tilleggsProdukter: data.tilleggsProdukter || [],
     };
