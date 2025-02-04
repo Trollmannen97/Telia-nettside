@@ -1,3 +1,32 @@
+const themeToggle = document.getElementById("themeToggle");
+const themeIcon = document.getElementById("themeIcon");
+
+function toggleTheme() {
+  let currentTheme = document.body.classList.contains("dark-mode")
+    ? "dark"
+    : "light";
+
+  if (currentTheme === "light") {
+    document.body.classList.add("dark-mode");
+    themeIcon.src = "/icons/dark-icon.svg"; // Bytt til mørkt ikon
+    localStorage.setItem("theme", "dark"); // Lagre valg i nettleseren
+  } else {
+    document.body.classList.remove("dark-mode");
+    themeIcon.src = "/icons/light-icon.svg"; // Bytt til lyst ikon
+    localStorage.setItem("theme", "light");
+  }
+}
+
+// Sjekk lagret tema når siden lastes
+document.addEventListener("DOMContentLoaded", () => {
+  let savedTheme = localStorage.getItem("theme") || "light";
+  if (savedTheme === "dark") {
+    document.body.classList.add("dark-mode");
+    themeIcon.src = "/icons/dark-icon.svg";
+  }
+  themeToggle.addEventListener("click", toggleTheme);
+});
+
 /****************************************************
  * 1) GLOBALE VARIABLER ELLER KONSTANTER
  ****************************************************/
