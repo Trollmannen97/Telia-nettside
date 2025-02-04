@@ -336,7 +336,7 @@ button:hover {
     font-weight: bold;
     font-size: 1.2em;
     align-items: center;
-    color:#4b0082
+    color:#252525
 }
 
 /* Flexbox for familieplan */
@@ -412,7 +412,7 @@ button:hover {
 .total-price {
     font-size: 1.8em;
     font-weight: bold;
-    color: #4b0082;
+    color: #252525;
     padding: 10px;
     border-radius: 8px;
     text-align: center;
