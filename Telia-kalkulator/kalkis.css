@@ -10,6 +10,8 @@
 
 button {
     background: linear-gradient(135deg, #e5006e, #ff336e);
+    margin: 10px;
+
 }
 
 .dark-mode button {
