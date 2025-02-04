@@ -63,6 +63,16 @@ button {
 .dark-mode p {
     color: #ffffff;
 }
+.dark-mode .family-plan-price {
+    color: #ffffff;
+}
+.dark-mode .sim-options select {
+    background: #010101;
+
+}
+
+
+
 
 /* Generelle justeringer for kroppen */
 body {
