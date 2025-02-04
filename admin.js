@@ -80,23 +80,37 @@ function buildAbonnementEditor() {
 
 function buildRabattEditor() {
   const container = document.getElementById("rabattContainer");
-  container.innerHTML = "";
+  container.innerHTML = ""; // Tømmer container før vi bygger innholdet
 
-  if (!teliaData.rabatter || teliaData.rabatter.length === 0) {
+  if (!teliaData.rabatter) {
+    console.warn("Rabatter mangler eller er tom:", teliaData.rabatter);
     container.innerHTML = "<p>Ingen rabatter funnet</p>";
     return;
   }
 
-  teliaData.rabatter.forEach((r) => {
-    container.innerHTML += `
-            <div>
-                <label>${r.type || "Ukjent"} rabatt:</label>
-                <input type="number" id="rabatt-${r.id}" value="${
-      r.rabatt ?? 0
-    }">
-            </div>
-        `;
-  });
+  // 🟢 Håndter "hovednummer" rabatter (array)
+  if (Array.isArray(teliaData.rabatter.hovednummer)) {
+    teliaData.rabatter.hovednummer.forEach((r, index) => {
+      container.innerHTML += `
+        <div>
+          <label>Hovednummer rabatt ${index + 1}:</label>
+          <input type="number" id="rabatt-hovednummer-${index}" value="${r}">
+        </div>
+      `;
+    });
+  }
+
+  // 🟢 Håndter "familie" rabatter (objekt)
+  if (teliaData.rabatter.familie) {
+    Object.entries(teliaData.rabatter.familie).forEach(([key, value]) => {
+      container.innerHTML += `
+        <div>
+          <label>Familierabatt (${key}):</label>
+          <input type="number" id="rabatt-familie-${key}" value="${value}">
+        </div>
+      `;
+    });
+  }
 }
 
 function buildSimEditor() {
