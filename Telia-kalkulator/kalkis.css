@@ -16,6 +16,52 @@ button {
     background: linear-gradient(135deg, #6a0dad, #4b0082);
 }
 
+
+
+.dark-mode {
+    background-color: #252525;
+    color: #f0f0f0;
+}
+
+.dark-mode .calculator,
+.dark-mode #familySection,
+.dark-mode #singlePlanOptions,
+.dark-mode .result {
+    background-color: #1e1e1e; /* Mørk bakgrunn */
+    color: #ffffff; /* Lys tekst */
+    border: 2px solid #ffffff; /* Hvit kant */
+}
+
+/* Endre fargen på input/select felt */
+.dark-mode input,
+.dark-mode select {
+    background-color: #333;
+    color: #ffffff;
+    border: 1px solid #ffffff;
+}
+
+/* Juster label-farger */
+.dark-mode label {
+    color: #d4b5ff; /* Lys lilla */
+}
+
+/* Endre fargen på knapper */
+.dark-mode button {
+    background: linear-gradient(135deg, #6a0dad, #4b0082);
+}
+
+/* Spesielt for pris-detaljer */
+.dark-mode .result {
+    background-color: #1a1a1a;
+    border: 2px solid #ffffff;
+}
+
+.dark-mode .total-price {
+    color: #ffffff;
+}
+
+
+
 /* Generelle justeringer for kroppen */
 body {
     font-family: Arial, sans-serif;
