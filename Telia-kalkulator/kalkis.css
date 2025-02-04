@@ -69,6 +69,12 @@ label {
     font-size: 1.1em;
 }
 
+h3 {
+   color:#8b12ea;
+    font-size: 1.2em;
+}
+
+
 /* Styling for select og radio */
 select, input[type="radio"] {
     width: 100%;
