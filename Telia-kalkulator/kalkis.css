@@ -74,6 +74,15 @@ h3 {
     font-size: 1.2em;
 }
 
+h4 {
+   color:#8b12ea;
+    font-size: 1.2em;
+}
+
+p {
+    color:#6a0dad;
+
+}
 
 /* Styling for select og radio */
 select, input[type="radio"] {
@@ -106,7 +115,7 @@ input[type="radio"] + label {
     padding-left: 30px; /* Plass til den tilpassede knappen */
     cursor: pointer;
     font-size: 1.2em;
-    color: #333;
+    color: #6a0dad;
     display: inline-block;
     margin-bottom: 10px;
 }
@@ -228,7 +237,7 @@ button:hover {
 .sim-options label {
     font-size: 0.9em;
     font-weight: bold;
-    color: #555;
+    color: #8b12ea;
 }
 
 .sim-options select {
