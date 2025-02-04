@@ -142,13 +142,11 @@ function buildAddonsEditor() {
  * 3) LAGRE ENDRINGER TIL BACKEND
  ****************************************************/
 async function saveChanges() {
-  // Sjekk om `teliaData` er definert
   if (!teliaData) {
     console.error("teliaData er ikke lastet inn.");
     return;
   }
 
-  // Bygger opp riktig JSON-format for backend
   const updatedData = {
     abonnementer: teliaData.abonnementer.map((plan) => ({
       id: plan.id,
@@ -164,17 +162,18 @@ async function saveChanges() {
           parseFloat(document.getElementById(`rabatt-familie-${key}`).value),
         ])
       ),
-    }, // Sikrer at rabatter ikke er undefined
-    simKort: [
-      {
-        id: "sim_normal",
+    },
+    simKort: {
+      normal: {
         pris: parseFloat(document.getElementById("sim-normal").value),
       },
-      {
-        id: "sim_teliaX",
+      teliaX: {
         pris: parseFloat(document.getElementById("sim-teliaX").value),
       },
-    ],
+      klokke: {
+        pris: parseFloat(document.getElementById("sim-klokke").value),
+      },
+    },
     tilleggsProdukter: teliaData.tilleggsProdukter.map((addon) => ({
       id: addon.id,
       pris: parseFloat(document.getElementById(`addon-${addon.id}`).value),
@@ -191,6 +190,9 @@ async function saveChanges() {
     const result = await response.json();
     document.getElementById("saveMessage").innerText = result.message;
     console.log("Oppdatering vellykket:", result);
+
+    // **🟢 Hent nye priser for at kalkulatoren skal oppdatere riktig**
+    teliaData = await fetchTeliaData(true);
   } catch (error) {
     console.error("Kunne ikke lagre data til backend:", error);
   }

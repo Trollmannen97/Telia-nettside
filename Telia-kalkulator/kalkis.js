@@ -5,12 +5,13 @@ let teliaData = null;
 // Her vil vi lagre innholdet fra prices.json (abonnementer, rabatter, simKort, tilleggsProdukter, etc.)
 
 /****************************************************
- * 2) HENT JSON-FIL (prices.json)
+ * 2) HENT Backend Data
  ****************************************************/
 const backendUrl = "https://telia-backend.onrender.com"; // Bytt til din faktiske Render-URL
 
-async function fetchTeliaData() {
-  if (teliaData) return teliaData; // Hvis vi allerede har lastet data, bruk det
+async function fetchTeliaData(forceReload = false) {
+  if (!forceReload && teliaData) return teliaData;
+
   try {
     const response = await fetch(`${backendUrl}/api/prices`);
     const data = await response.json();
