@@ -68,8 +68,11 @@ button {
 }
 .dark-mode .sim-options select {
     background: #333;
-    border: 1px solid #ffffff;
 
+}
+
+.dark-mode #singlePlanOptions select {
+    border-color: 1px solid #ffffff;
 }
 
 
