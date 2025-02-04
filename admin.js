@@ -2,6 +2,36 @@ const backendUrl = "https://telia-backend.onrender.com"; // Oppdater med riktig 
 let teliaData = null;
 
 /****************************************************
+ * 🟢 HENT DATA FRA BACKEND
+ ****************************************************/
+async function fetchTeliaData() {
+  try {
+    const response = await fetch(`${backendUrl}/api/prices`);
+    const data = await response.json();
+
+    if (!data || !data.abonnementer) {
+      throw new Error("Ugyldig dataformat fra backend");
+    }
+
+    teliaData = {
+      abonnementer: data.abonnementer || [],
+      rabatter: data.rabatter || { hovednummer: [], familie: {} },
+      simKort: {
+        normal: data.simKort?.normal ?? { pris: 0 },
+        teliaX: data.simKort?.teliaX ?? { pris: 0 },
+        klokke: data.simKort?.klokke ?? { pris: 0 },
+      },
+      tilleggsProdukter: data.tilleggsProdukter || [],
+    };
+
+    return teliaData;
+  } catch (error) {
+    console.error("Kunne ikke laste data fra backend:", error);
+    return null;
+  }
+}
+
+/****************************************************
  * 1) ADMIN LOGIN SYSTEM
  ****************************************************/
 async function login() {
@@ -190,9 +220,13 @@ async function saveChanges() {
     const result = await response.json();
     document.getElementById("saveMessage").innerText = result.message;
     console.log("Oppdatering vellykket:", result);
-
-    // **🟢 Hent nye priser for at kalkulatoren skal oppdatere riktig**
-    teliaData = await fetchTeliaData(true);
+    try {
+      teliaData = await fetchTeliaData(); // Henter nye data etter lagring
+      buildRabattEditor(); // Oppdater rabattene i admin-panelet
+      buildSimEditor(); // Oppdater SIM-prisene i admin-panelet
+    } catch (error) {
+      console.error("Kunne ikke oppdatere admin-panelet med nye data:", error);
+    }
   } catch (error) {
     console.error("Kunne ikke lagre data til backend:", error);
   }
