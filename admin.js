@@ -47,7 +47,7 @@ async function loadData() {
 
     teliaData = {
       abonnementer: data.abonnementer || [],
-      rabatter: Array.isArray(data.rabatter) ? data.rabatter : [],
+      rabatter: data.rabatter || { hovednummer: [], familie: {} },
       simKort: {
         normal: data.simKort?.normal ?? 0,
         teliaX: data.simKort?.teliaX ?? 0,
@@ -117,9 +117,11 @@ function buildSimEditor() {
   const container = document.getElementById("simContainer");
   container.innerHTML = `
         <label>Normal SIM-kort pris:</label>
-        <input type="number" id="sim-normal" value="${teliaData.simKort.normal}">
+        <input type="number" id="sim-normal" value="${teliaData.simKort.normal.pris}">
         <label>Telia X SIM-kort pris:</label>
-        <input type="number" id="sim-teliaX" value="${teliaData.simKort.teliaX}">
+        <input type="number" id="sim-teliaX" value="${teliaData.simKort.teliaX.pris}">
+        <label>Klokke SIM-kort pris:</label>
+        <input type="number" id="sim-klokke" value="${teliaData.simKort.klokke.pris}">
     `;
 }
 
