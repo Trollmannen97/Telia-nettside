@@ -71,10 +71,9 @@ button {
 
 }
 
-.dark-mode #singlePlanOptions select {
-    border-color: 1px solid #ffffff;
+.dark-mode input[type="radio"] + label {
+    color: #ffffff;
 }
-
 
 
 
@@ -207,7 +206,7 @@ input[type="radio"]:checked + label:after {
     width: 10px;
     height: 10px;
     border-radius: 50%; /* Gjør den rund */
-    background-color: #8300e9; /* Lilla farge for valgt */
+    background-color: #421c54; /* Lilla farge for valgt */
     transition: all 0.3s ease;
 }
 
