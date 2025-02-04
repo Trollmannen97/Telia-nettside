@@ -154,12 +154,17 @@ async function saveChanges() {
       id: plan.id,
       pris: parseFloat(document.getElementById(`plan-${plan.id}`).value),
     })),
-    rabatter: teliaData.rabatter
-      ? teliaData.rabatter.map((r) => ({
-          id: r.id,
-          rabatt: parseFloat(document.getElementById(`rabatt-${r.id}`).value),
-        }))
-      : [], // Sikrer at rabatter ikke er undefined
+    rabatter: {
+      hovednummer: teliaData.rabatter.hovednummer.map((r, index) =>
+        parseFloat(document.getElementById(`rabatt-hovednummer-${index}`).value)
+      ),
+      familie: Object.fromEntries(
+        Object.entries(teliaData.rabatter.familie).map(([key, value]) => [
+          key,
+          parseFloat(document.getElementById(`rabatt-familie-${key}`).value),
+        ])
+      ),
+    }, // Sikrer at rabatter ikke er undefined
     simKort: [
       {
         id: "sim_normal",
