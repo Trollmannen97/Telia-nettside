@@ -67,7 +67,8 @@ button {
     color: #ffffff;
 }
 .dark-mode .sim-options select {
-    background: #010101;
+    background: #333;
+    border: 1px solid #ffffff;
 
 }
 
