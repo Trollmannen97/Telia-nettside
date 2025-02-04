@@ -294,13 +294,16 @@ button:hover {
     flex-wrap: wrap;
     justify-content: center;
     gap: 15px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
+    flex-direction: column; /* Endrer rekkefølgen til vertikal */
+    align-items: center; /* Sentrerer elementene */
 }
 
 .sim-options label {
     font-size: 0.9em;
     font-weight: bold;
     color: #8b12ea;
+    text-align: center;
 }
 
 .sim-options select {
@@ -319,6 +322,16 @@ button:hover {
     box-shadow: 0 0 5px rgba(229, 0, 110, 0.3);
     outline: none;
 }
+
+.family-plan-price {
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #252525;
+    margin-top: 10px; /* Avstand fra SIM-valgene */
+    text-align: center;
+    display: block;
+}
+
 
 /* Familie SIM-valg */
 .family-sim-options {
@@ -347,12 +360,8 @@ button:hover {
 
 
 /* Familieplan-pris */
-.family-plan-price {
-    font-weight: bold;
-    font-size: 1.2em;
-    align-items: center;
-    color:#252525
-}
+
+/* 🟢 Flytt SIM-kort prisen under */
 
 /* Flexbox for familieplan */
 .family-plan {
