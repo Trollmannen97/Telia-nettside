@@ -8,11 +8,11 @@ function toggleTheme() {
 
   if (currentTheme === "light") {
     document.body.classList.add("dark-mode");
-    themeIcon.src = "/icons/dark-icon.svg"; // Bytt til mørkt ikon
+    themeIcon.src = "/Telia-nettside/icons/dark-icon.svg"; // Bytt til mørkt ikon
     localStorage.setItem("theme", "dark"); // Lagre valg i nettleseren
   } else {
     document.body.classList.remove("dark-mode");
-    themeIcon.src = "/icons/light-icon.svg"; // Bytt til lyst ikon
+    themeIcon.src = "/Telia-nettside/icons/light-icon.svg"; // Bytt til lyst ikon
     localStorage.setItem("theme", "light");
   }
 }
