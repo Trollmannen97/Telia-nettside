@@ -60,7 +60,9 @@ button {
     color: #ffffff;
 }
 
-
+.dark-mode p {
+    color: #ffffff;
+}
 
 /* Generelle justeringer for kroppen */
 body {
@@ -126,7 +128,7 @@ h4 {
 }
 
 p {
-    color:#6a0dad;
+    color:#252525;
 
 }
 
