@@ -481,7 +481,7 @@ button:hover {
     border: 3px solid #6a0dad; /* Markerer valgte tilleggstjenester */
     transform: scale(1.1);
   }
-  .new-customer-discount {
+  #newCustomerDiscountContainer {
     display: flex;
     align-items: center;
     justify-content: center;  /* Sentrerer horisontalt */
@@ -495,7 +495,6 @@ button:hover {
 }
 
 
-/* Stil for bryteren */
 .switch {
     position: relative;
     display: inline-block;
