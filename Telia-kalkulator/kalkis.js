@@ -17,11 +17,28 @@ function toggleTheme() {
   }
 }
 
+// Funksjon for å vise/skjule rabatt-knappen dynamisk
+function toggleNewCustomerDiscount() {
+  const plan = document.getElementById("plan");
+  const discountContainer = document.getElementById(
+    "newCustomerDiscountContainer"
+  );
+
+  if (plan.options[plan.selectedIndex].text.includes("Telia X Start")) {
+    discountContainer.style.display = "flex"; // Viser rabatt-knappen
+  } else {
+    discountContainer.style.display = "none"; // Skjuler rabatt-knappen
+    document.getElementById("newCustomer").checked = false; // Tilbakestill rabatt
+    applyNewCustomerDiscount(); // Oppdater pris
+  }
+}
+
+// Funksjon for å aktivere rabatt og oppdatere prisen
 function applyNewCustomerDiscount() {
   const plan = document.getElementById("plan");
   const newCustomerCheckbox = document.getElementById("newCustomer");
 
-  if (plan.value.includes("Telia X Start")) {
+  if (plan.options[plan.selectedIndex].text.includes("Telia X Start")) {
     if (newCustomerCheckbox.checked) {
       plan.value = "429.00"; // Rabattpris
     } else {
@@ -31,6 +48,11 @@ function applyNewCustomerDiscount() {
 
   calculateTotalPrice(); // Oppdater totalprisen
 }
+
+// Lytt til endringer i abonnementet og vis/skjul rabatt-knappen
+document
+  .getElementById("plan")
+  .addEventListener("change", toggleNewCustomerDiscount);
 
 // Sjekk lagret tema når siden lastes
 document.addEventListener("DOMContentLoaded", () => {
