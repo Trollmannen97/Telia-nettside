@@ -17,6 +17,21 @@ function toggleTheme() {
   }
 }
 
+function applyNewCustomerDiscount() {
+  const plan = document.getElementById("plan");
+  const newCustomerCheckbox = document.getElementById("newCustomer");
+
+  if (plan.value.includes("Telia X Start")) {
+    if (newCustomerCheckbox.checked) {
+      plan.value = "429.00"; // Rabattpris
+    } else {
+      plan.value = "479.00"; // Originalpris
+    }
+  }
+
+  calculateTotalPrice(); // Oppdater totalprisen
+}
+
 // Sjekk lagret tema når siden lastes
 document.addEventListener("DOMContentLoaded", () => {
   let savedTheme = localStorage.getItem("theme") || "light";
