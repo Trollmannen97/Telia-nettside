@@ -737,8 +737,12 @@ function calculateTotalPrice() {
   const discountPercentage = parseFloat(discountSelect.value) || 0;
 
   // Beregn rabattert pris for hovedabonnement
+  // Beregn rabattert pris for hovedabonnement
+  let discountedMainPlanPrice = planPrice; // Start med planPrice som standard
   const mainDiscountAmount = (planPrice * discountPercentage) / 100;
-  const discountedMainPlanPrice = planPrice - mainDiscountAmount;
+  discountedMainPlanPrice -= mainDiscountAmount; // Trekk rabatten
+
+  // ✅ Nå er discountedMainPlanPrice definert før bruk
   totalPrice += discountedMainPlanPrice;
 
   // **Håndter SIM-kostnader for hovedabonnementet via calculateSimPrice**
