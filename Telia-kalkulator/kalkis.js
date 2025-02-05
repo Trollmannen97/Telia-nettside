@@ -34,27 +34,16 @@ function toggleNewCustomerDiscount() {
 }
 
 // Funksjon for å aktivere rabatt og oppdatere prisen
+let newCustomerDiscountApplied = false; // Global variabel for rabattstatus
+
 function applyNewCustomerDiscount() {
-  const plan = document.getElementById("plan");
   const newCustomerCheckbox = document.getElementById("newCustomer");
 
-  // Sjekk om plan eksisterer og har et valgt element
-  if (!plan || plan.selectedIndex === -1) {
-    console.warn("Ingen abonnement valgt eller plan ikke lastet inn enda.");
-    return;
-  }
+  // Oppdater rabattstatus basert på om bryteren er aktivert eller ikke
+  newCustomerDiscountApplied = newCustomerCheckbox.checked;
 
-  const selectedPlanText = plan.options[plan.selectedIndex].text;
-
-  if (selectedPlanText.includes("Telia X Start")) {
-    if (newCustomerCheckbox.checked) {
-      plan.value = "429.00"; // Rabattpris
-    } else {
-      plan.value = "479.00"; // Originalpris
-    }
-  }
-
-  calculateTotalPrice(); // Oppdater totalprisen
+  // Kjør totalprisberegningen for å oppdatere prisen riktig
+  calculateTotalPrice();
 }
 
 // Lytt til endringer i abonnementet og vis/skjul rabatt-knappen
@@ -735,6 +724,13 @@ function calculateTotalPrice() {
   const planNameFull = plan.options[plan.selectedIndex].text;
   const planName = planNameFull.split(" - ")[0];
   let planPrice = parseFloat(plan.value);
+
+  // 🔹 Sjekk om det er Telia X Start og om rabatt er aktivert
+  if (planName.includes("Telia X Start") && newCustomerDiscountApplied) {
+    planPrice -= 50; // Trekk fra rabatten
+  }
+
+  totalPrice += planPrice;
 
   // Hent rabattprosent for hovednummeret
   const discountSelect = document.getElementById("discount");
