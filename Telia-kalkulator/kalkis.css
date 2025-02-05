@@ -481,16 +481,19 @@ button:hover {
     border: 3px solid #6a0dad; /* Markerer valgte tilleggstjenester */
     transform: scale(1.1);
   }
-
   .new-customer-discount {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
+    justify-content: center;  /* Sentrerer horisontalt */
+    flex-direction: row;  /* Holder teksten og knappen på samme linje */
+    gap: 10px; /* Gir litt mellomrom */
     margin-top: 10px;
     font-weight: bold;
     color: #8300e9;
+    text-align: center;
+    width: 100%;
 }
+
 
 /* Stil for bryteren */
 .switch {
