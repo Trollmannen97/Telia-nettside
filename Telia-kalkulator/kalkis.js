@@ -730,7 +730,7 @@ function calculateTotalPrice() {
     planPrice -= 50; // Trekk fra rabatten
   }
 
-  totalPrice += planPrice;
+  totalPrice += discountedMainPlanPrice;
 
   // Hent rabattprosent for hovednummeret
   const discountSelect = document.getElementById("discount");
