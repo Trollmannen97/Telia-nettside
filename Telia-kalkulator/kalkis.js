@@ -38,7 +38,15 @@ function applyNewCustomerDiscount() {
   const plan = document.getElementById("plan");
   const newCustomerCheckbox = document.getElementById("newCustomer");
 
-  if (plan.options[plan.selectedIndex].text.includes("Telia X Start")) {
+  // Sjekk om plan eksisterer og har et valgt element
+  if (!plan || plan.selectedIndex === -1) {
+    console.warn("Ingen abonnement valgt eller plan ikke lastet inn enda.");
+    return;
+  }
+
+  const selectedPlanText = plan.options[plan.selectedIndex].text;
+
+  if (selectedPlanText.includes("Telia X Start")) {
     if (newCustomerCheckbox.checked) {
       plan.value = "429.00"; // Rabattpris
     } else {
@@ -719,6 +727,11 @@ function calculateTotalPrice() {
 
   // Hent hovedabonnementet
   const plan = document.getElementById("plan");
+  if (!plan || plan.selectedIndex === -1) {
+    console.warn("Abonnement er ikke lastet inn enda.");
+    return;
+  }
+
   const planNameFull = plan.options[plan.selectedIndex].text;
   const planName = planNameFull.split(" - ")[0];
   let planPrice = parseFloat(plan.value);
