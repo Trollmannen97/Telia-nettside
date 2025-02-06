@@ -287,9 +287,9 @@ button:hover {
     background-color: #f9f9f9;
     padding: 50px;
     border-radius: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid #8b12ea;
     margin-top: 25px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 15px #a69aaf;
     display: none;
     
 }
