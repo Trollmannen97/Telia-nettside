@@ -258,7 +258,7 @@ function addFamilyPlan() {
         <option value="2">2</option>
         <option value="3">3</option>
       </select>
-      <label for="klokke">Smartklokke:</label>
+      <label for="klokke">Klokkesim:</label>
       <select class="klokke-select" onchange="updateSimPrice(this)">
         <option value="0">0</option>
         <option value="1">1</option>
