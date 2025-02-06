@@ -348,7 +348,7 @@ button:hover {
 
 
 /*Singel og for enkelkunde */
-.singleSimPrice {
+#singleSimPrice {
     font-weight: bold;
     font-size: 1.2em;
     color: #252525;
