@@ -490,10 +490,11 @@ button:hover {
 
 /* Familieplanens egen stil */
 .family-plan .device-payment-container input.device-payment {
-    border: 2px solid #e5006e; /* Mørkere rosa farge for familie */
+    border: 2px solid #8300e9; /* Mørkere rosa farge for familie */
     background-color: #ffffff; /* Hvit bakgrunn */
     color: #333; /* Mørkere tekst */
     font-size: 1.1em;
+    width: 30%;
 }
 
 /* Fokus-effekt */
