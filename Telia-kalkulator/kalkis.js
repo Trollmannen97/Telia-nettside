@@ -731,7 +731,7 @@ function updateSimPrice(element) {
     simPrices.twinSimPrice + simPrices.dataSimPrice + simPrices.klokkeSimPrice;
 
   const simPriceElement =
-    planDiv.querySelector(".family-plan-price") ||
+    planDiv.querySelector(".familie-plan-price") ||
     document.getElementById("singleSimPrice");
   if (simPriceElement) {
     simPriceElement.textContent = `SIM-kort: ${totalSimPrice.toFixed(2)} kr`;
