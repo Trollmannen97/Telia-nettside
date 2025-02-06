@@ -1,7 +1,13 @@
+/* Legger til en ny skrifttype for SIM og tilleggstjenester */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+
+
 .dark-mode {
     background-color: #252525;
     color: #f0f0f0;
 }
+
 
 .dark-mode .calculator {
     background-color: #252525;
@@ -300,21 +306,28 @@ button:hover {
 }
 
 .sim-options label {
-    font-size: 0.9em;
-    font-weight: bold;
-    color: #8b12ea;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1em; /* Gjør teksten litt større */
+    font-weight: 600; /* Gjør skriften litt fetere */
+    color: #8300e9; /* Lilla farge */
     text-align: center;
 }
 
+/* Forbedrer dropdown-menyene */
 .sim-options select {
-    width: 80px;  /* Justerer bredden */
-    padding: 5px;
-    font-size: 0.9em;
-    border-radius: 6px;
-    border: 1px solid #8300e9;
-    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1em;
+    border-radius: 8px; /* Glattere kanter */
+    padding: 8px;
+    border: 2px solid #8300e9; /* Gir lilla kant */
     background: white;
-    transition: all 0.3s ease;
+    color: #252525;
+    transition: all 0.3s ease-in-out;
+}
+/* Hover-effekt på select */
+.sim-options select:hover {
+    border-color: #e5006e;
+    box-shadow: 0 0 6px rgba(229, 0, 110, 0.3);
 }
 
 .sim-options select:focus {
@@ -322,6 +335,18 @@ button:hover {
     box-shadow: 0 0 5px rgba(229, 0, 110, 0.3);
     outline: none;
 }
+
+/* Fiks for SIM-kortprisen */
+.sim-options p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1em;
+    font-weight: 600;
+    color: #252525;
+    text-align: center;
+    margin-top: 10px;
+}
+
+
 
 .family-plan-price {
     font-weight: bold;
