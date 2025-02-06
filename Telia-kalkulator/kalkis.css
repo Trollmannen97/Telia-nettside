@@ -459,10 +459,28 @@ button:hover {
   
   .device-payment-container input.device-payment {
     width: 100%;
-    padding: 8px;
+    padding: 10px;
     box-sizing: border-box;
-  }
+    border: 2px solid #8300e9; /* Lilla kant */
+    border-radius: 8px; /* Gjør kantene glatte */
+    font-size: 1.1em;
+    background-color: #f9f9f9;
+    color: #252525;
+    transition: all 0.3s ease-in-out;
+}
 
+/* Endrer kantfarge og skygge når brukeren klikker */
+.device-payment-container input.device-payment:focus {
+    border-color: #e5006e; /* Mørkere lilla ved fokus */
+    box-shadow: 0 0 8px rgba(229, 0, 110, 0.5);
+    outline: none;
+}
+
+/* Endre bakgrunn når feltet er inaktivt */
+.device-payment-container input.device-payment::placeholder {
+    color: #999;
+    font-style: italic;
+}
 
   .addon-icon {
     width: 50px; /* Match størrelsen du har valgt i Canva */
