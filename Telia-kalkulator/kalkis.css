@@ -352,9 +352,11 @@ button:hover {
     font-weight: bold;
     font-size: 1.2em;
     color: #252525;
-    margin-top: 15px; /* Avstand fra SIM-valgene */
+    margin-top: 25px; /* Økt avstand fra SIM-valgene */
     text-align: center;
     display: block;
+    padding-top: 10px;
+    border-top: 1px solid #8b12ea; /* Liten linje for å skille */
 }
 
 
@@ -362,7 +364,7 @@ button:hover {
 /* ✅ Spesifikke stiler for Familie-seksjonen */
 /* Familie-seksjon kompakt stil */
 .family-section {
-    background-color: #f4f4f4;
+    background-color: #f0f0f0;;
     padding: 20px;
     border-radius: 12px;
     border: 2px solid #8b12ea;
