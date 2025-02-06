@@ -360,22 +360,27 @@ button:hover {
 
 /* Familie SIM-valg */
 /* ✅ Spesifikke stiler for Familie-seksjonen */
+/* Familie-seksjon kompakt stil */
 .family-section {
-    background-color: #f9f9f9;
-    padding: 40px;
+    background-color: #f4f4f4;
+    padding: 20px;
     border-radius: 12px;
-    border: 2px solid #8b12ea; /* Lilla kant */
+    border: 2px solid #8b12ea;
     margin-top: 25px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    display: none; /* Holder familie skjult til valgt */
+    display: none; /* Skjules inntil aktivert */
+    max-width: 600px; /* Reduserer bredden */
+    margin-left: auto;
+    margin-right: auto;
 }
-
 /* Familie-seksjon overskrift */
+/* Familie-seksjon tittel */
 .family-section h3 {
     color: #8300e9;
     text-align: center;
-    font-size: 1.4em;
+    font-size: 1.3em;
     font-weight: bold;
+    margin-bottom: 15px;
 }
 
 /* Familie dropdown-meny */
@@ -409,12 +414,20 @@ button:hover {
     box-shadow: 0 0 8px rgba(229, 0, 110, 0.3);
 }
 
-/* ✅ Familie SIM-valg spesifikke stiler */
 .family-sim-options {
     display: flex;
-    justify-content: center;
-    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Justerer bedre */
+    gap: 10px;
     margin-bottom: 15px;
+}
+
+
+/* ✅ Familie SIM-valg spesifikke stiler */
+.family-sim-option {
+    flex: 1; /* Justerer bredden automatisk */
+    text-align: center;
+    min-width: 150px; /* Setter en minimumsbredde */
 }
 
 .family-sim-options label {
@@ -435,22 +448,21 @@ button:hover {
     background: white;
 }
 
-/* Endrer knappestilen for Fjern-knappen */
-.remove-family-plan {
+/* Familie-seksjon knapper */
+.add-family-plan-btn, .remove-family-plan {
     background: linear-gradient(135deg, #8300e9, #e1ccf1);
     color: white;
     border: none;
-    padding: 10px 15px;
+    padding: 8px 15px;
     border-radius: 8px;
-    font-size: 1.1em;
+    font-size: 1em;
     cursor: pointer;
     transition: background 0.3s ease, transform 0.3s ease;
     display: block;
-    margin: 20px auto;
+    margin: 15px auto;
 }
 
-/* Hover-effekt for Fjern-knappen */
-.remove-family-plan:hover {
+.add-family-plan-btn:hover, .remove-family-plan:hover {
     background: linear-gradient(135deg, #e5006e, #ff336e);
     transform: scale(1.05);
 }
