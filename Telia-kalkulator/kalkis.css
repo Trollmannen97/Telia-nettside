@@ -484,6 +484,25 @@ button:hover {
     width: 100%; /* Sørg for at den strekker seg og ikke "henger fast" */
 }
 
+/* Stil for familieplanens Svitsj/delbetaling input */
+.family-plan .device-payment {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 2px solid #8b12ea; /* Lilla kant for familie */
+    border-radius: 6px; /* Glatte kanter */
+    font-size: 1.1em;
+    background-color: #f9f9f9;
+    color: #252525;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Effekt ved fokus */
+.family-plan .device-payment:focus {
+    border-color: #e5006e;
+    box-shadow: 0 0 8px rgba(229, 0, 110, 0.5);
+    outline: none;
+}
 
 
 
