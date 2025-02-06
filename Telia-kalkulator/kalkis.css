@@ -298,10 +298,11 @@ button:hover {
 .sim-options {
     display: flex;
     justify-content: center;
-    gap: 20px;
-    margin-bottom: 10px;
+    gap: 8px;
+    margin-bottom: 15px;
     flex-direction: row; /* Endrer rekkefølgen til horizontal */
     align-items: center; /* Sentrerer elementene */
+    padding: 10px;
 }
 
 .sim-options label {
