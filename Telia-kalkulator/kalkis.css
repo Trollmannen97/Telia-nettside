@@ -477,12 +477,13 @@ button:hover {
     font-weight: bold;
     font-size: 1.1em;
     color: #252525;
-    margin-top: 10px; /* Mindre avstand for familie */
+    margin-top: 15px; /* Øker avstanden litt */
     text-align: center;
     display: block;
-    padding-top: 5px;
-    border-top: 1px solid #8b12ea;
+    padding-top: 8px;
+    width: 100%; /* Sørg for at den strekker seg og ikke "henger fast" */
 }
+
 
 
 
