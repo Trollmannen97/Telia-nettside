@@ -397,17 +397,7 @@ button:hover {
     transition: all 0.3s ease-in-out;
 }
 
-/* Familie-seksjon input-felter */
-.family-section input {
-    width: 100%;
-    padding: 8px;
-    border-radius: 8px;
-    border: 2px solid #8b12ea;
-    font-size: 1.1em;
-    background-color: white;
-    color: #252525;
-    transition: all 0.3s ease-in-out;
-}
+
 
 /* Familie-seksjon: hover-effekt på dropdown */
 .family-section select:hover,
@@ -485,24 +475,34 @@ button:hover {
 }
 
 /* Stil for familieplanens Svitsj/delbetaling input */
-.family-plan .device-payment {
+/* Standardstil for Svitsj/delbetaling */
+.device-payment-container input.device-payment {
     width: 100%;
     padding: 8px;
     box-sizing: border-box;
-    border: 2px solid #8b12ea; /* Lilla kant for familie */
-    border-radius: 6px; /* Glatte kanter */
+    border: 2px solid #8b12ea;
+    border-radius: 6px;
     font-size: 1.1em;
     background-color: #f9f9f9;
     color: #252525;
     transition: all 0.3s ease-in-out;
 }
 
-/* Effekt ved fokus */
-.family-plan .device-payment:focus {
-    border-color: #e5006e;
-    box-shadow: 0 0 8px rgba(229, 0, 110, 0.5);
+/* Familieplanens egen stil */
+.family-plan .device-payment-container input.device-payment {
+    border: 2px solid #e5006e; /* Mørkere rosa farge for familie */
+    background-color: #ffffff; /* Hvit bakgrunn */
+    color: #333; /* Mørkere tekst */
+    font-size: 1.1em;
+}
+
+/* Fokus-effekt */
+.family-plan .device-payment-container input.device-payment:focus {
+    border-color: #ff3366;
+    box-shadow: 0 0 8px rgba(255, 51, 102, 0.5);
     outline: none;
 }
+
 
 
 
