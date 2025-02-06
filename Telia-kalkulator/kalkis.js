@@ -499,7 +499,13 @@ function updateResultDisplay() {
   // **Vis hovedabonnementet**
   const plan = document.getElementById("plan");
   const planNameFull = plan.options[plan.selectedIndex].text;
-  const selectedPlanPrice = parseFloat(plan.value);
+
+  let selectedPlanPrice = parseFloat(plan.value);
+
+  // 🔹 Sjekk om det er Telia X Start og om rabatt er aktivert
+  if (planName.includes("Telia X Start") && newCustomerDiscountApplied) {
+    selectedPlanPrice -= 50; // Trekk fra rabatten
+  }
 
   // Ekstraher kun abonnementsnavnet uten pris
   const planName = planNameFull.split(" - ")[0];
