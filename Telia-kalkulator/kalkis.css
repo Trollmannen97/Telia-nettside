@@ -359,67 +359,102 @@ button:hover {
 
 
 /* Familie SIM-valg */
+/* ✅ Spesifikke stiler for Familie-seksjonen */
+.family-section {
+    background-color: #f9f9f9;
+    padding: 40px;
+    border-radius: 12px;
+    border: 2px solid #8b12ea; /* Lilla kant */
+    margin-top: 25px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    display: none; /* Holder familie skjult til valgt */
+}
+
+/* Familie-seksjon overskrift */
+.family-section h3 {
+    color: #8300e9;
+    text-align: center;
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+/* Familie dropdown-meny */
+.family-section select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 2px solid #8b12ea;
+    font-size: 1em;
+    background: white;
+    color: #252525;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Familie-seksjon input-felter */
+.family-section input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 8px;
+    border: 2px solid #8b12ea;
+    font-size: 1.1em;
+    background-color: white;
+    color: #252525;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Familie-seksjon: hover-effekt på dropdown */
+.family-section select:hover,
+.family-section input:hover {
+    border-color: #e5006e;
+    box-shadow: 0 0 8px rgba(229, 0, 110, 0.3);
+}
+
+/* ✅ Familie SIM-valg spesifikke stiler */
 .family-sim-options {
     display: flex;
     justify-content: center;
     gap: 15px;
     margin-bottom: 15px;
-
 }
 
-.family-sim-option {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.family-sim-options label {
+    font-size: 1em;
+    font-weight: bold;
+    color: #8b12ea;
+    text-align: center;
 }
 
-.family-sim-option select {
-    width: 80px;
-    padding: 5px;
-    font-size: 0.9em;
-    border-radius: 6px;
-    border: 1px solid #8300e9;
+/* Familie-plan input-felt */
+.family-sim-options select {
+    width: 90px;
+    padding: 8px;
+    font-size: 1em;
+    border-radius: 8px;
+    border: 2px solid #8b12ea;
     text-align: center;
     background: white;
 }
 
-
-
-/* Familieplan-pris */
-
-/* 🟢 Flytt SIM-kort prisen under */
-
-/* Flexbox for familieplan */
-.family-plan {
-    display: flex; 
-    flex-direction: column; /* Slik at alle elementer er vertikalt stablet */
-    align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #ddd;
-    width: 100%;
-
-}
-
-
-
-  
-
-
-/* Fjern knapp for familieplan */
+/* Endrer knappestilen for Fjern-knappen */
 .remove-family-plan {
-    background-color: #0000;
+    background: linear-gradient(135deg, #8300e9, #e1ccf1);
     color: white;
-    padding: 8px 12px;
     border: none;
+    padding: 10px 15px;
     border-radius: 8px;
+    font-size: 1.1em;
     cursor: pointer;
-    margin-top: 15px;
+    transition: background 0.3s ease, transform 0.3s ease;
+    display: block;
+    margin: 20px auto;
 }
 
+/* Hover-effekt for Fjern-knappen */
 .remove-family-plan:hover {
-    background-color: #0000;
+    background: linear-gradient(135deg, #e5006e, #ff336e);
+    transform: scale(1.05);
 }
+
 
 .family-sim-options {
     display: none;

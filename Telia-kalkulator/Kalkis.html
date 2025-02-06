@@ -96,14 +96,15 @@
 </div>
 </div>
 <!-- Familie-seksjon for SIM-kort -->
-<div id="familySection">
+<!-- Familie-seksjon for SIM-kort -->
+<div id="familySection" class="family-section">
     <h3>Familie</h3>
     <div id="familyPlans">
-        <!-- Familieplan - SIM-valg (TVILLINGSIM og DataSIM) -->
+        <!-- Familieplan - SIM-valg (TvillingSIM og DataSIM) -->
         <div class="family-sim-options">
             <div class="family-sim-option">
                 <label for="familyTwinsimSelect">TvillingSIM:</label>
-                <select id="familyTwinsimSelect" class="twinsim-select" onchange="updateSimPrice(this)">
+                <select id="familyTwinsimSelect" class="family-twinsim-select" onchange="updateSimPrice(this)">
                     <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -112,7 +113,16 @@
             </div>
             <div class="family-sim-option"> 
                 <label for="familyDatasimSelect">DataSIM:</label>
-                <select id="familyDatasimSelect" class="datasim-select" onchange="updateSimPrice(this)">
+                <select id="familyDatasimSelect" class="family-datasim-select" onchange="updateSimPrice(this)">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
+            <div class="family-sim-option"> 
+                <label for="familyKlokkeSelect">Smartklokke:</label>
+                <select id="familyKlokkeSelect" class="family-klokke-select" onchange="updateSimPrice(this)">
                     <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -121,8 +131,9 @@
             </div>
         </div>
     </div>
-    <button type="button" onclick="addFamilyPlan()">Legg til abonnement</button>
+    <button type="button" class="add-family-plan-btn" onclick="addFamilyPlan()">Legg til abonnement</button>
 </div>
+
 
 <button onclick="calculateTotalPrice()">Beregn pris</button>
 
