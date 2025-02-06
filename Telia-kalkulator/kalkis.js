@@ -498,17 +498,23 @@ function updateResultDisplay() {
 
   // **Vis hovedabonnementet**
   const plan = document.getElementById("plan");
-  const planNameFull = plan.options[plan.selectedIndex].text;
-
-  let selectedPlanPrice = parseFloat(plan.value);
-
-  // 🔹 Sjekk om det er Telia X Start og om rabatt er aktivert
-  if (planName.includes("Telia X Start") && newCustomerDiscountApplied) {
-    selectedPlanPrice -= 50; // Trekk fra rabatten
+  if (!plan || plan.selectedIndex === -1) {
+    console.warn("Abonnement er ikke lastet inn enda.");
+    return;
   }
 
-  // Ekstraher kun abonnementsnavnet uten pris
-  const planName = planNameFull.split(" - ")[0];
+  // ✅ **Nå deklareres `planName` før den brukes**
+  const planNameFull = plan.options[plan.selectedIndex].text;
+  let selectedPlanPrice = parseFloat(plan.value);
+  let planName = planNameFull.split(" - ")[0];
+
+  // ✅ **Sjekk om rabatt er aktivert OG trekk fra rabatten før visning**
+  const newCustomerCheckbox = document.getElementById("newCustomer");
+  const newCustomerDiscountApplied = newCustomerCheckbox.checked;
+
+  if (planName.includes("Telia X Start") && newCustomerDiscountApplied) {
+    selectedPlanPrice -= 50;
+  }
 
   // Hent den valgte rabattprosenten for hovednummeret
   const discountSelect = document.getElementById("discount");
@@ -519,11 +525,11 @@ function updateResultDisplay() {
   const discountValue = discountSelect.value || "0";
   const discountPercentage = parseFloat(discountValue) || 0;
 
-  // Beregn rabattbeløpet for hovedabonnementet
+  // ✅ **Riktig rabattberegning for hovedabonnementet**
   const mainDiscountAmount = (selectedPlanPrice * discountPercentage) / 100;
   const discountedMainPlanPrice = selectedPlanPrice - mainDiscountAmount;
 
-  // Oppdater oversikt for hovedabonnement
+  // ✅ **Nå vises riktig pris i prisdetaljene!**
   let plansDetails = `<p>Hovedabonnement: ${planName} - ${discountedMainPlanPrice.toFixed(
     2
   )} kr</p>`;
