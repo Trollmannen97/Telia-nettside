@@ -616,6 +616,9 @@ function updateResultDisplay() {
     document.getElementById("singleDatasimSelect").value
   );
 
+  const klokkeSimCountMain =
+    parseInt(document.getElementById("singleKlokkeSelect").value) || 0;
+
   if (twinSimCountMain > 0) {
     const twinSimPriceMain = planName.includes("Telia X") ? 89 : 49;
     simDetails += `<p>Hovedabonnement - TvillingSIM: ${twinSimCountMain} x ${twinSimPriceMain} kr</p>`;
@@ -623,6 +626,11 @@ function updateResultDisplay() {
   if (dataSimCountMain > 0) {
     const dataSimPriceMain = planName.includes("Telia X") ? 89 : 49;
     simDetails += `<p>Hovedabonnement - DataSIM: ${dataSimCountMain} x ${dataSimPriceMain} kr</p>`;
+  }
+
+  if (klokkeSimCountMain > 0) {
+    const klokkeSimPriceMain = 30; // Sett prisen for smartklokke-SIM
+    simDetails += `<p>Hovedabonnement - SmartklokkeSIM: ${klokkeSimCountMain} x ${klokkeSimPriceMain} kr</p>`;
   }
 
   // ============== Familieabonnementenes SIM-valg ===========
@@ -637,6 +645,9 @@ function updateResultDisplay() {
       planSelect.options[planSelect.selectedIndex].text;
     const familyPlanName = familyPlanNameFull.split(" - ")[0];
 
+    const klokkeSimCount =
+      parseInt(familyPlanDiv.querySelector(".klokke-select")?.value) || 0;
+
     if (twinSimCount > 0) {
       const twinSimPrice = familyPlanName.includes("Telia X") ? 89 : 49;
       simDetails += `<p>${familyPlanName} - TvillingSIM: ${twinSimCount} x ${twinSimPrice} kr</p>`;
@@ -644,6 +655,11 @@ function updateResultDisplay() {
     if (dataSimCount > 0) {
       const dataSimPrice = familyPlanName.includes("Telia X") ? 89 : 49;
       simDetails += `<p>${familyPlanName} - DataSIM: ${dataSimCount} x ${dataSimPrice} kr</p>`;
+    }
+
+    if (klokkeSimCount > 0) {
+      const klokkeSimPrice = 30; // Sett prisen for smartklokke-SIM
+      simDetails += `<p>${familyPlanName} - SmartklokkeSIM: ${klokkeSimCount} x ${klokkeSimPrice} kr</p>`;
     }
 
     // Delbetaling for familie
@@ -746,7 +762,6 @@ function calculateTotalPrice() {
   const discountSelect = document.getElementById("discount");
   const discountPercentage = parseFloat(discountSelect.value) || 0;
 
-  // Beregn rabattert pris for hovedabonnement
   // Beregn rabattert pris for hovedabonnement
   let discountedMainPlanPrice = planPrice; // Start med planPrice som standard
   const mainDiscountAmount = (planPrice * discountPercentage) / 100;
