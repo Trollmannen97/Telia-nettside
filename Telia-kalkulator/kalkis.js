@@ -713,14 +713,15 @@ function updateSimPrice(element) {
     planType = planSelect.options[planSelect.selectedIndex].text;
   }
 
-  // Hent antall TvillingSIM og DataSIM
+  // Hent antall TvillingSIM, DataSIM og SmartklokkeSIM
   const twinSimCount =
-    parseInt(planDiv.querySelector(".twinsim-select").value) || 0;
+    parseInt(planDiv.querySelector(".twinsim-select")?.value) || 0;
   const dataSimCount =
-    parseInt(planDiv.querySelector(".datasim-select").value) || 0;
+    parseInt(planDiv.querySelector(".datasim-select")?.value) || 0;
   const klokkeSimCount =
     parseInt(planDiv.querySelector(".klokke-select")?.value) || 0;
 
+  // Beregn SIM-priser
   const simPrices = calculateSimPrice(
     planType,
     twinSimCount,
@@ -730,14 +731,20 @@ function updateSimPrice(element) {
   const totalSimPrice =
     simPrices.twinSimPrice + simPrices.dataSimPrice + simPrices.klokkeSimPrice;
 
-  const simPriceElement =
-    planDiv.querySelector(".familie-plan-price") ||
-    document.getElementById("singleSimPrice");
+  // Finn riktig pris-element for både enkel kunde og familie
+  let simPriceElement;
+  if (planDiv.id === "singlePlanOptions") {
+    simPriceElement = document.getElementById("singleSimPrice"); // Enkel kunde
+  } else {
+    simPriceElement = planDiv.querySelector(".familie-plan-price"); // Familie
+  }
+
+  // Oppdater SIM-kort prisen hvis elementet eksisterer
   if (simPriceElement) {
     simPriceElement.textContent = `SIM-kort: ${totalSimPrice.toFixed(2)} kr`;
   }
 }
-//Funksjonen for totalpris
+
 // Funksjonen for totalpris
 function calculateTotalPrice() {
   let totalPrice = 0;
