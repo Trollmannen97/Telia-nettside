@@ -347,7 +347,7 @@ button:hover {
 }
 
 
-
+/*Singel og for enkelkunde */
 .family-plan-price {
     font-weight: bold;
     font-size: 1.2em;
@@ -473,6 +473,17 @@ button:hover {
 .family-sim-options {
     display: none;
 }
+.famile-sim-price {
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #252525;
+    margin-top: 10px; /* Mindre avstand for familie */
+    text-align: center;
+    display: block;
+    padding-top: 5px;
+    border-top: 1px solid #8b12ea;
+}
+
 
 
 
