@@ -86,6 +86,9 @@ button {
 .dark-mode .familie-plan-price {
     color: #ffffff;
 }
+.dark-mode #singleSimPrice {
+    color: #ffffff;
+}
 
 /* Generelle justeringer for kroppen */
 body {
