@@ -83,7 +83,9 @@ button {
     color: #ffffff;
 }
 
-
+.dark-mode .familie-plan-price {
+    color: #ffffff;
+}
 
 /* Generelle justeringer for kroppen */
 body {
