@@ -635,25 +635,22 @@ function updateResultDisplay() {
     }: ${familyPlanName} - ${discountedPrice.toFixed(2)} kr</p>`;
 
     // 🔹 Oppdater rabatt-detaljer 🔹
-    discountDetails += `<p>${familyPlanName}: Rabatt på ${discount.toFixed(
-      2
-    )} kr</p>`;
+    if (discount > 0) {
+      discountDetails += `<p>${familyPlanName}: Rabatt på ${discount.toFixed(
+        2
+      )} kr</p>`;
+    }
 
+    // 🔹 Kun legg til 50 kr rabatt om rabattknappen er aktivert 🔹
     if (
       familyPlanName.includes("Telia X Start") &&
-      familyDiscountToggle?.checked
+      familyDiscountToggle?.checked &&
+      discount < 50 // 🚀 Unngår dobbel rabatt hvis den allerede er 50+
     ) {
       discountDetails += `<p>${familyPlanName}: Ekstra rabatt på 50 kr</p>`;
     }
 
-    // Legg til rabattinformasjon
-    if (discount > 0) {
-      discountDetails += `<p>${familyPlanName}: Rabatt på ${discount} kr</p>`;
-    } else {
-      discountDetails += `<p>${familyPlanName}: Ingen rabatt</p>`;
-    }
-
-    // Ekstra rabatt
+    // 🔹 Håndter ekstra rabatt separat 🔹
     const extraDiscountSelect = familyPlanDiv.querySelector(
       ".family-extra-discount"
     );
