@@ -296,6 +296,9 @@ function addFamilyPlan() {
 
   const familySelect = newDiv.querySelector(".family-plan-select");
   buildFamilyPlanOptions(familySelect);
+  familySelect.addEventListener("change", function () {
+    toggleFamilyDiscount(familySelect);
+  });
 
   const discountSelect = newDiv.querySelector(".family-extra-discount");
   buildFamilyExtraDiscountSelect(discountSelect);
