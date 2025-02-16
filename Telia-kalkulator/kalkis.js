@@ -610,10 +610,34 @@ function updateResultDisplay() {
     const discount = getFamilyDiscount(familyPlanPrice, familyPlanName, false);
     const discountedPrice = familyPlanPrice - discount;
 
+    // 🔹 Sjekk om rabattbryteren for 50 kr er aktivert 🔹
+    const familyDiscountToggle = familyPlanDiv.querySelector(
+      ".family-discount-toggle"
+    );
+    if (
+      familyPlanName.includes("Telia X Start") &&
+      familyDiscountToggle?.checked
+    ) {
+      discountedPrice -= 50; // Trekk fra 50 kr hvis aktivert
+    }
+
     // Legg til i oversikten
     plansDetails += `<p>Familieabonnement ${
       i + 1
     }: ${familyPlanName} - ${discountedPrice.toFixed(2)} kr</p>`;
+
+    // 🔹 Oppdater rabatt-detaljer 🔹
+    if (discount > 0) {
+      discountDetails += `<p>${familyPlanName}: Rabatt på ${discount.toFixed(
+        2
+      )} kr</p>`;
+    }
+    if (
+      familyPlanName.includes("Telia X Start") &&
+      familyDiscountToggle?.checked
+    ) {
+      discountDetails += `<p>${familyPlanName}: Ekstra rabatt på 50 kr</p>`;
+    }
 
     // Legg til rabattinformasjon
     if (discount > 0) {
