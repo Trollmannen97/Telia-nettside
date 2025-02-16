@@ -304,6 +304,25 @@ function addFamilyPlan() {
   buildFamilyAddons(newDiv.querySelector(".addons-container"));
 }
 
+function toggleFamilyDiscount(selectElement) {
+  const familyPlanDiv = selectElement.closest(".family-plan");
+  const discountContainer = familyPlanDiv.querySelector(
+    ".family-discount-container"
+  );
+
+  // Hent valgt abonnementsnavn
+  const selectedPlan = selectElement.options[selectElement.selectedIndex].text;
+
+  // Vis kun rabattknappen hvis abonnementet er "Telia X Start"
+  if (selectedPlan.includes("Telia X Start")) {
+    discountContainer.style.display = "flex";
+  } else {
+    discountContainer.style.display = "none";
+    familyPlanDiv.querySelector(".family-discount-toggle").checked = false; // Tilbakestill rabatt
+    applyFamilyDiscount(familyPlanDiv.querySelector(".family-discount-toggle")); // Oppdater prisen
+  }
+}
+
 async function buildFamilyAddons(container) {
   const data = await fetchTeliaData();
   if (!data || !data.tilleggsProdukter) return;
@@ -756,8 +775,21 @@ function updateSimPrice(element) {
   }
 }
 
-function applyFamilyDiscount(toggle) {
-  calculateTotalPrice(); // Oppdater prisen hver gang bryteren endres
+function applyFamilyDiscount(checkbox) {
+  const familyPlanDiv = checkbox.closest(".family-plan");
+  const planSelect = familyPlanDiv.querySelector(".family-plan-select");
+  let planPrice = parseFloat(planSelect.value);
+
+  // Hent abonnementsnavn
+  const selectedPlan = planSelect.options[planSelect.selectedIndex].text;
+
+  // Kun rabatt på "Telia X Start"
+  if (selectedPlan.includes("Telia X Start") && checkbox.checked) {
+    planPrice -= 50;
+  }
+
+  // Oppdater prisen
+  calculateTotalPrice();
 }
 
 // Funksjonen for totalpris
@@ -852,7 +884,7 @@ function calculateTotalPrice() {
     const extraDiscountPercentage = parseFloat(extraDiscountSelect.value) || 0;
     const extraDiscountAmount =
       (discountedPlanPrice * extraDiscountPercentage) / 100;
-    const finalPlanPrice = discountedPlanPrice - extraDiscountAmount;
+    let finalPlanPrice = discountedPlanPrice - extraDiscountAmount;
 
     // **SIM-kostnader for familie**
     const twinSimCount =
