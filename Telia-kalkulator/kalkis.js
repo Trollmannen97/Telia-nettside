@@ -606,21 +606,30 @@ function updateResultDisplay() {
     const familyPlanPrice = parseFloat(planSelect.value);
     const familyPlanName = familyPlanNameFull.split(" - ")[0];
 
-    // Beregn rabatt for familieabonnementet
-    let discount =
-      parseFloat(getFamilyDiscount(familyPlanPrice, familyPlanName, false)) ||
-      0;
+    // ✅ Definerer familyDiscountToggle HER, før vi bruker den
+    const familyDiscountToggle = familyPlanDiv.querySelector(
+      ".family-discount-toggle"
+    );
+
+    // ✅ Beregn rabatt for familieabonnementet
+    let discount = parseFloat(
+      getFamilyDiscount(familyPlanPrice, familyPlanName, false)
+    );
+
+    // 🚀 **Forhindre feil: Hvis discount er NaN eller ikke et tall, sett den til 0**
     if (isNaN(discount)) discount = 0;
+
     let discountedPrice = familyPlanPrice - discount;
 
+    // ✅ Sjekk om rabattknappen er aktivert og trekk fra 50 kr
     if (
       familyPlanName.includes("Telia X Start") &&
       familyDiscountToggle?.checked
     ) {
-      discountedPrice -= 50; // Trekk fra 50 kr hvis aktivert
+      discountedPrice -= 50;
     }
 
-    // Legg til i oversikten
+    // 🔹 Legg til i oversikten 🔹
     plansDetails += `<p>Familieabonnement ${
       i + 1
     }: ${familyPlanName} - ${discountedPrice.toFixed(2)} kr</p>`;
@@ -629,6 +638,7 @@ function updateResultDisplay() {
     discountDetails += `<p>${familyPlanName}: Rabatt på ${discount.toFixed(
       2
     )} kr</p>`;
+
     if (
       familyPlanName.includes("Telia X Start") &&
       familyDiscountToggle?.checked
