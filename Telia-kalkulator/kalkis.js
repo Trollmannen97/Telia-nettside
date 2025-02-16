@@ -243,6 +243,17 @@ function addFamilyPlan() {
     <label for="familyExtraDiscount">Ekstra rabatt:</label>
     <select class="family-extra-discount" onchange="calculateTotalPrice()">
     </select>
+
+    <!-- 🔹 Rabattknapp for familie 🔹 -->
+    <div class="family-discount-container">
+      <label>50 kr rabatt i 12 måneder:</label>
+      <label class="switch">
+        <input type="checkbox" class="family-discount-toggle" onchange="applyFamilyDiscount(this)">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+
     <div class="sim-options">
       <label for="twinsim">TvillingSIM:</label>
       <select class="twinsim-select" onchange="updateSimPrice(this)">
@@ -745,6 +756,10 @@ function updateSimPrice(element) {
   }
 }
 
+function applyFamilyDiscount(toggle) {
+  calculateTotalPrice(); // Oppdater prisen hver gang bryteren endres
+}
+
 // Funksjonen for totalpris
 function calculateTotalPrice() {
   let totalPrice = 0;
@@ -824,6 +839,14 @@ function calculateTotalPrice() {
     // Familierabatt og evt. ekstra rabatt
     const discount = getFamilyDiscount(planPrice, planText, false);
     const discountedPlanPrice = planPrice - discount;
+
+    // 🔹 Sjekk om rabattbryteren for 50 kr er aktivert 🔹
+    const familyDiscountToggle = planDiv.querySelector(
+      ".family-discount-toggle"
+    );
+    if (planText.includes("Telia X Start") && familyDiscountToggle?.checked) {
+      discountedPlanPrice -= 50; // Trekk fra 50 kr hvis aktivert
+    }
 
     const extraDiscountSelect = planDiv.querySelector(".family-extra-discount");
     const extraDiscountPercentage = parseFloat(extraDiscountSelect.value) || 0;
