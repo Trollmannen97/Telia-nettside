@@ -870,7 +870,7 @@ function calculateTotalPrice() {
 
     // Familierabatt og evt. ekstra rabatt
     const discount = getFamilyDiscount(planPrice, planText, false);
-    const discountedPlanPrice = planPrice - discount;
+    let discountedPlanPrice = planPrice - discount; // Bruk "let" i stedet for "const"
 
     // 🔹 Sjekk om rabattbryteren for 50 kr er aktivert 🔹
     const familyDiscountToggle = planDiv.querySelector(
