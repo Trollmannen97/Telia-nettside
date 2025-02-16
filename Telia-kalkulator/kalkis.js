@@ -305,11 +305,11 @@ function addFamilyPlan() {
 
   // Kaller en ny funksjon for å bygge tilleggstjenester dynamisk
   buildFamilyAddons(newDiv.querySelector(".addons-container"));
-}
 
-// 🚀 **Skjul rabattknappen ved opprettelse!**
-const discountContainer = newDiv.querySelector(".family-discount-container");
-discountContainer.style.display = "none"; // Skjules til "Telia X Start" blir valgt
+  // 🚀 **Skjul rabattknappen ved opprettelse!**
+  const discountContainer = newDiv.querySelector(".family-discount-container");
+  discountContainer.style.display = "none"; // Skjules til "Telia X Start" blir valgt
+}
 
 function toggleFamilyDiscount(selectElement) {
   const familyPlanDiv = selectElement.closest(".family-plan");
