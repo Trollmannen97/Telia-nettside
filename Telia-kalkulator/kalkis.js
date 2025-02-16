@@ -610,12 +610,9 @@ function updateResultDisplay() {
     let discount =
       parseFloat(getFamilyDiscount(familyPlanPrice, familyPlanName, false)) ||
       0;
-    const discountedPrice = familyPlanPrice - discount;
+    if (isNaN(discount)) discount = 0;
+    let discountedPrice = familyPlanPrice - discount;
 
-    // 🔹 Sjekk om rabattbryteren for 50 kr er aktivert 🔹
-    const familyDiscountToggle = familyPlanDiv.querySelector(
-      ".family-discount-toggle"
-    );
     if (
       familyPlanName.includes("Telia X Start") &&
       familyDiscountToggle?.checked
