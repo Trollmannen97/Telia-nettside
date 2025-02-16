@@ -307,6 +307,10 @@ function addFamilyPlan() {
   buildFamilyAddons(newDiv.querySelector(".addons-container"));
 }
 
+// 🚀 **Skjul rabattknappen ved opprettelse!**
+const discountContainer = newDiv.querySelector(".family-discount-container");
+discountContainer.style.display = "none"; // Skjules til "Telia X Start" blir valgt
+
 function toggleFamilyDiscount(selectElement) {
   const familyPlanDiv = selectElement.closest(".family-plan");
   const discountContainer = familyPlanDiv.querySelector(
