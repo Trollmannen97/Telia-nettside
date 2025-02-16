@@ -607,7 +607,9 @@ function updateResultDisplay() {
     const familyPlanName = familyPlanNameFull.split(" - ")[0];
 
     // Beregn rabatt for familieabonnementet
-    const discount = getFamilyDiscount(familyPlanPrice, familyPlanName, false);
+    let discount =
+      parseFloat(getFamilyDiscount(familyPlanPrice, familyPlanName, false)) ||
+      0;
     const discountedPrice = familyPlanPrice - discount;
 
     // 🔹 Sjekk om rabattbryteren for 50 kr er aktivert 🔹
@@ -627,11 +629,9 @@ function updateResultDisplay() {
     }: ${familyPlanName} - ${discountedPrice.toFixed(2)} kr</p>`;
 
     // 🔹 Oppdater rabatt-detaljer 🔹
-    if (discount > 0) {
-      discountDetails += `<p>${familyPlanName}: Rabatt på ${discount.toFixed(
-        2
-      )} kr</p>`;
-    }
+    discountDetails += `<p>${familyPlanName}: Rabatt på ${discount.toFixed(
+      2
+    )} kr</p>`;
     if (
       familyPlanName.includes("Telia X Start") &&
       familyDiscountToggle?.checked
