@@ -17,6 +17,53 @@ function toggleTheme() {
   }
 }
 
+//Feedback-knappen//
+document.addEventListener("DOMContentLoaded", function () {
+  const feedbackBtn = document.getElementById("feedbackBtn");
+  const feedbackModal = document.getElementById("feedbackModal");
+  const closeModal = document.querySelector(".close");
+  const submitFeedback = document.getElementById("submitFeedback");
+
+  feedbackBtn.addEventListener("click", function () {
+    feedbackModal.style.display = "block";
+  });
+
+  closeModal.addEventListener("click", function () {
+    feedbackModal.style.display = "none";
+  });
+
+  window.addEventListener("click", function (event) {
+    if (event.target === feedbackModal) {
+      feedbackModal.style.display = "none";
+    }
+  });
+
+  submitFeedback.addEventListener("click", async function () {
+    const feedbackText = document.getElementById("feedbackText").value;
+    if (!feedbackText.trim()) {
+      alert("Vennligst skriv inn tilbakemeldingen din før du sender.");
+      return;
+    }
+
+    const response = await fetch(
+      "https://telia-backend.onrender.com/api/feedback",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: feedbackText }),
+      }
+    );
+
+    if (response.ok) {
+      alert("Tilbakemeldingen din er sendt!");
+      feedbackModal.style.display = "none";
+      document.getElementById("feedbackText").value = ""; // Tøm input
+    } else {
+      alert("Noe gikk galt, prøv igjen senere.");
+    }
+  });
+});
+
 // Funksjon for å vise/skjule rabatt-knappen dynamisk
 function toggleNewCustomerDiscount() {
   const plan = document.getElementById("plan");
